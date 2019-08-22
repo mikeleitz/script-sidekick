@@ -15,8 +15,18 @@
  */
 package com.mikeleitz.sidekick;
 
-import org.springframework.boot.SpringApplication;
+import com.mikeleitz.sidekick.bash.BashInput;
+import com.mikeleitz.sidekick.bash.BashOption;
+import com.mikeleitz.sidekick.bash.BashPreamble;
+import com.mikeleitz.sidekick.bash.BashScript;
+import com.mikeleitz.sidekick.bash.ShellOptionEnum;
+import com.mikeleitz.sidekick.bash.validation.NotNullBashValidation;
+import org.apache.commons.io.FileUtils;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
 
 /**
  * @author leitz@mikeleitz.com
@@ -24,8 +34,29 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ScriptSidekickApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ScriptSidekickApplication.class, args);
+	public static void main(String[] args) throws IOException {
+//		SpringApplication.run(ScriptSidekickApplication.class, args);
+
+		test();
 	}
 
+	public static void test() throws IOException {
+		BashPreamble bashPreamble = BashPreamble.builder().shell(ShellOptionEnum.BASH).build();
+
+		BashOption bashOption = BashOption.builder()
+				.shortName('o')
+				.longName("open")
+				.helpDescription("Open stream along with other work.")
+				.validation(new NotNullBashValidation()).build();
+
+		BashInput input = BashInput.builder().bashOption(bashOption).build();
+
+		BashScript bashScript = BashScript.builder().bashPreamble(bashPreamble).bashInput(input).build();
+
+		File scriptFile = new File("/tmp/myscript.sh");
+		FileUtils.writeStringToFile(scriptFile, bashScript.buildScript(), Charset.defaultCharset());
+		scriptFile.setExecutable(true);
+		scriptFile.setReadable(true);
+		scriptFile.setWritable(true);
+	}
 }

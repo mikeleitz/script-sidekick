@@ -19,4 +19,5 @@ package com.mikeleitz.sidekick.base;
  * @author leitz@mikeleitz.com
  */
 public interface Builder {
+    BuilderResult buildResult();
 }

@@ -1,5 +1,5 @@
-/**
- * Copyright 2019 Michael Leitz
+/*
+ * Copyright (c) 2019, Michael Leitz
  * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,10 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.mikeleitz.sidekick.base;
+package com.mikeleitz.sidekick.bash;
+
+import lombok.Getter;
 
 /**
  * @author leitz@mikeleitz.com
  */
-public interface DocumentBuilder extends Builder {
+public enum ShellOptionEnum {
+    BASH("#!/usr/bin/env bash");
+
+    @Getter private String shebang;
+
+    ShellOptionEnum(String shebang) {
+        this.shebang = shebang;
+    }
 }
