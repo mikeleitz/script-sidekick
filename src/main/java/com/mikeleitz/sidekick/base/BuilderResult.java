@@ -1,5 +1,5 @@
-/**
- * Copyright 2019 Michael Leitz
+/*
+ * Copyright (c) 2019, Michael Leitz
  * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,5 +18,6 @@ package com.mikeleitz.sidekick.base;
 /**
  * @author leitz@mikeleitz.com
  */
-public interface DocumentBuilder extends Builder {
+public interface BuilderResult {
+    Object getResult();
 }

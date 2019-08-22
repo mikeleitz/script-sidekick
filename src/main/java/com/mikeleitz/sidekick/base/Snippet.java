@@ -15,8 +15,32 @@
  */
 package com.mikeleitz.sidekick.base;
 
+import lombok.Getter;
+
 /**
  * @author leitz@mikeleitz.com
  */
-public interface Snippet {
+public class Snippet implements BuilderResult {
+    @Getter private String value;
+
+    public Snippet(String value) {
+        this.value = value;
+    }
+
+    public void append(String value) {
+        this.value += value;
+    }
+
+    public void merge(Snippet snippet) {
+        this.value += snippet.getValue();
+    }
+
+    @Override
+    public Object getResult() {
+        Object returnValue = null;
+
+        returnValue = value;
+
+        return returnValue;
+    }
 }

@@ -18,5 +18,5 @@ package com.mikeleitz.sidekick.base;
 /**
  * @author leitz@mikeleitz.com
  */
-public interface SectionBuilder {
+public interface SectionBuilder extends Builder {
 }
