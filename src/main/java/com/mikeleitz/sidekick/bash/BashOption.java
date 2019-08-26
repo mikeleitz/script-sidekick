@@ -52,7 +52,7 @@ public class BashOption implements BuilderResult {
         return returnValue;
     }
 
-    private String makeVariableNameAcceptableToBash(String variableName) {
+    protected String makeVariableNameAcceptableToBash(String variableName) {
         String returnValue = null;
 
         returnValue = variableName.toUpperCase();
