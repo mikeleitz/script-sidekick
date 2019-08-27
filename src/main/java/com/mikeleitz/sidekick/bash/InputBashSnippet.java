@@ -1,5 +1,5 @@
-/**
- * Copyright 2019 Michael Leitz
+/*
+ * Copyright (c) 2019, Michael Leitz
  * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,39 +13,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.mikeleitz.sidekick.base;
+package com.mikeleitz.sidekick.bash;
 
-import lombok.NonNull;
-import org.apache.commons.io.FileUtils;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
+import com.mikeleitz.sidekick.base.Snippet;
+import com.mikeleitz.sidekick.base.SnippetContext;
 import org.stringtemplate.v4.ST;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
+import java.util.List;
 
 /**
  * @author leitz@mikeleitz.com
  */
-public abstract class Snippet {
-    @NonNull private Resource templateResource;
-    protected String template;
-    protected SnippetContext context;
+public class InputBashSnippet extends Snippet {
+    private static final String templateLocation = "com/mikeleitz/sidekick/bash/bash-input-template.stg";
 
-    public Snippet(String templateLocation, SnippetContext context) throws IOException {
-        this.context = context;
-
-        templateResource = new ClassPathResource(templateLocation);
-        template = FileUtils.readFileToString(templateResource.getFile(), Charset.defaultCharset());
+    public InputBashSnippet(SnippetContext context) throws IOException {
+        super(templateLocation, context);
     }
 
-    public abstract String getSnippet();
+    @Override
+    public String getSnippet() {
+        String returnValue = null;
 
+        returnValue = buildTemplate();
+
+        return returnValue;
+    }
+
+    @Override
     protected String buildTemplate() {
         String returnValue = null;
 
         ST snippetTemplate = new ST(template);
-        context.getAllValues().asMap().forEach((e,v) -> snippetTemplate.add(e, v));
+
+        List<Object> inputOptions = context.getAllValues().get("inputOptions");
+        snippetTemplate.add("inputOptions", inputOptions);
 
         returnValue = snippetTemplate.render();
 

@@ -15,12 +15,12 @@
  */
 package com.mikeleitz.sidekick.bash;
 
-import com.mikeleitz.sidekick.base.BuilderResult;
-import com.mikeleitz.sidekick.base.Snippet;
 import com.mikeleitz.sidekick.base.Validation;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NonNull;
+import lombok.Setter;
 import lombok.Singular;
 
 import java.util.List;
@@ -30,31 +30,67 @@ import java.util.List;
  */
 @Data
 @Builder
-public class BashOption implements BuilderResult {
+@Setter(AccessLevel.NONE)
+public class BashOption {
     private Character shortName;
+    private Boolean hasArg = false;
     @NonNull private String longName;
     private String helpDescription;
     @Singular private List<Validation> validations;
 
-    @Override
-    public Object getResult() {
-        Object returnValue = null;
+    // Fields to help render the template.
+    // These are populated when the object is built via builder().
+    protected String shortOptArgsValue;
+    protected String longOptArgsValue;
+    protected String switchStatementSection;
+    protected String declareVariablesSection;
 
-        String variableName = makeVariableNameAcceptableToBash(longName);
-        Snippet resultSnippet = new Snippet("\n" + variableName + "=\n");
+    public static BashOptionBuilder builder() {
+        return new BashOptionBuilder(){
+            @Override
+            public BashOption build() {
+                BashOption buildResult = super.build();
 
-        for (Validation validation : validations) {
-            Snippet validationSnippet = validation.createValidation(variableName, null);
-            resultSnippet.merge(validationSnippet);
+                buildResult.shortOptArgsValue = buildResult.hasArg ? buildResult.getShortName() + ":" : buildResult.getShortName() + "";
+                buildResult.longOptArgsValue = buildResult.hasArg ? buildResult.getLongName() + ":" : buildResult.getLongName() + "";
+
+                buildResult.createSwitchStatement();
+
+                return buildResult;
+            }
+        };
+    }
+
+    protected void createSwitchStatement() {
+        switchStatementSection = "";
+
+        switchStatementSection += getShortName() != null ? "-" + getShortName() + " | " + "--" + getLongName() + ")" : "-" + getLongName() + ")";
+        switchStatementSection += "\n";
+
+        declareVariablesSection = makeVariableNameAcceptableToBash(getLongName()) + "_OPTION_CHOSEN=";
+        declareVariablesSection += "\n";
+
+        switchStatementSection += makeVariableNameAcceptableToBash(getLongName()) + "_OPTION_CHOSEN=1";
+        switchStatementSection += "\n";
+
+        if (hasArg) {
+            declareVariablesSection += makeVariableNameAcceptableToBash(getLongName()) + "_ARG=";
+            declareVariablesSection += "\n";
+
+            switchStatementSection += makeVariableNameAcceptableToBash(getLongName()) + "_ARG=\"$2\"";
+            switchStatementSection += "\n";
+            switchStatementSection += "shift 2";
+            switchStatementSection += "\n";
+        } else {
+            switchStatementSection += "shift";
+            switchStatementSection += "\n";
         }
 
-        returnValue = resultSnippet.getResult();
-        return returnValue;
+        switchStatementSection += ";;";
     }
 
     protected String makeVariableNameAcceptableToBash(String variableName) {
         String returnValue = null;
-
         returnValue = variableName.toUpperCase();
 
         return returnValue;

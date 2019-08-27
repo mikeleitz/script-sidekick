@@ -36,8 +36,10 @@ public class NotNullBashValidation implements Validation {
     public Snippet createValidation(String variableName, Map<String, Object> validationParams) {
         Snippet returnValue = null;
 
+/*
         String snippetValue = String.format(NOT_NULL_VALIDATION, variableName, variableName, variableName);
         returnValue = new Snippet(snippetValue);
+*/
 
         return returnValue;
     }

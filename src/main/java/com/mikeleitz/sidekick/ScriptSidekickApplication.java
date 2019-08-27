@@ -15,13 +15,16 @@
  */
 package com.mikeleitz.sidekick;
 
-import com.mikeleitz.sidekick.bash.BashInput;
+import com.mikeleitz.sidekick.base.SnippetContext;
 import com.mikeleitz.sidekick.bash.BashOption;
-import com.mikeleitz.sidekick.bash.BashPreamble;
-import com.mikeleitz.sidekick.bash.BashScript;
+import com.mikeleitz.sidekick.bash.InputBashSnippet;
+import com.mikeleitz.sidekick.bash.LoggingBashSnippet;
+import com.mikeleitz.sidekick.bash.ShebangBashSnippet;
 import com.mikeleitz.sidekick.bash.ShellOptionEnum;
-import com.mikeleitz.sidekick.bash.validation.NotNullBashValidation;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.File;
@@ -32,14 +35,13 @@ import java.nio.charset.Charset;
  * @author leitz@mikeleitz.com
  */
 @SpringBootApplication
-public class ScriptSidekickApplication {
+@Slf4j
+public class ScriptSidekickApplication implements CommandLineRunner {
 
 	public static void main(String[] args) throws IOException {
-//		SpringApplication.run(ScriptSidekickApplication.class, args);
-
-		test();
+		SpringApplication.run(ScriptSidekickApplication.class, args);
 	}
-
+/*
 	public static void test() throws IOException {
 		BashPreamble bashPreamble = BashPreamble.builder().shell(ShellOptionEnum.BASH).build();
 
@@ -58,5 +60,33 @@ public class ScriptSidekickApplication {
 		scriptFile.setExecutable(true);
 		scriptFile.setReadable(true);
 		scriptFile.setWritable(true);
+	}*/
+
+	@Override
+	public void run(String... args) throws Exception {
+		log.info("Running command line!!");
+
+		SnippetContext context = new SnippetContext();
+		context.addValue("shell", ShellOptionEnum.BASH);
+
+		BashOption bashOption1 = BashOption.builder().shortName('w').longName("work").hasArg(true).build();
+		BashOption bashOption2 = BashOption.builder().shortName('x').longName("extract").hasArg(false).build();
+		context.addValue("inputOptions", bashOption1);
+		context.addValue("inputOptions", bashOption2);
+
+		ShebangBashSnippet shebangBashSnippet = new ShebangBashSnippet(context);
+		LoggingBashSnippet loggingBashSnippet = new LoggingBashSnippet(context);
+		InputBashSnippet inputBashSnippet = new InputBashSnippet(context);
+
+		String finalScript = shebangBashSnippet.getSnippet() + "\n" + loggingBashSnippet.getSnippet() + "\n" + inputBashSnippet.getSnippet() + "\n";
+
+		File outputScript = new File("/tmp/myscript.sh");
+
+		// beautysh file1.sh file2.sh file3.sh
+		FileUtils.writeStringToFile(outputScript, finalScript, Charset.defaultCharset());
+
+		outputScript.setWritable(true);
+		outputScript.setReadable(true);
+		outputScript.setExecutable(true);
 	}
 }
