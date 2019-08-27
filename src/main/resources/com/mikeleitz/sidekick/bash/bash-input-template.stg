@@ -1,0 +1,66 @@
+##################################################################################################
+# Declare all variables used in the input parsing section
+##################################################################################################
+
+<inputOptions:{ inputOption |<inputOption.declareVariablesSection>}>
+
+##################################################################################################
+# Setup enhanced getopts to handle input
+# From: https://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
+##################################################################################################
+
+# saner programming env: these switches turn some bugs into errors
+set -o errexit -o pipefail -o noclobber -o nounset
+
+# Check to make sure the correct version of getopt is installed.
+# This script uses a more sophisticated version to make things easier to program.
+! getopt --test >/dev/null
+if [[ ${PIPESTATUS[0]} -ne 4 ]]; then
+  echo "This script requires enhanced getopt to work.  Enhanced getopt is included on any modern *nix system."
+  echo "If you're running OSX install via"
+  echo "$ brew install gnu-getopt"
+  echo "The add it to your path and restart your shell."
+  echo "$ echo 'export PATH=\"/usr/local/opt/gnu-getopt/bin:\$PATH\"' >> ~/.bash_profile"
+  echo ""
+  echo "If you're on another distro, install enhanced getopt and make it available in the path."
+  exit 1
+fi
+
+# These are all the switches for the script.
+#
+# The OPTIONS letters correspond to the LONGOPTS names.  e.g. v is synonomous with verbose, r: means version:
+#
+# The colon means the switch has an arg associated with it.  n: and name: means you specify a name long with the switch.
+# Without a colon means the switch is standalone and doesn't require additional information. v and verbose mean put it in verbose mode.
+OPTIONS=<inputOptions:{ inputOption |<inputOption.shortOptArgsValue>}>
+LONGOPTS=<inputOptions:{ inputOption |<inputOption.longOptArgsValue>}; separator="," >
+
+# -regarding ! and PIPESTATUS see above
+# -temporarily store output to be able to check for errors
+# -activate quoting/enhanced mode (e.g. by writing out “--options”)
+# -pass arguments only via   -- "$@"   to separate them correctly
+! PARSED=$(getopt --options=$OPTIONS --longoptions=$LONGOPTS --name "$0" -- "$@")
+if [[ ${PIPESTATUS[0]} -ne 0 ]]; then
+  # e.g. return value is 1
+  #  then getopt has complained about wrong arguments to stdout
+  exit 2
+fi
+
+# read getopt’s output this way to handle the quoting right:
+eval set -- "$PARSED"
+
+# Handle all possible script inputs.
+while true; do
+  case "$1" in
+<inputOptions:{ inputOption |
+<inputOption.switchStatementSection>
+}> --)
+    shift
+    break
+    ;;
+  *)
+    echo "Programming error"
+    exit 3
+    ;;
+  esac
+done

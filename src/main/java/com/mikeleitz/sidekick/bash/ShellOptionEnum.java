@@ -15,17 +15,19 @@
  */
 package com.mikeleitz.sidekick.bash;
 
-import lombok.Getter;
-
 /**
  * @author leitz@mikeleitz.com
  */
 public enum ShellOptionEnum {
-    BASH("#!/usr/bin/env bash");
+    BASH("com/mikeleitz/sidekick/bash/bash-shebang.stg");
 
-    @Getter private String shebang;
+    private String shebangTemplateName;
 
-    ShellOptionEnum(String shebang) {
-        this.shebang = shebang;
+    ShellOptionEnum(String shebangTemplateName) {
+        this.shebangTemplateName = shebangTemplateName;
+    }
+
+    public String getShebangTemplateName() {
+        return shebangTemplateName;
     }
 }
