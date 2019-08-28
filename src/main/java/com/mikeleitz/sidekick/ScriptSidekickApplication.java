@@ -71,14 +71,13 @@ public class ScriptSidekickApplication implements CommandLineRunner {
 		log.info("Running command line!!");
 
 		SnippetContext context = new SnippetContext();
-		context.addValue("shell", ShellOptionEnum.BASH);
 
 		BashOption bashOption1 = BashOption.builder().shortName('w').longName("work").argNeeded(true).build();
 		BashOption bashOption2 = BashOption.builder().shortName('x').longName("extract").argNeeded(false).build();
 
 		Set<BashOption> bashOptions = Stream.of(bashOption1, bashOption2).collect(Collectors.toCollection(HashSet::new));
 
-		ShebangBashSnippet shebangBashSnippet = new ShebangBashSnippet(context);
+		ShebangBashSnippet shebangBashSnippet = new ShebangBashSnippet(context, ShellOptionEnum.BASH);
 		LoggingBashSnippet loggingBashSnippet = new LoggingBashSnippet(context);
 
 		InputBashSnippet inputBashSnippet = new InputBashSnippet(context, bashOptions);

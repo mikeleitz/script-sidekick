@@ -19,15 +19,7 @@ package com.mikeleitz.sidekick.bash.domain;
  * @author leitz@mikeleitz.com
  */
 public enum ShellOptionEnum {
-    BASH("com/mikeleitz/sidekick/bash/bash-shebang.stg");
+    BASH;
 
-    private String shebangTemplateName;
-
-    ShellOptionEnum(String shebangTemplateName) {
-        this.shebangTemplateName = shebangTemplateName;
-    }
-
-    public String getShebangTemplateName() {
-        return shebangTemplateName;
-    }
+    ShellOptionEnum() { }
 }
