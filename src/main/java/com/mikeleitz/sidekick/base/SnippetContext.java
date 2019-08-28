@@ -16,19 +16,17 @@
 package com.mikeleitz.sidekick.base;
 
 import lombok.NonNull;
-import org.apache.commons.collections4.ListValuedMap;
-import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
-import org.springframework.util.CollectionUtils;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author leitz@mikeleitz.com
  */
 public class SnippetContext {
-    @NonNull private ListValuedMap<String, Object> values = new ArrayListValuedHashMap();
+    @NonNull private Map<String, Object> values = new HashMap<>();
 
-    public ListValuedMap<String, Object> getAllValues() {
+    public Map<String, Object> getAllValues() {
         return values;
     }
 
@@ -36,27 +34,4 @@ public class SnippetContext {
         values.put(key, value);
     }
 
-    public List getList(String key) {
-        List returnValue = null;
-
-        returnValue = values.get(key);
-
-        return returnValue;
-    }
-
-    public <T> T getValue(Class<T> type, String key) {
-        return type.cast(values.get(key).get(0));
-    }
-
-    public <T> T getRequiredValue(Class<T> type, String key) {
-        List resultList = values.get(key);
-
-        if (resultList == null && CollectionUtils.isEmpty(resultList)) {
-            throw new IllegalArgumentException(String.format("Expecting to find value for key %s.", key));
-        }
-
-        Object resultEntry = resultList.get(0);
-
-        return type.cast(resultEntry);
-    }
 }

@@ -16,11 +16,11 @@
 package com.mikeleitz.sidekick;
 
 import com.mikeleitz.sidekick.base.SnippetContext;
-import com.mikeleitz.sidekick.bash.BashOption;
 import com.mikeleitz.sidekick.bash.InputBashSnippet;
 import com.mikeleitz.sidekick.bash.LoggingBashSnippet;
 import com.mikeleitz.sidekick.bash.ShebangBashSnippet;
-import com.mikeleitz.sidekick.bash.ShellOptionEnum;
+import com.mikeleitz.sidekick.bash.domain.BashOption;
+import com.mikeleitz.sidekick.bash.domain.ShellOptionEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.boot.CommandLineRunner;
@@ -30,6 +30,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author leitz@mikeleitz.com
@@ -69,20 +73,22 @@ public class ScriptSidekickApplication implements CommandLineRunner {
 		SnippetContext context = new SnippetContext();
 		context.addValue("shell", ShellOptionEnum.BASH);
 
-		BashOption bashOption1 = BashOption.builder().shortName('w').longName("work").hasArg(true).build();
-		BashOption bashOption2 = BashOption.builder().shortName('x').longName("extract").hasArg(false).build();
-		context.addValue("inputOptions", bashOption1);
-		context.addValue("inputOptions", bashOption2);
+		BashOption bashOption1 = BashOption.builder().shortName('w').longName("work").argNeeded(true).build();
+		BashOption bashOption2 = BashOption.builder().shortName('x').longName("extract").argNeeded(false).build();
+
+		Set<BashOption> bashOptions = Stream.of(bashOption1, bashOption2).collect(Collectors.toCollection(HashSet::new));
 
 		ShebangBashSnippet shebangBashSnippet = new ShebangBashSnippet(context);
 		LoggingBashSnippet loggingBashSnippet = new LoggingBashSnippet(context);
-		InputBashSnippet inputBashSnippet = new InputBashSnippet(context);
+
+		InputBashSnippet inputBashSnippet = new InputBashSnippet(context, bashOptions);
 
 		String finalScript = shebangBashSnippet.getSnippet() + "\n" + loggingBashSnippet.getSnippet() + "\n" + inputBashSnippet.getSnippet() + "\n";
 
 		File outputScript = new File("/tmp/myscript.sh");
 
 		// beautysh file1.sh file2.sh file3.sh
+		// Run python app inside Docker container to format.
 		FileUtils.writeStringToFile(outputScript, finalScript, Charset.defaultCharset());
 
 		outputScript.setWritable(true);

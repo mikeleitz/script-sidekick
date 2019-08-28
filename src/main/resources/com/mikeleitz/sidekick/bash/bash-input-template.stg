@@ -2,7 +2,7 @@
 # Declare all variables used in the input parsing section
 ##################################################################################################
 
-<inputOptions:{ inputOption |<inputOption.declareVariablesSection>}>
+<allVariableDeclarations:{ allVariableDeclaration |<allVariableDeclaration>}>
 
 ##################################################################################################
 # Setup enhanced getopts to handle input
@@ -32,8 +32,8 @@ fi
 #
 # The colon means the switch has an arg associated with it.  n: and name: means you specify a name long with the switch.
 # Without a colon means the switch is standalone and doesn't require additional information. v and verbose mean put it in verbose mode.
-OPTIONS=<inputOptions:{ inputOption |<inputOption.shortOptArgsValue>}>
-LONGOPTS=<inputOptions:{ inputOption |<inputOption.longOptArgsValue>}; separator="," >
+OPTIONS=<allShortOpts:{ allShortOpt |<allShortOpt>}>
+LONGOPTS=<allLongOpts:{ allLongOpt |<allLongOpt>}; separator="," >
 
 # -regarding ! and PIPESTATUS see above
 # -temporarily store output to be able to check for errors
@@ -52,8 +52,8 @@ eval set -- "$PARSED"
 # Handle all possible script inputs.
 while true; do
   case "$1" in
-<inputOptions:{ inputOption |
-<inputOption.switchStatementSection>
+<allSwitchStatements:{ allSwitchStatement |
+<allSwitchStatement>
 }> --)
     shift
     break

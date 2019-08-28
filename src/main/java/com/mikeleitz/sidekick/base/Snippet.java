@@ -45,7 +45,7 @@ public abstract class Snippet {
         String returnValue = null;
 
         ST snippetTemplate = new ST(template);
-        context.getAllValues().asMap().forEach((e,v) -> snippetTemplate.add(e, v));
+        context.getAllValues().forEach((e,v) -> snippetTemplate.add(e, v));
 
         returnValue = snippetTemplate.render();
 

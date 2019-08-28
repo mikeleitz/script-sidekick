@@ -24,10 +24,10 @@ import java.io.IOException;
  * @author leitz@mikeleitz.com
  */
 public class ShebangBashSnippet extends Snippet {
-    private static final String templateLocation = "com/mikeleitz/sidekick/bash/bash-logging-template.stg";
+    private static final String templateLocation = "com/mikeleitz/sidekick/bash/bash-shebang.stg";
 
     public ShebangBashSnippet(SnippetContext context) throws IOException {
-        super(context.getRequiredValue(ShellOptionEnum.class, "shell").getShebangTemplateName(), context);
+        super(templateLocation, context);
     }
 
     @Override
