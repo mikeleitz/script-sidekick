@@ -2,7 +2,8 @@
 # Declare all variables used in the input parsing section
 ##################################################################################################
 
-<allVariableDeclarations:{ allVariableDeclaration |<allVariableDeclaration>}>
+<allVariables:{ variable |<variable>=
+}>
 
 ##################################################################################################
 # Setup enhanced getopts to handle input
