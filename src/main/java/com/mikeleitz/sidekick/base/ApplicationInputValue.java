@@ -15,11 +15,10 @@
  */
 package com.mikeleitz.sidekick.base;
 
-import java.util.Map;
-
 /**
  * @author leitz@mikeleitz.com
  */
-public interface Validation {
-    Snippet createValidation(String variableName, Map<String, Object> validationParams);
+public interface ApplicationInputValue {
+    public String getVariableName();
+    public String getIsSetVariableName();
 }
