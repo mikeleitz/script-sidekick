@@ -16,9 +16,9 @@
 package com.mikeleitz.sidekick;
 
 import com.mikeleitz.sidekick.base.SnippetContext;
-import com.mikeleitz.sidekick.bash.InputBashSnippet;
-import com.mikeleitz.sidekick.bash.LoggingBashSnippet;
-import com.mikeleitz.sidekick.bash.ShebangBashSnippet;
+import com.mikeleitz.sidekick.bash.snippet.InputBashSnippet;
+import com.mikeleitz.sidekick.bash.snippet.LoggingBashSnippet;
+import com.mikeleitz.sidekick.bash.snippet.ShebangBashSnippet;
 import com.mikeleitz.sidekick.bash.domain.BashOption;
 import com.mikeleitz.sidekick.bash.domain.ShellOptionEnum;
 import lombok.extern.slf4j.Slf4j;

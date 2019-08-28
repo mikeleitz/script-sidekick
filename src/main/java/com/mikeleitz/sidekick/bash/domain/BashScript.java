@@ -13,28 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.mikeleitz.sidekick.bash;
+package com.mikeleitz.sidekick.bash.domain;
 
-import com.mikeleitz.sidekick.base.Snippet;
-import com.mikeleitz.sidekick.base.SnippetContext;
-
-import java.io.IOException;
+import lombok.Builder;
 
 /**
  * @author leitz@mikeleitz.com
  */
-public class ShebangBashSnippet extends Snippet {
-    private static final String templateLocation = "com/mikeleitz/sidekick/bash/bash-shebang.stg";
+@Builder
+public class BashScript {
+//    @NonNull private BashPreamble bashPreamble;
+//    @NonNull private BashInput bashInput;
 
-    public ShebangBashSnippet(SnippetContext context) throws IOException {
-        super(templateLocation, context);
-    }
-
-    @Override
-    public String getSnippet() {
+    public String buildScript() {
         String returnValue = null;
 
-        returnValue = buildTemplate();
+/*        Object preambleResult = bashPreamble.buildResult().getResult();
+        Object inputResult = bashInput.buildResult().getResult();
+
+        StringBuilder stringBuilder = new StringBuilder(preambleResult.toString())
+                .append("\n")
+                .append(inputResult.toString());
+
+        returnValue = stringBuilder.toString();*/
 
         return returnValue;
     }
