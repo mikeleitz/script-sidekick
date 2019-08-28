@@ -15,11 +15,17 @@
  */
 package com.mikeleitz.sidekick.bash.domain;
 
+import lombok.Getter;
+
 /**
  * @author leitz@mikeleitz.com
  */
 public enum ShellOptionEnum {
-    BASH;
+    BASH(".sh");
 
-    ShellOptionEnum() { }
+    @Getter String extension;
+
+    ShellOptionEnum(String extension) {
+        this.extension = extension;
+    }
 }

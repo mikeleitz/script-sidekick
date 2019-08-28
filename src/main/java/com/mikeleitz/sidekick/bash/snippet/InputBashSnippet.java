@@ -31,6 +31,14 @@ import java.util.Set;
  */
 public class InputBashSnippet extends Snippet {
     private static final String TEMPLATE_LOCATION = "com/mikeleitz/sidekick/bash/bash-input-template.stg";
+    private static final String VERBOSE_SWITCH_STATEMENT = "  -v | --verbose)\n"
+            + "    __VERBOSE=7 # Verbose indicates logging at debug.\n"
+            + "    shift\n"
+            + "    ;;";
+
+    private static final String HELP_SWITCH_STATEMENT = "  -h | --help)\n"
+            + "    .printHelp # Show help\n"
+            + "    ;;";
 
     private Set<BashOption> allInputOptions;
 
@@ -38,6 +46,7 @@ public class InputBashSnippet extends Snippet {
         super(TEMPLATE_LOCATION, context);
         this.allInputOptions = allInputOptions;
 
+        context.addValue("bashOptions", allInputOptions);
         addDomainValuesToSnippetContext(context);
     }
 
@@ -67,7 +76,16 @@ public class InputBashSnippet extends Snippet {
                     }
                 }
 
-                String switchStatement = createSwitchStatement(bashOption);
+                String switchStatement;
+
+                if (bashOption.equals(BashOption.HELP)) {
+                    switchStatement = HELP_SWITCH_STATEMENT;
+                } else if (bashOption.equals(BashOption.VERBOSE)) {
+                    switchStatement = VERBOSE_SWITCH_STATEMENT;
+                } else {
+                    switchStatement = createSwitchStatement(bashOption);
+                }
+
                 if (StringUtils.isNotBlank(switchStatement)) {
                     allSwitchStatements.add(switchStatement);
                 }
@@ -79,6 +97,23 @@ public class InputBashSnippet extends Snippet {
         context.addValue("allSwitchStatements", allSwitchStatements);
         context.addValue("allVariables", allVariables);
     }
+
+    protected String createHelpSwitchStatement() {
+        String returnValue = null;
+
+        returnValue = HELP_SWITCH_STATEMENT;
+
+        return returnValue;
+    }
+
+    protected String createVerboseSwitchStatement() {
+        String returnValue = null;
+
+        returnValue = VERBOSE_SWITCH_STATEMENT;
+
+        return returnValue;
+    }
+
 
     protected String createSwitchStatement(BashOption bashOption) {
         String returnValue = null;
