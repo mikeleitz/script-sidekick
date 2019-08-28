@@ -23,10 +23,10 @@ import java.io.IOException;
 /**
  * @author leitz@mikeleitz.com
  */
-public class LoggingBashSnippet extends Snippet {
-    private static final String TEMPLATE_LOCATION = "com/mikeleitz/sidekick/bash/bash-logging-template.stg";
+public class ProcessingBashSnippet extends Snippet {
+    private static final String TEMPLATE_LOCATION = "com/mikeleitz/sidekick/bash/bash-processing-template.stg";
 
-    public LoggingBashSnippet(SnippetContext context) throws IOException {
+    public ProcessingBashSnippet(SnippetContext context) throws IOException {
         super(TEMPLATE_LOCATION, context);
     }
 }

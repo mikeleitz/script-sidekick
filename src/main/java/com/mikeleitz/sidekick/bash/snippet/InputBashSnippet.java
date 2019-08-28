@@ -30,12 +30,12 @@ import java.util.Set;
  * @author leitz@mikeleitz.com
  */
 public class InputBashSnippet extends Snippet {
-    private static final String templateLocation = "com/mikeleitz/sidekick/bash/bash-input-template.stg";
+    private static final String TEMPLATE_LOCATION = "com/mikeleitz/sidekick/bash/bash-input-template.stg";
 
     private Set<BashOption> allInputOptions;
 
     public InputBashSnippet(SnippetContext context, Set<BashOption> allInputOptions) throws IOException {
-        super(templateLocation, context);
+        super(TEMPLATE_LOCATION, context);
         this.allInputOptions = allInputOptions;
 
         addDomainValuesToSnippetContext(context);
@@ -45,28 +45,31 @@ public class InputBashSnippet extends Snippet {
         List<String> allShortOpts = new ArrayList<>();
         List<String> allLongOpts = new ArrayList<>();
         List<String> allSwitchStatements = new ArrayList<>();
-        List<String> allVariableDeclarations = new ArrayList<>();
+        List<String> allVariables = new ArrayList<>();
 
         if (CollectionUtils.isNotEmpty(allInputOptions)) {
             for (BashOption bashOption : allInputOptions) {
                 if (bashOption.getShortName() != null) {
-                    String shortOptArgsValue = bashOption.isArgNeeded() ? bashOption.getShortName() + ":" : bashOption.getShortName() + "";
+                    String shortOptArgsValue = bashOption.isArgNeeded() ?
+                            bashOption.getShortName() + ":" : bashOption.getShortName() + "";
                     allShortOpts.add(shortOptArgsValue);
                 }
 
                 if (StringUtils.isNotBlank(bashOption.getLongName())) {
-                    String longOptArgsValue = bashOption.isArgNeeded() ? bashOption.getLongName() + ":" : bashOption.getLongName() + "";
+                    String longOptArgsValue = bashOption.isArgNeeded() ?
+                            bashOption.getLongName() + ":" : bashOption.getLongName() + "";
                     allLongOpts.add(longOptArgsValue);
+
+                    allVariables.add(makeVariableNameAcceptableToBash(bashOption.getLongName()) + "_OPTION_CHOSEN");
+
+                    if (bashOption.isArgNeeded()) {
+                        allVariables.add(makeVariableNameAcceptableToBash(bashOption.getLongName()) + "_ARG");
+                    }
                 }
 
                 String switchStatement = createSwitchStatement(bashOption);
                 if (StringUtils.isNotBlank(switchStatement)) {
                     allSwitchStatements.add(switchStatement);
-                }
-
-                String variableDeclarationSection = createVariableDeclarationSection(bashOption);
-                if (StringUtils.isNotBlank(variableDeclarationSection)) {
-                    allVariableDeclarations.add(variableDeclarationSection);
                 }
             }
         }
@@ -74,21 +77,7 @@ public class InputBashSnippet extends Snippet {
         context.addValue("allShortOpts", allShortOpts);
         context.addValue("allLongOpts", allLongOpts);
         context.addValue("allSwitchStatements", allSwitchStatements);
-        context.addValue("allVariableDeclarations", allVariableDeclarations);
-    }
-
-    protected String createVariableDeclarationSection(BashOption bashOption) {
-        String returnValue = null;
-
-        returnValue = makeVariableNameAcceptableToBash(bashOption.getLongName()) + "_OPTION_CHOSEN=";
-        returnValue += "\n";
-
-        if (bashOption.isArgNeeded()) {
-            returnValue += makeVariableNameAcceptableToBash(bashOption.getLongName()) + "_ARG=";
-            returnValue += "\n";
-        }
-
-        return returnValue;
+        context.addValue("allVariables", allVariables);
     }
 
     protected String createSwitchStatement(BashOption bashOption) {
@@ -121,31 +110,9 @@ public class InputBashSnippet extends Snippet {
 
     protected String makeVariableNameAcceptableToBash(String variableName) {
         String returnValue = null;
+
         returnValue = variableName.toUpperCase();
 
         return returnValue;
     }
-
-    @Override
-    public String getSnippet() {
-        String returnValue = null;
-
-        returnValue = buildTemplate();
-
-        return returnValue;
-    }
-//
-//    @Override
-//    protected String buildTemplate() {
-//        String returnValue = null;
-//
-//        ST snippetTemplate = new ST(template);
-//
-//        List<Object> inputOptions = context.getAllValues().get("inputOptions");
-//        snippetTemplate.add("inputOptions", inputOptions);
-//
-//        returnValue = snippetTemplate.render();
-//
-//        return returnValue;
-//    }
 }

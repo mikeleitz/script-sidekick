@@ -39,7 +39,13 @@ public abstract class Snippet {
         template = FileUtils.readFileToString(templateResource.getFile(), Charset.defaultCharset());
     }
 
-    public abstract String getSnippet();
+    public String getSnippet() {
+        String returnValue = null;
+
+        returnValue = buildTemplate();
+
+        return returnValue;
+    }
 
     protected String buildTemplate() {
         String returnValue = null;

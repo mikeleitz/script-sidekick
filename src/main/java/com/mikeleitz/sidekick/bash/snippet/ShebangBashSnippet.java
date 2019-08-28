@@ -25,7 +25,7 @@ import java.io.IOException;
  * @author leitz@mikeleitz.com
  */
 public class ShebangBashSnippet extends Snippet {
-    private static final String BASH_TEMPLATE_LOCATION = "com/mikeleitz/sidekick/bash/bash-shebang.stg";
+    private static final String BASH_TEMPLATE_LOCATION = "com/mikeleitz/sidekick/bash/bash-shebang-template.stg";
 
     public ShebangBashSnippet(SnippetContext context, ShellOptionEnum shellOptionEnum) throws IOException {
         super(getLocation(shellOptionEnum), context);
@@ -43,15 +43,6 @@ public class ShebangBashSnippet extends Snippet {
             default :
                 throw new IllegalArgumentException(String.format("ShellOptionEnum [%s] not supported.  Can't create Shebang snippet.", shellOptionEnum));
         }
-
-        return returnValue;
-    }
-
-    @Override
-    public String getSnippet() {
-        String returnValue = null;
-
-        returnValue = buildTemplate();
 
         return returnValue;
     }

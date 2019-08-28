@@ -16,11 +16,12 @@
 package com.mikeleitz.sidekick;
 
 import com.mikeleitz.sidekick.base.SnippetContext;
-import com.mikeleitz.sidekick.bash.snippet.InputBashSnippet;
-import com.mikeleitz.sidekick.bash.snippet.LoggingBashSnippet;
-import com.mikeleitz.sidekick.bash.snippet.ShebangBashSnippet;
 import com.mikeleitz.sidekick.bash.domain.BashOption;
 import com.mikeleitz.sidekick.bash.domain.ShellOptionEnum;
+import com.mikeleitz.sidekick.bash.snippet.InputBashSnippet;
+import com.mikeleitz.sidekick.bash.snippet.LoggingBashSnippet;
+import com.mikeleitz.sidekick.bash.snippet.ProcessingBashSnippet;
+import com.mikeleitz.sidekick.bash.snippet.ShebangBashSnippet;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.boot.CommandLineRunner;
@@ -82,7 +83,9 @@ public class ScriptSidekickApplication implements CommandLineRunner {
 
 		InputBashSnippet inputBashSnippet = new InputBashSnippet(context, bashOptions);
 
-		String finalScript = shebangBashSnippet.getSnippet() + "\n" + loggingBashSnippet.getSnippet() + "\n" + inputBashSnippet.getSnippet() + "\n";
+		ProcessingBashSnippet processingBashSnippet = new ProcessingBashSnippet(context);
+
+		String finalScript = shebangBashSnippet.getSnippet() + "\n" + loggingBashSnippet.getSnippet() + "\n" + inputBashSnippet.getSnippet() + "\n" + processingBashSnippet.getSnippet() + "\n";
 
 		File outputScript = new File("/tmp/myscript.sh");
 
