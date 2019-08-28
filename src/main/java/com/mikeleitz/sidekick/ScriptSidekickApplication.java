@@ -18,6 +18,7 @@ package com.mikeleitz.sidekick;
 import com.mikeleitz.sidekick.base.SnippetContext;
 import com.mikeleitz.sidekick.bash.domain.BashOption;
 import com.mikeleitz.sidekick.bash.domain.ShellOptionEnum;
+import com.mikeleitz.sidekick.bash.snippet.HelpBashSnippet;
 import com.mikeleitz.sidekick.bash.snippet.InputBashSnippet;
 import com.mikeleitz.sidekick.bash.snippet.LoggingBashSnippet;
 import com.mikeleitz.sidekick.bash.snippet.ProcessingBashSnippet;
@@ -75,17 +76,20 @@ public class ScriptSidekickApplication implements CommandLineRunner {
 
 		BashOption bashOption1 = BashOption.builder().shortName('w').longName("work").argNeeded(true).build();
 		BashOption bashOption2 = BashOption.builder().shortName('x').longName("extract").argNeeded(false).build();
+		BashOption bashOption3 = BashOption.HELP;
+		BashOption bashOption4 = BashOption.VERBOSE;
 
-		Set<BashOption> bashOptions = Stream.of(bashOption1, bashOption2).collect(Collectors.toCollection(HashSet::new));
+		Set<BashOption> bashOptions = Stream.of(bashOption1, bashOption2, bashOption3, bashOption4).collect(Collectors.toCollection(HashSet::new));
 
 		ShebangBashSnippet shebangBashSnippet = new ShebangBashSnippet(context, ShellOptionEnum.BASH);
 		LoggingBashSnippet loggingBashSnippet = new LoggingBashSnippet(context);
 
 		InputBashSnippet inputBashSnippet = new InputBashSnippet(context, bashOptions);
+		HelpBashSnippet helpBashSnippet = new HelpBashSnippet(context, bashOptions, "leitz", ShellOptionEnum.BASH, "myscript", "1.1", "Test the output tool.");
 
 		ProcessingBashSnippet processingBashSnippet = new ProcessingBashSnippet(context);
 
-		String finalScript = shebangBashSnippet.getSnippet() + "\n" + loggingBashSnippet.getSnippet() + "\n" + inputBashSnippet.getSnippet() + "\n" + processingBashSnippet.getSnippet() + "\n";
+		String finalScript = shebangBashSnippet.getSnippet() + "\n" + helpBashSnippet.getSnippet() + "\n" + loggingBashSnippet.getSnippet() + "\n" + inputBashSnippet.getSnippet() + "\n" + processingBashSnippet.getSnippet() + "\n";
 
 		File outputScript = new File("/tmp/myscript.sh");
 

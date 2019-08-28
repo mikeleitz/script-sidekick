@@ -32,30 +32,13 @@ import java.util.List;
 @Builder
 @Setter(AccessLevel.NONE)
 public class BashOption {
+    public static BashOption VERBOSE = BashOption.builder().argNeeded(false).shortName('v').longName("verbose").helpDescription("verbose operation").build();
+    public static BashOption HELP = BashOption.builder().argNeeded(false).shortName('h').longName("help").helpDescription("give this help list").build();
+
     private Character shortName;
     private boolean argNeeded = false;
     @NonNull private String longName;
-    private String helpDescription;
+    private String helpDescription = "";
     @Singular private List<Validation> validations;
-
-    // Fields to help render the template.
-    // These are populated when the object is built via builder().
-    protected String shortOptArgsValue;
-    protected String longOptArgsValue;
-    protected String switchStatementSection;
-    protected String declareVariablesSection;
-
-    public static BashOptionBuilder builder() {
-        return new BashOptionBuilder(){
-            @Override
-            public BashOption build() {
-                BashOption buildResult = super.build();
-
-
-                return buildResult;
-            }
-        };
-    }
-
 
 }
