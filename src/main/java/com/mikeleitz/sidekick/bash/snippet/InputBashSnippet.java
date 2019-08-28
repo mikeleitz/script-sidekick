@@ -18,6 +18,8 @@ package com.mikeleitz.sidekick.bash.snippet;
 import com.mikeleitz.sidekick.base.Snippet;
 import com.mikeleitz.sidekick.base.SnippetContext;
 import com.mikeleitz.sidekick.bash.domain.BashOption;
+import com.mikeleitz.sidekick.bash.snippet.validation.BashValidationEnum;
+import com.mikeleitz.sidekick.bash.snippet.validation.BashValidationFactory;
 import io.micrometer.core.instrument.util.StringUtils;
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -42,12 +44,28 @@ public class InputBashSnippet extends Snippet {
 
     private Set<BashOption> allInputOptions;
 
+    private BashValidationFactory bashValidationFactory = new BashValidationFactory();
+
+    private String variableName;
+    private String setVariableName;
+
     public InputBashSnippet(SnippetContext context, Set<BashOption> allInputOptions) throws IOException {
         super(TEMPLATE_LOCATION, context);
         this.allInputOptions = allInputOptions;
 
         context.addValue("bashOptions", allInputOptions);
         addDomainValuesToSnippetContext(context);
+    }
+
+    protected List<Snippet> createValidationSnippets(BashOption bashOption) throws IOException {
+        List<Snippet> returnValue = new ArrayList<>();
+
+        for (BashValidationEnum validationEnum : bashOption.getValidations()) {
+            Snippet validationSnippet = bashValidationFactory.createValidationSnippet(validationEnum, context, bashOption);
+            returnValue.add(validationSnippet);
+        }
+
+        return returnValue;
     }
 
     protected void addDomainValuesToSnippetContext(SnippetContext context) {
@@ -69,10 +87,10 @@ public class InputBashSnippet extends Snippet {
                             bashOption.getLongName() + ":" : bashOption.getLongName() + "";
                     allLongOpts.add(longOptArgsValue);
 
-                    allVariables.add(makeVariableNameAcceptableToBash(bashOption.getLongName()) + "_OPTION_CHOSEN");
+                    allVariables.add(bashOption.getIsSetVariableName());
 
                     if (bashOption.isArgNeeded()) {
-                        allVariables.add(makeVariableNameAcceptableToBash(bashOption.getLongName()) + "_ARG");
+                        allVariables.add(bashOption.getVariableName());
                     }
                 }
 
@@ -98,23 +116,6 @@ public class InputBashSnippet extends Snippet {
         context.addValue("allVariables", allVariables);
     }
 
-    protected String createHelpSwitchStatement() {
-        String returnValue = null;
-
-        returnValue = HELP_SWITCH_STATEMENT;
-
-        return returnValue;
-    }
-
-    protected String createVerboseSwitchStatement() {
-        String returnValue = null;
-
-        returnValue = VERBOSE_SWITCH_STATEMENT;
-
-        return returnValue;
-    }
-
-
     protected String createSwitchStatement(BashOption bashOption) {
         String returnValue = null;
         returnValue = "";
@@ -124,11 +125,11 @@ public class InputBashSnippet extends Snippet {
                 "-" + bashOption.getLongName() + ")";
         returnValue += "\n";
 
-        returnValue += makeVariableNameAcceptableToBash(bashOption.getLongName()) + "_OPTION_CHOSEN=1";
+        returnValue += bashOption.getIsSetVariableName();
         returnValue += "\n";
 
         if (bashOption.isArgNeeded()) {
-            returnValue += makeVariableNameAcceptableToBash(bashOption.getLongName()) + "_ARG=\"$2\"";
+            returnValue += bashOption.getVariableName();
             returnValue += "\n";
             returnValue += "shift 2";
             returnValue += "\n";
@@ -139,14 +140,6 @@ public class InputBashSnippet extends Snippet {
         }
 
         returnValue += ";;";
-
-        return returnValue;
-    }
-
-    protected String makeVariableNameAcceptableToBash(String variableName) {
-        String returnValue = null;
-
-        returnValue = variableName.toUpperCase();
 
         return returnValue;
     }

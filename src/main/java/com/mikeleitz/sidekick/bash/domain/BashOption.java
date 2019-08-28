@@ -15,7 +15,8 @@
  */
 package com.mikeleitz.sidekick.bash.domain;
 
-import com.mikeleitz.sidekick.base.Validation;
+import com.mikeleitz.sidekick.base.ApplicationInputValue;
+import com.mikeleitz.sidekick.bash.snippet.validation.BashValidationEnum;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
@@ -31,14 +32,39 @@ import java.util.List;
 @Data
 @Builder
 @Setter(AccessLevel.NONE)
-public class BashOption {
+public class BashOption implements ApplicationInputValue {
     public static BashOption VERBOSE = BashOption.builder().argNeeded(false).shortName('v').longName("verbose").helpDescription("verbose operation").build();
     public static BashOption HELP = BashOption.builder().argNeeded(false).shortName('h').longName("help").helpDescription("give this help list").build();
 
     private Character shortName;
-    private boolean argNeeded = false;
+    @Builder.Default private boolean argNeeded = false;
     @NonNull private String longName;
-    private String helpDescription = "";
-    @Singular private List<Validation> validations;
+    @Builder.Default private String helpDescription = "";
+    @Singular private List<BashValidationEnum> validations;
 
+    @Override
+    public String getVariableName() {
+        return createVariableName(this);
+    }
+
+    @Override
+    public String getIsSetVariableName() {
+        return createVariableSetName(this);
+    }
+
+    private String createVariableName(BashOption bashOption) {
+        return makeVariableNameAcceptableToBash(bashOption.getLongName()) + "_ARG";
+    }
+
+    private String createVariableSetName(BashOption bashOption) {
+        return makeVariableNameAcceptableToBash(bashOption.getLongName()) + "_OPTION_CHOSEN";
+    }
+
+    private String makeVariableNameAcceptableToBash(String variableName) {
+        String returnValue = null;
+
+        returnValue = variableName.toUpperCase();
+
+        return returnValue;
+    }
 }

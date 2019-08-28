@@ -15,9 +15,11 @@
  */
 package com.mikeleitz.sidekick.base;
 
+import java.io.IOException;
+
 /**
  * @author leitz@mikeleitz.com
  */
-public interface BuilderResult {
-    Object getResult();
+public abstract class ValidationFactory<E extends Enum<E>> {
+    public abstract Snippet createValidationSnippet(E validationType, SnippetContext snippetContext, ApplicationInputValue applicationInputValue) throws IOException;
 }
