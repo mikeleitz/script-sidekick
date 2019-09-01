@@ -21,6 +21,7 @@ import com.mikeleitz.sidekick.bash.domain.BashOption;
 import com.mikeleitz.sidekick.bash.snippet.validation.BashValidationEnum;
 import com.mikeleitz.sidekick.bash.snippet.validation.BashValidationFactory;
 import io.micrometer.core.instrument.util.StringUtils;
+import lombok.NonNull;
 import org.apache.commons.collections4.CollectionUtils;
 
 import java.io.IOException;
@@ -43,18 +44,21 @@ public class InputBashSnippet extends Snippet {
             + "    ;;";
 
     private Set<BashOption> allInputOptions;
+    private List<Snippet> allValidationSnippets = new ArrayList<>();
 
     private BashValidationFactory bashValidationFactory = new BashValidationFactory();
 
-    private String variableName;
-    private String setVariableName;
-
-    public InputBashSnippet(SnippetContext context, Set<BashOption> allInputOptions) throws IOException {
+    public InputBashSnippet(SnippetContext context, @NonNull Set<BashOption> allInputOptions) throws IOException {
         super(TEMPLATE_LOCATION, context);
         this.allInputOptions = allInputOptions;
 
         context.addValue("bashOptions", allInputOptions);
         addDomainValuesToSnippetContext(context);
+
+        for (BashOption bashOption : allInputOptions) {
+            List<Snippet> validationSnippets = createValidationSnippets(bashOption);
+            allValidationSnippets.addAll(validationSnippets);
+        }
     }
 
     protected List<Snippet> createValidationSnippets(BashOption bashOption) throws IOException {
@@ -125,11 +129,11 @@ public class InputBashSnippet extends Snippet {
                 "-" + bashOption.getLongName() + ")";
         returnValue += "\n";
 
-        returnValue += bashOption.getIsSetVariableName();
+        returnValue += bashOption.getIsSetVariableName() + "=1";
         returnValue += "\n";
 
         if (bashOption.isArgNeeded()) {
-            returnValue += bashOption.getVariableName();
+            returnValue += bashOption.getVariableName() + "=\"$2\"";
             returnValue += "\n";
             returnValue += "shift 2";
             returnValue += "\n";
@@ -140,6 +144,21 @@ public class InputBashSnippet extends Snippet {
         }
 
         returnValue += ";;";
+
+        return returnValue;
+    }
+
+    @Override
+    protected String buildTemplate() {
+        String returnValue = null;
+
+        returnValue = super.buildTemplate();
+
+        // Create all validation snippets.
+        for (Snippet validationSnippet : allValidationSnippets) {
+            returnValue += "\n";
+            returnValue += validationSnippet.getSnippet();
+        }
 
         return returnValue;
     }
