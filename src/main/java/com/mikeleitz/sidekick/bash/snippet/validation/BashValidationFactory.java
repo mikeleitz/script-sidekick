@@ -35,6 +35,9 @@ public class BashValidationFactory extends ValidationFactory<BashValidationEnum>
             case NOT_NULL:
                 returnValue = createNewNotNullBashValidation(snippetContext, applicationInputValue);
                 break;
+            case TRIM_WHITESPACE:
+                returnValue = createNewTrimBashValidation(snippetContext, applicationInputValue);
+                break;
             default:
                 throw new IllegalArgumentException(String.format("BashValidationType %s not supported.", validationType));
         }
@@ -50,6 +53,18 @@ public class BashValidationFactory extends ValidationFactory<BashValidationEnum>
         String variableSetName = applicationInputValue.getIsSetVariableName();
 
         returnValue = new NotNullBashSnippet(snippetContext, variableName, variableSetName);
+
+        return returnValue;
+    }
+
+    private Snippet createNewTrimBashValidation(SnippetContext snippetContext, ApplicationInputValue applicationInputValue)
+            throws IOException {
+        Snippet returnValue = null;
+
+        String variableName = applicationInputValue.getVariableName();
+        String variableSetName = applicationInputValue.getIsSetVariableName();
+
+        returnValue = new TrimBashSnippet(snippetContext, variableName, variableSetName);
 
         return returnValue;
     }

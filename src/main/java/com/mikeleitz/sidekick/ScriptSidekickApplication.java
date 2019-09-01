@@ -23,6 +23,7 @@ import com.mikeleitz.sidekick.bash.snippet.InputBashSnippet;
 import com.mikeleitz.sidekick.bash.snippet.LoggingBashSnippet;
 import com.mikeleitz.sidekick.bash.snippet.ProcessingBashSnippet;
 import com.mikeleitz.sidekick.bash.snippet.ShebangBashSnippet;
+import com.mikeleitz.sidekick.bash.snippet.validation.BashValidationEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.boot.CommandLineRunner;
@@ -74,7 +75,7 @@ public class ScriptSidekickApplication implements CommandLineRunner {
 
 		SnippetContext context = new SnippetContext();
 
-		BashOption bashOption1 = BashOption.builder().shortName('w').longName("work").argNeeded(true).build();
+		BashOption bashOption1 = BashOption.builder().shortName('w').longName("work").argNeeded(true).validation(BashValidationEnum.NOT_NULL).validation(BashValidationEnum.TRIM_WHITESPACE).build();
 		BashOption bashOption2 = BashOption.builder().shortName('x').longName("extract").argNeeded(false).build();
 		BashOption bashOption3 = BashOption.HELP;
 		BashOption bashOption4 = BashOption.VERBOSE;
@@ -91,7 +92,7 @@ public class ScriptSidekickApplication implements CommandLineRunner {
 
 		String finalScript = shebangBashSnippet.getSnippet() + "\n" + helpBashSnippet.getSnippet() + "\n" + loggingBashSnippet.getSnippet() + "\n" + inputBashSnippet.getSnippet() + "\n" + processingBashSnippet.getSnippet() + "\n";
 
-		File outputScript = new File("/tmp/myscript.sh");
+		File outputScript = new File("./myscript.sh");
 
 		// beautysh file1.sh file2.sh file3.sh
 		// Run python app inside Docker container to format.

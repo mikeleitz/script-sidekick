@@ -19,5 +19,5 @@ package com.mikeleitz.sidekick.bash.snippet.validation;
  * @author leitz@mikeleitz.com
  */
 public enum BashValidationEnum {
-    NOT_NULL
+    NOT_NULL, TRIM_WHITESPACE
 }
