@@ -15,10 +15,10 @@
  */
 package com.mikeleitz.sidekick.bash.snippet.validation;
 
-import com.mikeleitz.sidekick.base.ApplicationInputValue;
 import com.mikeleitz.sidekick.base.Snippet;
 import com.mikeleitz.sidekick.base.SnippetContext;
 import com.mikeleitz.sidekick.base.ValidationFactory;
+import com.mikeleitz.sidekick.base.application.ApplicationInput;
 
 import java.io.IOException;
 
@@ -28,15 +28,15 @@ import java.io.IOException;
 public class BashValidationFactory extends ValidationFactory<BashValidationEnum> {
 
     @Override
-    public Snippet createValidationSnippet(BashValidationEnum validationType, SnippetContext snippetContext, ApplicationInputValue applicationInputValue) throws IOException {
+    public Snippet createValidationSnippet(BashValidationEnum validationType, SnippetContext snippetContext, ApplicationInput applicationInput) throws IOException {
         Snippet returnValue = null;
 
         switch (validationType) {
             case NOT_NULL:
-                returnValue = createNewNotNullBashValidation(snippetContext, applicationInputValue);
+                returnValue = createNewNotNullBashValidation(snippetContext, applicationInput);
                 break;
             case TRIM_WHITESPACE:
-                returnValue = createNewTrimBashValidation(snippetContext, applicationInputValue);
+                returnValue = createNewTrimBashValidation(snippetContext, applicationInput);
                 break;
             default:
                 throw new IllegalArgumentException(String.format("BashValidationType %s not supported.", validationType));
@@ -45,24 +45,24 @@ public class BashValidationFactory extends ValidationFactory<BashValidationEnum>
         return returnValue;
     }
 
-    private Snippet createNewNotNullBashValidation(SnippetContext snippetContext, ApplicationInputValue applicationInputValue)
+    private Snippet createNewNotNullBashValidation(SnippetContext snippetContext, ApplicationInput applicationInput)
             throws IOException {
         Snippet returnValue = null;
 
-        String variableName = applicationInputValue.getVariableName();
-        String variableSetName = applicationInputValue.getIsSetVariableName();
+        String variableName = applicationInput.getVariableName();
+        String variableSetName = applicationInput.getIsSetVariableName();
 
         returnValue = new NotNullBashSnippet(snippetContext, variableName, variableSetName);
 
         return returnValue;
     }
 
-    private Snippet createNewTrimBashValidation(SnippetContext snippetContext, ApplicationInputValue applicationInputValue)
+    private Snippet createNewTrimBashValidation(SnippetContext snippetContext, ApplicationInput applicationInput)
             throws IOException {
         Snippet returnValue = null;
 
-        String variableName = applicationInputValue.getVariableName();
-        String variableSetName = applicationInputValue.getIsSetVariableName();
+        String variableName = applicationInput.getVariableName();
+        String variableSetName = applicationInput.getIsSetVariableName();
 
         returnValue = new TrimBashSnippet(snippetContext, variableName, variableSetName);
 

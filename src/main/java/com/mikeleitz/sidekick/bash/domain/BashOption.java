@@ -15,7 +15,7 @@
  */
 package com.mikeleitz.sidekick.bash.domain;
 
-import com.mikeleitz.sidekick.base.ApplicationInputValue;
+import com.mikeleitz.sidekick.base.application.ApplicationInput;
 import com.mikeleitz.sidekick.bash.snippet.validation.BashValidationEnum;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -32,7 +32,7 @@ import java.util.List;
 @Data
 @Builder
 @Setter(AccessLevel.NONE)
-public class BashOption implements ApplicationInputValue {
+public class BashOption implements ApplicationInput {
     public static BashOption VERBOSE = BashOption.builder().argNeeded(false).shortName('v').longName("verbose").helpDescription("verbose operation").build();
     public static BashOption HELP = BashOption.builder().argNeeded(false).shortName('h').longName("help").helpDescription("give this help list").build();
 

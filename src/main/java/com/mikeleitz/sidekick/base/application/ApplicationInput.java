@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.mikeleitz.sidekick.base;
+package com.mikeleitz.sidekick.base.application;
 
 /**
  * @author leitz@mikeleitz.com
  */
-public interface ApplicationInputValue {
+public interface ApplicationInput {
     public String getVariableName();
     public String getIsSetVariableName();
 }
