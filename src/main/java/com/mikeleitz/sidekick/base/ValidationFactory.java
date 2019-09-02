@@ -15,11 +15,13 @@
  */
 package com.mikeleitz.sidekick.base;
 
+import com.mikeleitz.sidekick.base.application.ApplicationInput;
+
 import java.io.IOException;
 
 /**
  * @author leitz@mikeleitz.com
  */
 public abstract class ValidationFactory<E extends Enum<E>> {
-    public abstract Snippet createValidationSnippet(E validationType, SnippetContext snippetContext, ApplicationInputValue applicationInputValue) throws IOException;
+    public abstract Snippet createValidationSnippet(E validationType, SnippetContext snippetContext, ApplicationInput applicationInput) throws IOException;
 }
