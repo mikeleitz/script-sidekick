@@ -12,52 +12,23 @@
  */
 package com.mikeleitz.sidekick;
 
-import com.mikeleitz.sidekick.bash.domain.BashFile;
-import com.mikeleitz.sidekick.bash.domain.BashOption;
-import com.mikeleitz.sidekick.bash.domain.BashScriptConfiguration;
-import com.mikeleitz.sidekick.bash.domain.ShellOptionEnum;
-import com.mikeleitz.sidekick.bash.snippet.validation.BashValidationEnum;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author leitz@mikeleitz.com
  */
 @SpringBootApplication
 @Slf4j
-public class ScriptSidekickApplication implements CommandLineRunner {
+public class ScriptSidekickApplication {
 
     public static void main(String[] args) throws IOException {
         SpringApplication.run(ScriptSidekickApplication.class, args);
     }
 /*
-	public static void test() throws IOException {
-		BashPreamble bashPreamble = BashPreamble.builder().shell(ShellOptionEnum.BASH).build();
-
-		BashOption bashOption = BashOption.builder()
-				.shortName('o')
-				.longName("open")
-				.helpDescription("Open stream along with other work.")
-				.validation(new NotNullBashValidation()).build();
-
-		BashInput input = BashInput.builder().bashOption(bashOption).build();
-
-		BashScript bashScript = BashScript.builder().bashPreamble(bashPreamble).bashInput(input).build();
-
-		File scriptFile = new File("/tmp/myscript.sh");
-		FileUtils.writeStringToFile(scriptFile, bashScript.buildScript(), Charset.defaultCharset());
-		scriptFile.setExecutable(true);
-		scriptFile.setReadable(true);
-		scriptFile.setWritable(true);
-	}*/
-
     @Override
     public void run(String... args) throws Exception {
         log.info("Running command line!!");
@@ -77,5 +48,5 @@ public class ScriptSidekickApplication implements CommandLineRunner {
 
         BashFile bashFile = new BashFile(configuration);
         bashFile.toFile("./");
-    }
+    }*/
 }
