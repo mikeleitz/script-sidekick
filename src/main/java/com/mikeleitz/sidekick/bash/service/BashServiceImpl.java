@@ -16,8 +16,31 @@
 
 package com.mikeleitz.sidekick.bash.service;
 
+import com.mikeleitz.sidekick.bash.domain.BashFile;
+import com.mikeleitz.sidekick.bash.domain.BashScriptConfiguration;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
 /**
  * @author leitz@mikeleitz.com
  */
+@Service
+@Slf4j
 public class BashServiceImpl implements BashService {
+
+    @Override
+    @SneakyThrows
+    public String createBashScriptContents(BashScriptConfiguration bashScriptConfiguration) {
+        String returnValue = null;
+
+        log.debug("Started creating bash script [{}].", bashScriptConfiguration.getBashScriptName());
+
+        BashFile bashFile = new BashFile(bashScriptConfiguration);
+        returnValue = bashFile.getFileContents();
+
+        log.debug("Completed creating bash script [{}].  It has content length [{}].", bashScriptConfiguration.getBashScriptName(), returnValue.length());
+
+        return returnValue;
+    }
 }

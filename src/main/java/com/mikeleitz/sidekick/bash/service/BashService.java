@@ -16,9 +16,11 @@
 
 package com.mikeleitz.sidekick.bash.service;
 
+import com.mikeleitz.sidekick.bash.domain.BashScriptConfiguration;
+
 /**
  * @author leitz@mikeleitz.com
  */
 public interface BashService {
-
+    String createBashScriptContents(BashScriptConfiguration bashScriptConfiguration);
 }
