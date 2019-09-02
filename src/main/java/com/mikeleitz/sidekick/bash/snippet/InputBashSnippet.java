@@ -64,9 +64,11 @@ public class InputBashSnippet extends Snippet {
     protected List<Snippet> createValidationSnippets(BashOption bashOption) throws IOException {
         List<Snippet> returnValue = new ArrayList<>();
 
-        for (BashValidationEnum validationEnum : bashOption.getValidations()) {
-            Snippet validationSnippet = bashValidationFactory.createValidationSnippet(validationEnum, context, bashOption);
-            returnValue.add(validationSnippet);
+        if (CollectionUtils.isNotEmpty(bashOption.getValidations())) {
+            for (BashValidationEnum validationEnum : bashOption.getValidations()) {
+                Snippet validationSnippet = bashValidationFactory.createValidationSnippet(validationEnum, context, bashOption);
+                returnValue.add(validationSnippet);
+            }
         }
 
         return returnValue;

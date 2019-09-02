@@ -45,7 +45,7 @@ public class BashScriptCreationController {
         return returnValue;
     }
 
-    @PostMapping(value = "/")
+    @PostMapping(value = "")
     public @ResponseBody String createScriptBody(@RequestBody BashScriptConfiguration bashScriptConfiguration) {
         String returnValue = null;
 
