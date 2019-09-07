@@ -4,14 +4,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Spring Boot Thymeleaf Hello World Example</title>
+    <title>Command Line Script Generator</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" th:href="@{/css/main.css}"/>
 
     <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.5.0/css/bootstrap4-toggle.min.css"
           rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
 
     <script
             src="https://code.jquery.com/jquery-3.3.1.js"
@@ -50,19 +51,6 @@
 </nav>
 
 <main role="main" class="container">
-    <div class="starter-template">
-        <h1>Spring Boot Web Thymeleaf Example</h1>
-        <h2>
-            <span th:text="'Hello, ' + ${message}"></span>
-        </h2>
-    </div>
-
-    <!--
-    <ol>
-        <li th:each="task : ${tasks}" th:text="${task}"></li>
-    </ol>
-    -->
-
     <form>
         <fieldset class="scheduler-border">
             <legend class="scheduler-border">Script Details</legend>
