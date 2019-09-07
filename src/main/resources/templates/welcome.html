@@ -10,6 +10,9 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/main.css}"/>
 
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.5.0/css/bootstrap4-toggle.min.css"
+          rel="stylesheet">
+
     <script
             src="https://code.jquery.com/jquery-3.3.1.js"
             integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
@@ -17,6 +20,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.5.0/js/bootstrap4-toggle.min.js"></script>
 
     <style>
         fieldset.scheduler-border {
@@ -41,7 +46,7 @@
 <body>
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="#">Bash Script Generator</a>
+    <a class="navbar-brand" href="#">Command Line Script Generator</a>
 </nav>
 
 <main role="main" class="container">
@@ -60,18 +65,29 @@
 
     <form>
         <fieldset class="scheduler-border">
-            <legend class="scheduler-border">Bash Details</legend>
+            <legend class="scheduler-border">Script Details</legend>
 
-            <div class="form-group row">
-                <label for="scriptName" class="col-sm-2 col-form-label">Script name</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="scriptName" placeholder="Script Name">
-                </div>
+            <div class="form-group">
+                <label for="scriptName">Name</label>
+                <input type="text" class="form-control" id="scriptName" placeholder="Script Name">
             </div>
 
+            <div class="form-group">
+                <label for="scriptShell">Shell</label>
+
+                <div id="scriptShell">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="scriptShell" id="bashShell"
+                               value="bash" checked>
+                        <label class="form-check-label" for="bashShell">
+                            Bash
+                        </label>
+                    </div>
+                </div>
+            </div>
         </fieldset>
         <fieldset class="scheduler-border">
-            <legend class="scheduler-border">Bash Inputs</legend>
+            <legend class="scheduler-border">Script Inputs</legend>
 
             <div class="form-group">
                 <label for="addCommonInputButtons">Common Inputs</label>
@@ -98,12 +114,18 @@
             </div>
             <div class="form-group">
                 <label for="scriptInputShortName">Short name</label>
-                <input id="scriptInputShortName" type="text" class="form-control" placeholder="Short name">
+                <input id="scriptInputShortName" type="text" class="form-control" placeholder="Short name" maxlength="1">
             </div>
+
             <div class="form-group">
-                <label for="scriptInputRequired">Required Input</label>
-                <input id="scriptInputRequired" type="checkbox" class="form-control">
+                <label for="inputRequired">Input Decree</label>
+                <div id="inputRequired" class="input-group mb-3">
+                    <input class="form-control" type="checkbox" data-toggle="toggle" data-on="Required"
+                           data-off="Optional" data-onstyle="success" data-offstyle="info">
+                </div>
+
             </div>
+
             <div class="form-group">
                 <label for="scriptInputHelpText">Help text</label>
                 <input id="scriptInputHelpText" type="text" class="form-control" placeholder="Help text">
@@ -125,7 +147,7 @@
         <div class="container">
             <div class="row">
                 <div class="col text-center">
-                    <button class="btn btn-primary btn-lg">Create Bash Script</button>
+                    <button class="btn btn-primary btn-lg">Create Shell Script</button>
                 </div>
             </div>
         </div>
