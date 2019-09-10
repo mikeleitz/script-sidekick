@@ -14,6 +14,11 @@ export default new Router({
       component: Home
     },
     {
+      path: '/configure-script',
+      name: 'configure-script',
+      component: () => import(/* webpackChunkName: "input" */ './views/ConfigureScript.vue')
+    },
+    {
       path: '/about',
       name: 'about',
       // route level code-splitting
