@@ -18,40 +18,38 @@
   <div>
     <div class="form-group">
       <label for="scriptInputLongName">Long name</label>
-      <input id="scriptInputLongName" type="text" class="form-control" placeholder="Long name">
+      <input id="scriptInputLongName" type="text" class="form-control" placeholder="Long name" v-model="longName">
     </div>
+
     <div class="form-group">
       <label for="scriptInputShortName">Short name</label>
-      <input id="scriptInputShortName" type="text" class="form-control" placeholder="Short name"
+      <input id="scriptInputShortName" type="text" class="form-control" placeholder="Short name" v-model="shortName"
              maxlength="1">
     </div>
 
     <div class="form-group">
       <label for="inputRequired">Decree</label>
-      <!--
-      <div id="inputRequired" class="input-group mb-3">
-        <input class="form-control" type="checkbox" data-toggle="toggle" data-on="Required"
-               data-off="Optional" data-onstyle="success" data-offstyle="info">
-      </div>
-      -->
+
       <div id="inputRequired" class="input-group mb-3">
         <toggle-button :value="true"
                        :width="110"
                        :height="35"
                        :margin="10"
                        :font-size="14"
-                       :labels="{checked: 'Required', unchecked: 'Optional'}"/>
+                       :labels="{checked: 'Required', unchecked: 'Optional'}"
+                       v-modal="decree"/>
 
       </div>
     </div>
 
     <div class="form-group">
       <label for="scriptInputHelpText">Help text</label>
-      <input id="scriptInputHelpText" type="text" class="form-control" placeholder="Help text">
+      <input id="scriptInputHelpText" type="text" class="form-control" placeholder="Help text" v-model="helpText">
     </div>
 
     <div class="form-group">
-      <button class="btn btn-outline-secondary btn-sm">Remove this input</button>
+      <!-- <button @click="()=>del(record.id)">&times;</button> -->
+      <button class="btn btn-outline-secondary btn-sm" @click="()=>removeInput(1)">Remove this input</button>
     </div>
 
     <div>
@@ -59,7 +57,7 @@
     </div>
 
     <div class="form-group">
-      <button class="btn btn-outline-secondary btn-sm">Add another input</button>
+      <button class="btn btn-outline-secondary btn-sm" @click="addInput">Add another input</button>
     </div>
 
   </div>
@@ -69,7 +67,23 @@
     export default {
         name: "ScriptInput",
         props: {
-            msg: String
+            id: Number,
+            longName: String,
+            shortName: String,
+            decree: Boolean,
+            helpText: String
+        },
+        data: {},
+        methods: {
+            addInput: function (event) {
+                alert('Long name  :' + this.$props.longName)
+                alert('Short name :' + this.$props.shortName)
+                alert('Decree     :' + this.$props.decree)
+                alert('Help text  :' + this.$props.helpText)
+            },
+            removeInput: function (id) {
+                alert('Deleting id ' + this.$props.id)
+            }
         }
     }
 </script>
