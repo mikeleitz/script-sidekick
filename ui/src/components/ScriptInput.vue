@@ -15,12 +15,53 @@
   -->
 
 <template>
-  <div class="hello">
-    <h1>Got it!!</h1>
+  <div>
+    <div class="form-group">
+      <label for="scriptInputLongName">Long name</label>
+      <input id="scriptInputLongName" type="text" class="form-control" placeholder="Long name">
+    </div>
+    <div class="form-group">
+      <label for="scriptInputShortName">Short name</label>
+      <input id="scriptInputShortName" type="text" class="form-control" placeholder="Short name"
+             maxlength="1">
+    </div>
 
-    <p>
-      We have this message: {{ msg }}
-    </p>
+    <div class="form-group">
+      <label for="inputRequired">Decree</label>
+      <!--
+      <div id="inputRequired" class="input-group mb-3">
+        <input class="form-control" type="checkbox" data-toggle="toggle" data-on="Required"
+               data-off="Optional" data-onstyle="success" data-offstyle="info">
+      </div>
+      -->
+      <div id="inputRequired" class="input-group mb-3">
+        <toggle-button :value="true"
+                       :width="110"
+                       :height="35"
+                       :margin="10"
+                       :font-size="14"
+                       :labels="{checked: 'Required', unchecked: 'Optional'}"/>
+
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="scriptInputHelpText">Help text</label>
+      <input id="scriptInputHelpText" type="text" class="form-control" placeholder="Help text">
+    </div>
+
+    <div class="form-group">
+      <button class="btn btn-outline-secondary btn-sm">Remove this input</button>
+    </div>
+
+    <div>
+      <hr>
+    </div>
+
+    <div class="form-group">
+      <button class="btn btn-outline-secondary btn-sm">Add another input</button>
+    </div>
+
   </div>
 </template>
 

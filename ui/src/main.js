@@ -30,6 +30,9 @@ import { DropdownPlugin, TablePlugin } from 'bootstrap-vue'
 Vue.use(DropdownPlugin)
 Vue.use(TablePlugin)
 
+import ToggleButton from 'vue-js-toggle-button'
+Vue.use(ToggleButton)
+
 new Vue({
   router,
   render: h => h(App)
