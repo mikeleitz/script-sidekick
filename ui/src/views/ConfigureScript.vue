@@ -66,6 +66,16 @@
           <ScriptInput msg="Welcome to Your Vue.js App"/>
 
         </fieldset>
+
+        <fieldset class="scheduler-border">
+          <legend class="scheduler-border">Two-way binding example</legend>
+
+          <div class="form-group">
+            <label for="scriptInputNumbers">Numbers from component</label>
+            <input id="scriptInputNumbers" type="text" class="form-control" placeholder="Numbers from component" v-model="storeState.name">
+          </div>
+
+        </fieldset>
       </form>
     </main>
 
@@ -76,12 +86,15 @@
     // @ is an alias to /src
     import ScriptInput from '@/components/ScriptInput.vue'
 
+    import { store } from "../store.js";
+
     export default {
         name: 'configure-script',
         data() {
             return {
                 verboseCommandAdded: false,
-                quietCommandAdded: false
+                quietCommandAdded: false,
+                storeState: store.state
             }
         },
         components: {

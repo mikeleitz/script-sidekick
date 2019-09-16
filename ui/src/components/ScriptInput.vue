@@ -17,6 +17,12 @@
 <template>
   <div>
     <div class="form-group">
+      <label for="scriptInputNumbers">Numbers</label>
+      <input id="scriptInputNumbers" type="text" class="form-control" placeholder="Numbers from store" v-model="storeState.name">
+    </div>
+
+<!--
+    <div class="form-group">
       <label for="scriptInputLongName">Long name</label>
       <input id="scriptInputLongName" type="text" class="form-control" placeholder="Long name" v-model="longName">
     </div>
@@ -26,18 +32,16 @@
       <input id="scriptInputShortName" type="text" class="form-control" placeholder="Short name" v-model="shortName"
              maxlength="1">
     </div>
-
     <div class="form-group">
       <label for="inputRequired">Decree</label>
 
       <div id="inputRequired" class="input-group mb-3">
-        <toggle-button :value="true"
-                       :width="110"
+        <toggle-button :width="110"
                        :height="35"
                        :margin="10"
                        :font-size="14"
                        :labels="{checked: 'Required', unchecked: 'Optional'}"
-                       v-modal="decree"/>
+                       v-model="decree"/>
 
       </div>
     </div>
@@ -48,7 +52,7 @@
     </div>
 
     <div class="form-group">
-      <!-- <button @click="()=>del(record.id)">&times;</button> -->
+      &lt;!&ndash; <button @click="()=>del(record.id)">&times;</button> &ndash;&gt;
       <button class="btn btn-outline-secondary btn-sm" @click="()=>removeInput(1)">Remove this input</button>
     </div>
 
@@ -59,30 +63,62 @@
     <div class="form-group">
       <button class="btn btn-outline-secondary btn-sm" @click="addInput">Add another input</button>
     </div>
+-->
 
   </div>
 </template>
 
 <script>
+    import { store } from "../store.js";
+
     export default {
         name: "ScriptInput",
         props: {
-            id: Number,
-            longName: String,
-            shortName: String,
-            decree: Boolean,
-            helpText: String
+            id: {
+                required: false,
+                type: Number,
+                default: -1,
+            },
+            longName: {
+                required: false,
+                type: String,
+                default: '',
+            },
+            shortName: {
+                required: false,
+                type: String,
+                default: '',
+            },
+            decree: {
+                required: false,
+                type: Boolean,
+                default: false,
+            },
+            helpText: {
+                required: false,
+                type: String,
+                default: '',
+            }
         },
-        data: {},
+        data() {
+            return {
+                storeState: store.state
+            }
+        },
+        watch: {
+            inputVal(val) {
+                this.$emit('input', val);
+            }
+        },
         methods: {
             addInput: function (event) {
-                alert('Long name  :' + this.$props.longName)
-                alert('Short name :' + this.$props.shortName)
-                alert('Decree     :' + this.$props.decree)
-                alert('Help text  :' + this.$props.helpText)
+                alert('Long name  :' + this.longName)
+                alert('Short name :' + this.shortName)
+                alert('Decree     :' + this.decree)
+                alert('Help text  :' + this.helpText)
             },
             removeInput: function (id) {
-                alert('Deleting id ' + this.$props.id)
+                alert('Deleting id ' + this.id)
             }
         }
     }
