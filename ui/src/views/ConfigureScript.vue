@@ -18,7 +18,7 @@
 
   <div class="script-form">
     <main role="main" class="container">
-      <form>
+      <form @submit.prevent="onSubmit">
         <fieldset class="scheduler-border">
           <legend class="scheduler-border">Script Details</legend>
 
@@ -63,8 +63,15 @@
             <hr>
           </div>
 
-          <ScriptInput msg="Welcome to Your Vue.js App"/>
+          <ScriptInput/>
 
+          <div>
+            <hr>
+          </div>
+
+          <div class="form-group">
+            <button class="btn btn-outline-secondary btn-sm" @click="addScriptInput">Add another input1</button>
+          </div>
         </fieldset>
 
         <fieldset class="scheduler-border">
@@ -75,6 +82,12 @@
             <input id="scriptInputNumbers" type="text" class="form-control" placeholder="Numbers from component" v-model="storeState.name">
           </div>
 
+          <div class="form-group">
+            <p>
+              {{ storeState.scriptInputs }}
+            </p>
+          </div>
+
         </fieldset>
       </form>
     </main>
@@ -83,24 +96,35 @@
 </template>
 
 <script>
-    // @ is an alias to /src
-    import ScriptInput from '@/components/ScriptInput.vue'
+// @ is an alias to /src
+import ScriptInput from '@/components/ScriptInput.vue'
 
-    import { store } from "../store.js";
+import { store } from '../store.js'
 
-    export default {
-        name: 'configure-script',
-        data() {
-            return {
-                verboseCommandAdded: false,
-                quietCommandAdded: false,
-                storeState: store.state
-            }
-        },
-        components: {
-            ScriptInput
-        }
+export default {
+  name: 'configure-script',
+  data () {
+    return {
+      verboseCommandAdded: false,
+      quietCommandAdded: false,
+      storeState: store.state
     }
+  },
+  components: {
+    ScriptInput
+  },
+  methods: {
+    onSubmit: function() {
+
+    },
+    addScriptInput: function () {
+      this.storeState.scriptInputs.push({ longName: 'my-first-dynamic-input', shortName: '' })
+    },
+    removeScriptInput: function() {
+      this.storeState.scriptInputs.pop()
+    }
+  }
+}
 </script>
 
 <style>
