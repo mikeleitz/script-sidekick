@@ -17,9 +17,12 @@
 export const store = {
   state: {
     numbers: [1, 2, 3],
-    name: 'default name'
+    name: 'default name',
+    scriptInputs: [{}]
   },
-  addNumber(newNumber) {
-    this.state.numbers.push(newNumber);
+  methods: {
+    addNumber (newNumber) {
+      this.state.numbers.push(newNumber)
+    }
   }
-};
+}
