@@ -63,24 +63,30 @@
             <hr>
           </div>
 
-          <ScriptInput/>
-
-          <div>
-            <hr>
+          <div v-for="(scriptInput, index) in storeState.scriptInputs" :key="index">
+            <ScriptInput :id="-1" :index="index" />
+            <div>
+              <hr>
+            </div>
           </div>
 
           <div class="form-group">
-            <button class="btn btn-outline-secondary btn-sm" @click="addScriptInput">Add another input1</button>
+            <button class="btn btn-outline-secondary btn-sm" @click="addScriptInput">Add another input</button>
+            <button class="btn btn-outline-secondary btn-sm" @click="removeScriptInput">Remove last input</button>
+            <button class="btn btn-outline-secondary btn-sm" @click="removeAllScriptInputs">Remove all inputs</button>
           </div>
+
         </fieldset>
 
         <fieldset class="scheduler-border">
           <legend class="scheduler-border">Two-way binding example</legend>
+<!--
 
           <div class="form-group">
             <label for="scriptInputNumbers">Numbers from component</label>
             <input id="scriptInputNumbers" type="text" class="form-control" placeholder="Numbers from component" v-model="storeState.name">
           </div>
+-->
 
           <div class="form-group">
             <p>
@@ -114,14 +120,18 @@ export default {
     ScriptInput
   },
   methods: {
-    onSubmit: function() {
+    onSubmit: function () {
 
     },
     addScriptInput: function () {
-      this.storeState.scriptInputs.push({ longName: 'my-first-dynamic-input', shortName: '' })
+      let newIndex = this.storeState.scriptInputs.length
+      this.storeState.scriptInputs.push({ index: newIndex, longName: '', shortName: '', decree: false, helpText: '' })
     },
-    removeScriptInput: function() {
+    removeScriptInput: function () {
       this.storeState.scriptInputs.pop()
+    },
+    removeAllScriptInputs: function () {
+      this.storeState.scriptInputs.splice(0, this.storeState.scriptInputs.length)
     }
   }
 }

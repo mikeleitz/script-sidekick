@@ -16,22 +16,32 @@
 
 <template>
   <div>
-    <div class="form-group">
-      <label for="scriptInputNumbers">Numbers</label>
-      <input id="scriptInputNumbers" type="text" class="form-control" placeholder="Numbers from store" v-model="storeState.name">
-    </div>
-
 <!--
     <div class="form-group">
+      <label for="scriptInputNumbers">Numbers</label>
+      <input id="scriptInputNumbers" type="text" class="form-control" placeholder="Numbers from store"
+             v-model="storeState.name">
+    </div>
+-->
+
+    <div class="form-group">
+      <label for="scriptInputIndex">Index</label>
+      <input id="scriptInputIndex" type="text" class="form-control" placeholder="Index" v-model="thisScriptInput.index">
+    </div>
+
+    <div class="form-group">
       <label for="scriptInputLongName">Long name</label>
-      <input id="scriptInputLongName" type="text" class="form-control" placeholder="Long name" v-model="longName">
+      <input id="scriptInputLongName" type="text" class="form-control" placeholder="Long name"
+             v-model="thisScriptInput.longName">
     </div>
 
     <div class="form-group">
       <label for="scriptInputShortName">Short name</label>
-      <input id="scriptInputShortName" type="text" class="form-control" placeholder="Short name" v-model="shortName"
+      <input id="scriptInputShortName" type="text" class="form-control" placeholder="Short name"
+             v-model="thisScriptInput.shortName"
              maxlength="1">
     </div>
+
     <div class="form-group">
       <label for="inputRequired">Decree</label>
 
@@ -41,87 +51,77 @@
                        :margin="10"
                        :font-size="14"
                        :labels="{checked: 'Required', unchecked: 'Optional'}"
-                       v-model="decree"/>
+                       v-model="thisScriptInput.decree"/>
 
       </div>
     </div>
 
     <div class="form-group">
       <label for="scriptInputHelpText">Help text</label>
-      <input id="scriptInputHelpText" type="text" class="form-control" placeholder="Help text" v-model="helpText">
+      <input id="scriptInputHelpText" type="text" class="form-control" placeholder="Help text"
+             v-model="thisScriptInput.helpText">
     </div>
 
     <div class="form-group">
-      &lt;!&ndash; <button @click="()=>del(record.id)">&times;</button> &ndash;&gt;
-      <button class="btn btn-outline-secondary btn-sm" @click="()=>removeInput(1)">Remove this input</button>
+      <button class="btn btn-outline-secondary btn-sm" @click="()=>removeInput(thisScriptInput.index)">Remove this input</button>
     </div>
-
-    <div>
-      <hr>
-    </div>
-
-    <div class="form-group">
-      <button class="btn btn-outline-secondary btn-sm" @click="addInput">Add another input</button>
-    </div>
--->
 
   </div>
 </template>
 
 <script>
-    import { store } from "../store.js";
+import { store } from '../store.js'
 
-    export default {
-        name: "ScriptInput",
-        props: {
-            id: {
-                required: false,
-                type: Number,
-                default: -1,
-            },
-            longName: {
-                required: false,
-                type: String,
-                default: '',
-            },
-            shortName: {
-                required: false,
-                type: String,
-                default: '',
-            },
-            decree: {
-                required: false,
-                type: Boolean,
-                default: false,
-            },
-            helpText: {
-                required: false,
-                type: String,
-                default: '',
-            }
-        },
-        data() {
-            return {
-                storeState: store.state
-            }
-        },
-        watch: {
-            inputVal(val) {
-                this.$emit('input', val);
-            }
-        },
-        methods: {
-            addInput: function (event) {
-                alert('Long name  :' + this.longName)
-                alert('Short name :' + this.shortName)
-                alert('Decree     :' + this.decree)
-                alert('Help text  :' + this.helpText)
-            },
-            removeInput: function (id) {
-                alert('Deleting id ' + this.id)
-            }
-        }
+export default {
+  name: 'ScriptInput',
+  props: {
+    // These properties include the database id (or -1 if not saved) and the index from the array.
+    // This will allow the component to lookup the corresponding data element in the global store and
+    // display the rest of the values.
+    id: {
+      required: false,
+      type: Number,
+      default: -1
+    },
+    index: {
+      required: true,
+      type: Number
     }
+  },
+  created () {
+    const valu = store.state.scriptInputs.find(scriptInput => {
+      if (typeof scriptInput.index === 'undefined') {
+        return { index: this.index }
+      } else {
+        return scriptInput.index === this.index
+      }
+    })
+    this.thisScriptInput = valu
+  },
+  data () {
+    return {
+      storeState: store.state,
+      thisScriptInput: {}
+    }
+  },
+  watch: {
+    inputVal (val) {
+      this.$emit('input', val)
+    }
+  },
+  methods: {
+    addInput: function (event) {
+    },
+    removeInput: function (index) {
+      // alert('removing index: ' + this.index)
+      // I don't think this is going to work.  Will need to move tracking the index out of the model, or we'll have to update it on every refresh.
+      this.storeState.scriptInputs.splice(this.index, 1)
+    },
+    onLongNameChanged () {
+      // this.$store.commit('SET_MEETING_VALUE', this.value)
+    }
+  }
+}
 </script>
 
 <style scoped>
