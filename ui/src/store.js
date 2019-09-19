@@ -18,11 +18,18 @@ export const store = {
   state: {
     numbers: [1, 2, 3],
     name: 'default name',
-    scriptInputs: [{}]
+    scriptInputs: [
+      { id: 1, index: 0, longName: 'first input', shortName: 'f' }
+    ]
+  },
+  getters: {
+    getScriptInputByIndex: state => {
+      return state.scriptInputs.find(scriptInput => scriptInput.index === 0)
+    }
   },
   methods: {
-    addNumber (newNumber) {
-      this.state.numbers.push(newNumber)
+    addScriptInput (newScriptInput) {
+      return this.state.scriptInputs.push(newScriptInput)
     }
   }
 }
