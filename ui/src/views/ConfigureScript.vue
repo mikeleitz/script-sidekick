@@ -25,7 +25,10 @@
           <div class="form-group">
             <label for="scriptName">Name</label>
 
-            <input type="text" class="form-control" id="scriptName" placeholder="Script Name">
+            <input type="text"
+                   class="form-control"
+                   id="scriptName"
+                   placeholder="Script Name">
           </div>
 
           <div class="form-group">
@@ -33,8 +36,12 @@
 
             <div id="scriptShell">
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="scriptShell" id="bashShell"
-                       value="bash" checked>
+                <input class="form-check-input"
+                       type="radio"
+                       name="scriptShell"
+                       id="bashShell"
+                       value="bash"
+                       checked>
                 <label class="form-check-label" for="bashShell">
                   Bash
                 </label>
@@ -51,10 +58,8 @@
 
             <div id="addCommonInputButtons" class="input-group mb-3">
               <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <b-button :pressed.sync="verboseCommandAdded" variant="outline-primary" >Verbose</b-button>
-<!--                <p>Verbose State: <strong>{{ verboseCommandAdded }}</strong></p>-->
-                <b-button :pressed.sync="quietCommandAdded" variant="outline-primary">Quiet</b-button>
-<!--                <p>Quiet State: <strong>{{ quietCommandAdded }}</strong></p>-->
+                <b-button variant="btn btn-outline-secondary btn-sm" :pressed.sync="verboseCommandAdded">Verbose</b-button>
+                <b-button variant="btn btn-outline-secondary btn-sm" :pressed.sync="quietCommandAdded">Quiet</b-button>
               </div>
             </div>
           </div>
@@ -63,7 +68,14 @@
             <hr>
           </div>
 
-          <div v-for="(scriptInput, index) in storeState.scriptInputs" v-bind:item="scriptInput" v-bind:index="index" :key="scriptInput.id">
+          <div class="form-group">
+            <button class="btn btn-outline-secondary btn-sm" @click="addScriptInput">Add input</button>
+          </div>
+
+          <div v-for="(scriptInput, index) in storeState.scriptInputs"
+               v-bind:item="scriptInput"
+               v-bind:index="index"
+               :key="scriptInput.id">
             <ScriptInput :id="scriptInput.id" />
 
             <div class="form-group">
@@ -75,32 +87,19 @@
             </div>
           </div>
 
-          <div class="form-group">
-            <button class="btn btn-outline-secondary btn-sm" @click="addScriptInput">Add another input</button>
-          </div>
-
         </fieldset>
 
         <fieldset class="scheduler-border">
           <legend class="scheduler-border">Two-way binding example</legend>
-<!--
-
-          <div class="form-group">
-            <label for="scriptInputNumbers">Numbers from component</label>
-            <input id="scriptInputNumbers" type="text" class="form-control" placeholder="Numbers from component" v-model="storeState.name">
-          </div>
--->
 
           <div class="form-group">
             <p>
               {{ storeState.scriptInputs }}
             </p>
           </div>
-
         </fieldset>
       </form>
     </main>
-
   </div>
 </template>
 
@@ -124,18 +123,14 @@ export default {
   },
   methods: {
     onSubmit: function () {
-
     },
     addScriptInput: function () {
       let newScriptId = this.storeState.nextTempId
       this.storeState.nextTempId -= 1
-      this.storeState.scriptInputs.push({ id: newScriptId, longName: '', shortName: '', decree: false, helpText: '' })
+      this.storeState.scriptInputs.unshift({ id: newScriptId, longName: '', shortName: '', decree: false, helpText: '' })
     },
     removeScriptInput: function (index) {
       this.$delete(this.storeState.scriptInputs, index)
-    },
-    removeAllScriptInputs: function () {
-      this.storeState.scriptInputs.splice(0, this.storeState.scriptInputs.length)
     }
   }
 }

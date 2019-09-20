@@ -16,28 +16,30 @@
 
 <template>
   <div>
-<!--
-    <div class="form-group">
-      <label for="scriptInputNumbers">Numbers</label>
-      <input id="scriptInputNumbers" type="text" class="form-control" placeholder="Numbers from store"
-             v-model="storeState.name">
-    </div>
--->
-
     <div class="form-group">
       <label for="scriptInputIndex">Id</label>
-      <input id="scriptInputIndex" type="text" class="form-control" placeholder="Id" v-model="thisScriptInput.id">
+      <input id="scriptInputIndex"
+             type="text"
+             class="form-control"
+             placeholder="Id"
+             v-model="thisScriptInput.id">
     </div>
 
     <div class="form-group">
       <label for="scriptInputLongName">Long name</label>
-      <input id="scriptInputLongName" type="text" class="form-control" placeholder="Long name"
+      <input id="scriptInputLongName"
+             type="text"
+             class="form-control"
+             placeholder="Long name"
              v-model="thisScriptInput.longName">
     </div>
 
     <div class="form-group">
       <label for="scriptInputShortName">Short name</label>
-      <input id="scriptInputShortName" type="text" class="form-control" placeholder="Short name"
+      <input id="scriptInputShortName"
+             type="text"
+             class="form-control"
+             placeholder="Short name"
              v-model="thisScriptInput.shortName"
              maxlength="1">
     </div>
@@ -58,7 +60,10 @@
 
     <div class="form-group">
       <label for="scriptInputHelpText">Help text</label>
-      <input id="scriptInputHelpText" type="text" class="form-control" placeholder="Help text"
+      <input id="scriptInputHelpText"
+             type="text"
+             class="form-control"
+             placeholder="Help text"
              v-model="thisScriptInput.helpText">
     </div>
 
@@ -92,9 +97,6 @@ export default {
     }
   },
   methods: {
-    onLongNameChanged () {
-      // this.$store.commit('SET_MEETING_VALUE', this.value)
-    }
   }
 }
 </script>
