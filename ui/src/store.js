@@ -16,10 +16,9 @@
 
 export const store = {
   state: {
-    numbers: [1, 2, 3],
-    name: 'default name',
+    nextTempId: -1,
     scriptInputs: [
-      { id: 1, index: 0, longName: 'first input', shortName: 'f' }
+      // { id: 1, index: 0, longName: 'first input', shortName: 'f' }
     ]
   },
   getters: {

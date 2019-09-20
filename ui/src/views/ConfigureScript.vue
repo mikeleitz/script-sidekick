@@ -63,8 +63,13 @@
             <hr>
           </div>
 
-          <div v-for="(scriptInput, index) in storeState.scriptInputs" :key="index">
-            <ScriptInput :id="-1" :index="index" />
+          <div v-for="(scriptInput, index) in storeState.scriptInputs" v-bind:item="scriptInput" v-bind:index="index" :key="scriptInput.id">
+            <ScriptInput :id="scriptInput.id" />
+
+            <div class="form-group">
+              <button class="btn btn-outline-secondary btn-sm" @click="removeScriptInput(index)">Remove this input</button>
+            </div>
+
             <div>
               <hr>
             </div>
@@ -72,8 +77,6 @@
 
           <div class="form-group">
             <button class="btn btn-outline-secondary btn-sm" @click="addScriptInput">Add another input</button>
-            <button class="btn btn-outline-secondary btn-sm" @click="removeScriptInput">Remove last input</button>
-            <button class="btn btn-outline-secondary btn-sm" @click="removeAllScriptInputs">Remove all inputs</button>
           </div>
 
         </fieldset>
@@ -124,11 +127,12 @@ export default {
 
     },
     addScriptInput: function () {
-      let newIndex = this.storeState.scriptInputs.length
-      this.storeState.scriptInputs.push({ index: newIndex, longName: '', shortName: '', decree: false, helpText: '' })
+      let newScriptId = this.storeState.nextTempId
+      this.storeState.nextTempId -= 1
+      this.storeState.scriptInputs.push({ id: newScriptId, longName: '', shortName: '', decree: false, helpText: '' })
     },
-    removeScriptInput: function () {
-      this.storeState.scriptInputs.pop()
+    removeScriptInput: function (index) {
+      this.$delete(this.storeState.scriptInputs, index)
     },
     removeAllScriptInputs: function () {
       this.storeState.scriptInputs.splice(0, this.storeState.scriptInputs.length)

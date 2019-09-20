@@ -25,8 +25,8 @@
 -->
 
     <div class="form-group">
-      <label for="scriptInputIndex">Index</label>
-      <input id="scriptInputIndex" type="text" class="form-control" placeholder="Index" v-model="thisScriptInput.index">
+      <label for="scriptInputIndex">Id</label>
+      <input id="scriptInputIndex" type="text" class="form-control" placeholder="Id" v-model="thisScriptInput.id">
     </div>
 
     <div class="form-group">
@@ -62,10 +62,6 @@
              v-model="thisScriptInput.helpText">
     </div>
 
-    <div class="form-group">
-      <button class="btn btn-outline-secondary btn-sm" @click="()=>removeInput(thisScriptInput.index)">Remove this input</button>
-    </div>
-
   </div>
 </template>
 
@@ -82,21 +78,12 @@ export default {
       required: false,
       type: Number,
       default: -1
-    },
-    index: {
-      required: true,
-      type: Number
     }
   },
   created () {
-    const valu = store.state.scriptInputs.find(scriptInput => {
-      if (typeof scriptInput.index === 'undefined') {
-        return { index: this.index }
-      } else {
-        return scriptInput.index === this.index
-      }
+    this.thisScriptInput = store.state.scriptInputs.find(scriptInput => {
+      return scriptInput.id === this.id
     })
-    this.thisScriptInput = valu
   },
   data () {
     return {
@@ -104,19 +91,7 @@ export default {
       thisScriptInput: {}
     }
   },
-  watch: {
-    inputVal (val) {
-      this.$emit('input', val)
-    }
-  },
   methods: {
-    addInput: function (event) {
-    },
-    removeInput: function (index) {
-      // alert('removing index: ' + this.index)
-      // I don't think this is going to work.  Will need to move tracking the index out of the model, or we'll have to update it on every refresh.
-      this.storeState.scriptInputs.splice(this.index, 1)
-    },
     onLongNameChanged () {
       // this.$store.commit('SET_MEETING_VALUE', this.value)
     }
