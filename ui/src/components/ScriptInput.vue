@@ -16,6 +16,9 @@
 
 <template>
   <div>
+<!--    Users don't need to see the script input ids.-->
+
+<!--
     <div class="form-group">
       <label for="scriptInputIndex">Id</label>
       <input id="scriptInputIndex"
@@ -24,6 +27,7 @@
              placeholder="Id"
              v-model="thisScriptInput.id">
     </div>
+-->
 
     <div class="form-group">
       <label for="scriptInputLongName">Long name</label>
