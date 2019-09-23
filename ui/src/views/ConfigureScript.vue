@@ -28,7 +28,8 @@
             <input type="text"
                    class="form-control"
                    id="scriptName"
-                   placeholder="Script Name">
+                   placeholder="Script Name"
+                   v-model="storeState.scriptName">
           </div>
 
           <div class="form-group">
@@ -41,6 +42,7 @@
                        name="scriptShell"
                        id="bashShell"
                        value="bash"
+                       v-model="storeState.shellType"
                        checked>
                 <label class="form-check-label" for="bashShell">
                   Bash
@@ -93,7 +95,9 @@
           <legend class="scheduler-border">Two-way binding example</legend>
 
           <div class="form-group">
-            <p>
+            <p>Script Name: {{ storeState.scriptName }}</p>
+            <p>Shell Type: {{ storeState.shellType }}</p>
+            <p>All Inputs:
               {{ storeState.scriptInputs }}
             </p>
           </div>

@@ -18,8 +18,9 @@ export const store = {
   state: {
     nextTempId: -1,
     scriptInputs: [
-      // { id: 1, index: 0, longName: 'first input', shortName: 'f' }
     ],
+    scriptName: '',
+    shellType: 'bash',
     verboseCommandId: 0,
     quietCommandId: 0
   },
