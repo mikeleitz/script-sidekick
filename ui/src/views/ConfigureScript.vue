@@ -58,8 +58,8 @@
 
             <div id="addCommonInputButtons" class="input-group mb-3">
               <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <b-button variant="btn btn-outline-secondary btn-sm" :pressed.sync="verboseCommandAdded">Verbose</b-button>
-                <b-button variant="btn btn-outline-secondary btn-sm" :pressed.sync="quietCommandAdded">Quiet</b-button>
+                <b-button variant="btn btn-outline-secondary btn-sm" @click="quickAddVerbose" :pressed="isVerboseCommandPushed">Verbose</b-button>
+                <b-button variant="btn btn-outline-secondary btn-sm" @click="quickAddQuiet" :pressed="isQuietCommandPushed">Quiet</b-button>
               </div>
             </div>
           </div>
@@ -79,7 +79,7 @@
             <ScriptInput :id="scriptInput.id" />
 
             <div class="form-group">
-              <button class="btn btn-outline-secondary btn-sm" @click="removeScriptInput(index)">Remove this input</button>
+              <button class="btn btn-outline-secondary btn-sm" @click="removeScriptInputById(scriptInput.id)">Remove this input</button>
             </div>
 
             <div>
@@ -113,8 +113,8 @@ export default {
   name: 'configure-script',
   data () {
     return {
-      verboseCommandAdded: false,
-      quietCommandAdded: false,
+      isVerboseCommandPushed: false,
+      isQuietCommandPushed: false,
       storeState: store.state
     }
   },
@@ -124,13 +124,58 @@ export default {
   methods: {
     onSubmit: function () {
     },
-    addScriptInput: function () {
+    quickAddVerbose: function () {
+      if (!this.isVerboseCommandPushed) {
+        let newScriptId = this.getNextScriptId()
+        this.storeState.verboseCommandId = newScriptId
+        this.storeState.scriptInputs.unshift({
+          id: newScriptId,
+          longName: 'verbose',
+          shortName: 'v',
+          decree: false,
+          helpText: 'Maximum script output.'
+        })
+        this.isVerboseCommandPushed = true
+      } else {
+        this.removeScriptInputById(this.storeState.verboseCommandId)
+        this.isVerboseCommandPushed = false
+      }
+    },
+    quickAddQuiet: function () {
+      if (!this.isQuietCommandPushed) {
+        let newScriptId = this.getNextScriptId()
+        this.storeState.quietCommandId = newScriptId
+        this.storeState.scriptInputs.unshift({
+          id: newScriptId,
+          longName: 'quiet',
+          shortName: 'q',
+          decree: false,
+          helpText: 'Quiet mode.  No output.'
+        })
+        this.isQuietCommandPushed = true
+      } else {
+        this.removeScriptInputById(this.storeState.quietCommandId)
+        this.isQuietCommandPushed = false
+      }
+    },
+    getNextScriptId: function () {
       let newScriptId = this.storeState.nextTempId
       this.storeState.nextTempId -= 1
+      return newScriptId
+    },
+    addScriptInput: function () {
+      let newScriptId = this.getNextScriptId()
       this.storeState.scriptInputs.unshift({ id: newScriptId, longName: '', shortName: '', decree: false, helpText: '' })
     },
-    removeScriptInput: function (index) {
+    removeScriptInputById: function (id) {
+      let index = this.storeState.scriptInputs.findIndex(scriptInput => scriptInput.id === id)
       this.$delete(this.storeState.scriptInputs, index)
+
+      if (id === this.storeState.quietCommandId) {
+        this.isQuietCommandPushed = false
+      } else if (id === this.storeState.verboseCommandId) {
+        this.isVerboseCommandPushed = false
+      }
     }
   }
 }

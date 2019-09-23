@@ -19,7 +19,9 @@ export const store = {
     nextTempId: -1,
     scriptInputs: [
       // { id: 1, index: 0, longName: 'first input', shortName: 'f' }
-    ]
+    ],
+    verboseCommandId: 0,
+    quietCommandId: 0
   },
   getters: {
     getScriptInputByIndex: state => {
