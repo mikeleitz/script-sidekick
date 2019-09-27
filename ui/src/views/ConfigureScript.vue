@@ -23,13 +23,17 @@
           <legend class="scheduler-border">Script Details</legend>
 
           <div class="form-group">
-            <label for="scriptName">Name</label>
+            <ValidationProvider name="Name" rules="required|lengthBetween:3,50" v-slot="{ errors }">
 
-            <input type="text"
-                   class="form-control"
-                   id="scriptName"
-                   placeholder="Script Name"
-                   v-model="storeState.scriptName">
+              <label for="scriptName">Name</label>
+
+              <input type="text"
+                     class="form-control"
+                     id="scriptName"
+                     placeholder="Script Name"
+                     v-model="storeState.scriptName">
+              <span>{{ errors[0] }}</span>
+            </ValidationProvider>
           </div>
 
           <div class="form-group">
@@ -113,17 +117,36 @@ import ScriptInput from '@/components/ScriptInput.vue'
 
 import { store } from '../store.js'
 
+import { ValidationProvider, extend } from 'vee-validate'
+import { required } from 'vee-validate/dist/rules'
+
+extend('required', {
+  ...required,
+  message: '{_field_} is required'
+})
+
+extend('lengthBetween', {
+  validate: (value, { min, max }) => {
+    const length = value && value.length
+
+    return length >= min && length <= max
+  },
+  params: ['min', 'max'],
+  message: '{_field_} must be between {min} and {max} in length'
+})
+
 export default {
   name: 'configure-script',
+  components: {
+    ValidationProvider,
+    ScriptInput
+  },
   data () {
     return {
       isVerboseCommandPushed: false,
       isQuietCommandPushed: false,
       storeState: store.state
     }
-  },
-  components: {
-    ScriptInput
   },
   methods: {
     onSubmit: function () {
