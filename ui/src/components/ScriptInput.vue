@@ -42,15 +42,14 @@
     </div>
 
     <div class="form-group">
-      <ValidationProvider name="Short name" rules="max:1" v-slot="{ errors }">
+      <ValidationProvider name="Short name" rules="exactly:1" v-slot="{ errors }">
 
         <label for="scriptInputShortName">Short name</label>
         <input id="scriptInputShortName"
                type="text"
                class="form-control"
                placeholder="Short name"
-               v-model="thisScriptInput.shortName"
-               maxlength="1">
+               v-model="thisScriptInput.shortName">
         <span>{{ errors[0] }}</span>
       </ValidationProvider>
     </div>
@@ -70,12 +69,15 @@
     </div>
 
     <div class="form-group">
-      <label for="scriptInputHelpText">Help text</label>
-      <input id="scriptInputHelpText"
-             type="text"
-             class="form-control"
-             placeholder="Help text"
-             v-model="thisScriptInput.helpText">
+      <ValidationProvider name="Help text" rules="max:80" v-slot="{ errors }">
+        <label for="scriptInputHelpText">Help text</label>
+        <input id="scriptInputHelpText"
+               type="text"
+               class="form-control"
+               placeholder="Help text"
+               v-model="thisScriptInput.helpText">
+        <span>{{ errors[0] }}</span>
+      </ValidationProvider>
     </div>
 
   </div>
@@ -88,6 +90,18 @@ import { ValidationProvider, extend } from 'vee-validate'
 import { required } from 'vee-validate/dist/rules'
 
 extend('required', required)
+
+extend('exactly', {
+  validate: (value, { exactly }) => {
+    const length = value && value.length
+    let exactLength = Number(exactly)
+
+    return length === exactLength
+  },
+  params: ['exactly'],
+  message: '{_field_}\'s length must be exactly {exactly}'
+})
+
 extend('max', {
   validate: (value, { max }) => {
     const length = value && value.length

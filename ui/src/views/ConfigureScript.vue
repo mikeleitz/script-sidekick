@@ -132,7 +132,7 @@ extend('lengthBetween', {
     return length >= min && length <= max
   },
   params: ['min', 'max'],
-  message: '{_field_} must be between {min} and {max} in length'
+  message: '{_field_}\'s length must be between {min} and {max}'
 })
 
 export default {
