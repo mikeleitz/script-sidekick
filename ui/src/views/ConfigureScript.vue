@@ -18,7 +18,7 @@
 
   <div class="script-form">
     <main role="main" class="container">
-      <form @submit.prevent="onSubmit">
+      <form @submit.prevent="onSubmit" autocomplete="off">
         <fieldset class="scheduler-border">
           <legend class="scheduler-border">Script Details</legend>
 

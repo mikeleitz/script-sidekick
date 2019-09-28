@@ -13,6 +13,7 @@
     "bootstrap": "^4.3.1",
     "bootstrap-vue": "^2.0.0",
     "core-js": "^2.6.5",
+    "pluralize": "^8.0.0",
     "portal-vue": "^2.1.6",
     "toasts": "^1.0.0",
     "vee-validate": "^3.0.8",
