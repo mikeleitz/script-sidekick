@@ -16,70 +16,32 @@
 
 <template>
   <div>
-<!--    Users don't need to see the script input ids.-->
-
-<!--
-    <div class="form-group">
-      <label for="scriptInputIndex">Id</label>
-      <input id="scriptInputIndex"
-             type="text"
-             class="form-control"
-             placeholder="Id"
-             v-model="thisScriptInput.id">
-    </div>
--->
-    <div class="form-group">
+    <b-form-group label="Long name">
       <ValidationProvider name="Long name" rules="required" v-slot="{ errors }">
-
-        <label for="scriptInputLongName">Long name</label>
-        <input id="scriptInputLongName"
-               type="text"
-               class="form-control"
-               placeholder="Long name"
-               v-model="thisScriptInput.longName">
+        <b-form-input placeholder="Long name" v-model="thisScriptInput.longName" />
         <span>{{ errors[0] }}</span>
       </ValidationProvider>
-    </div>
+    </b-form-group>
 
-    <div class="form-group">
+    <b-form-group label="Short name">
       <ValidationProvider name="Short name" rules="exactly:1" v-slot="{ errors }">
-
-        <label for="scriptInputShortName">Short name</label>
-        <input id="scriptInputShortName"
-               type="text"
-               class="form-control"
-               placeholder="Short name"
-               v-model="thisScriptInput.shortName">
+        <b-form-input placeholder="Short name" v-model="thisScriptInput.shortName" />
         <span>{{ errors[0] }}</span>
       </ValidationProvider>
-    </div>
+    </b-form-group>
 
-    <div class="form-group">
-      <label for="inputRequired">Decree</label>
+    <b-form-group label="Decree">
+      <b-form-checkbox v-model="thisScriptInput.decree" name="check-button" switch>
+        {{ thisScriptInput.decree ? 'Required' : 'Optional' }}
+      </b-form-checkbox>
+    </b-form-group>
 
-      <div id="inputRequired" class="input-group mb-3">
-        <toggle-button :width="110"
-                       :height="35"
-                       :margin="10"
-                       :font-size="14"
-                       :labels="{checked: 'Required', unchecked: 'Optional'}"
-                       v-model="thisScriptInput.decree"/>
-
-      </div>
-    </div>
-
-    <div class="form-group">
+    <b-form-group label="Help text">
       <ValidationProvider name="Help text" rules="max:80" v-slot="{ errors }">
-        <label for="scriptInputHelpText">Help text</label>
-        <input id="scriptInputHelpText"
-               type="text"
-               class="form-control"
-               placeholder="Help text"
-               v-model="thisScriptInput.helpText">
+        <b-form-input placeholder="Help text" v-model="thisScriptInput.helpText" />
         <span>{{ errors[0] }}</span>
       </ValidationProvider>
-    </div>
-
+    </b-form-group>
   </div>
 </template>
 

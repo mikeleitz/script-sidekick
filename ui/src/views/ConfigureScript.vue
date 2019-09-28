@@ -18,95 +18,71 @@
 
   <div class="script-form">
     <main role="main" class="container">
-      <form @submit.prevent="onSubmit" autocomplete="off">
+      <b-form @submit.prevent="onSubmit" autocomplete="off">
         <fieldset class="scheduler-border">
           <legend class="scheduler-border">Script Details</legend>
 
-          <div class="form-group">
+          <b-form-group label="Name">
             <ValidationProvider name="Name" rules="required|lengthBetween:3,50" v-slot="{ errors }">
 
-              <label for="scriptName">Name</label>
-
-              <input type="text"
-                     class="form-control"
-                     id="scriptName"
-                     placeholder="Script Name"
-                     v-model="storeState.scriptName">
+              <b-form-input placeholder="Script Name" v-model="storeState.scriptName" />
               <span>{{ errors[0] }}</span>
             </ValidationProvider>
-          </div>
+          </b-form-group>
 
-          <div class="form-group">
-            <label for="scriptShell">Shell</label>
-
-            <div id="scriptShell">
-              <div class="form-check">
-                <input class="form-check-input"
-                       type="radio"
-                       name="scriptShell"
-                       id="bashShell"
-                       value="bash"
-                       v-model="storeState.shellType"
-                       checked>
-                <label class="form-check-label" for="bashShell">
-                  Bash
-                </label>
-              </div>
-            </div>
-          </div>
+          <b-form-group label="Shell">
+            <b-form-radio v-model="storeState.shellType" name="scriptShell" value="bash" checked>Bash</b-form-radio>
+          </b-form-group>
         </fieldset>
 
         <fieldset class="scheduler-border">
           <legend class="scheduler-border">Script Inputs</legend>
 
-          <div class="form-group">
-            <label for="addCommonInputButtons">Common Inputs</label>
+          <b-form-group>
+              <b-button-group class="mr-5">
+                <b-button size="sm" variant="outline-primary" @click="addScriptInput">Add input</b-button>
+              </b-button-group>
 
-            <div id="addCommonInputButtons" class="input-group mb-3">
-              <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <b-button variant="btn btn-outline-secondary btn-sm" @click="quickAddVerbose" :pressed="isVerboseCommandPushed">Verbose</b-button>
-                <b-button variant="btn btn-outline-secondary btn-sm" @click="quickAddQuiet" :pressed="isQuietCommandPushed">Quiet</b-button>
-              </div>
-            </div>
-          </div>
+              <b-button-group>
+                <b-button size="sm" variant="outline-secondary" @click="quickAddVerbose" :pressed="isVerboseCommandPushed">Verbose</b-button>
+                <b-button size="sm" variant="outline-secondary" @click="quickAddQuiet" :pressed="isQuietCommandPushed">Quiet</b-button>
+              </b-button-group>
+          </b-form-group>
 
           <div>
             <hr>
-          </div>
-
-          <div class="form-group">
-            <button class="btn btn-outline-secondary btn-sm" @click="addScriptInput">Add input</button>
           </div>
 
           <div v-for="(scriptInput, index) in storeState.scriptInputs"
                v-bind:item="scriptInput"
                v-bind:index="index"
                :key="scriptInput.id">
+
             <ScriptInput :id="scriptInput.id" />
 
-            <div class="form-group">
-              <button class="btn btn-outline-secondary btn-sm" @click="removeScriptInputById(scriptInput.id)">Remove this input</button>
-            </div>
+            <b-form-group>
+              <b-button variant="outline-danger" size="sm" @click="removeScriptInputById(scriptInput.id)">Remove this input</b-button>
+            </b-form-group>
 
             <div>
               <hr>
             </div>
-          </div>
 
+          </div>
         </fieldset>
 
         <fieldset class="scheduler-border">
           <legend class="scheduler-border">Two-way binding example</legend>
 
-          <div class="form-group">
+          <b-form-group>
             <p>Script Name: {{ storeState.scriptName }}</p>
             <p>Shell Type: {{ storeState.shellType }}</p>
             <p>All Inputs:
               {{ storeState.scriptInputs }}
             </p>
-          </div>
+          </b-form-group>
         </fieldset>
-      </form>
+      </b-form>
     </main>
   </div>
 </template>
