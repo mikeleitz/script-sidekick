@@ -28,24 +28,31 @@
              v-model="thisScriptInput.id">
     </div>
 -->
-
     <div class="form-group">
-      <label for="scriptInputLongName">Long name</label>
-      <input id="scriptInputLongName"
-             type="text"
-             class="form-control"
-             placeholder="Long name"
-             v-model="thisScriptInput.longName">
+      <ValidationProvider name="Long name" rules="required" v-slot="{ errors }">
+
+        <label for="scriptInputLongName">Long name</label>
+        <input id="scriptInputLongName"
+               type="text"
+               class="form-control"
+               placeholder="Long name"
+               v-model="thisScriptInput.longName">
+        <span>{{ errors[0] }}</span>
+      </ValidationProvider>
     </div>
 
     <div class="form-group">
-      <label for="scriptInputShortName">Short name</label>
-      <input id="scriptInputShortName"
-             type="text"
-             class="form-control"
-             placeholder="Short name"
-             v-model="thisScriptInput.shortName"
-             maxlength="1">
+      <ValidationProvider name="Short name" rules="max:1" v-slot="{ errors }">
+
+        <label for="scriptInputShortName">Short name</label>
+        <input id="scriptInputShortName"
+               type="text"
+               class="form-control"
+               placeholder="Short name"
+               v-model="thisScriptInput.shortName"
+               maxlength="1">
+        <span>{{ errors[0] }}</span>
+      </ValidationProvider>
     </div>
 
     <div class="form-group">
@@ -77,8 +84,25 @@
 <script>
 import { store } from '../store.js'
 
+import { ValidationProvider, extend } from 'vee-validate'
+import { required } from 'vee-validate/dist/rules'
+
+extend('required', required)
+extend('max', {
+  validate: (value, { max }) => {
+    const length = value && value.length
+
+    return length <= max
+  },
+  params: ['max'],
+  message: '{_field_} length must not be more than {max}'
+})
+
 export default {
   name: 'ScriptInput',
+  components: {
+    ValidationProvider
+  },
   props: {
     // These properties include the database id (or -1 if not saved) and the index from the array.
     // This will allow the component to lookup the corresponding data element in the global store and
