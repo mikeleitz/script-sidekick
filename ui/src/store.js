@@ -31,5 +31,10 @@ export const store = {
       return scriptInput.id === scriptInputId
     })
     return scriptInput
+  },
+  getNextScriptId: function () {
+    let newScriptId = this.state.nextTempId
+    this.state.nextTempId -= 1
+    return newScriptId
   }
 }
