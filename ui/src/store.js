@@ -26,14 +26,10 @@ export const store = {
       ]
     }
   },
-  getters: {
-    getScriptInputByIndex: state => {
-      return state.scriptInputs.find(scriptInput => scriptInput.index === 0)
-    }
-  },
-  methods: {
-    addScriptInput (newScriptInput) {
-      return this.state.scriptInputs.push(newScriptInput)
-    }
+  getScriptInputById (scriptInputId) {
+    let scriptInput = this.state.scriptForm.scriptInputs.find(scriptInput => {
+      return scriptInput.id === scriptInputId
+    })
+    return scriptInput
   }
 }
