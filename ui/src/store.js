@@ -17,12 +17,14 @@
 export const store = {
   state: {
     nextTempId: -1,
-    scriptInputs: [
-    ],
-    scriptName: '',
-    shellType: 'bash',
     verboseCommandId: 0,
-    quietCommandId: 0
+    quietCommandId: 0,
+    scriptForm: {
+      scriptName: 'xyz',
+      shellType: 'bash',
+      scriptInputs: [
+      ]
+    }
   },
   getters: {
     getScriptInputByIndex: state => {

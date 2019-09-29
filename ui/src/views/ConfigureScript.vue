@@ -25,13 +25,13 @@
           <b-form-group label="Name">
             <ValidationProvider name="Name" rules="required|lengthBetween:3,50" v-slot="{ errors }">
 
-              <b-form-input placeholder="Script Name" v-model="storeState.scriptName" />
+              <b-form-input placeholder="Script Name" v-model="scriptForm.scriptName" />
               <span>{{ errors[0] }}</span>
             </ValidationProvider>
           </b-form-group>
 
           <b-form-group label="Shell">
-            <b-form-radio v-model="storeState.shellType" name="scriptShell" value="bash" checked>Bash</b-form-radio>
+            <b-form-radio v-model="scriptForm.shellType" name="scriptShell" value="bash" checked>Bash</b-form-radio>
           </b-form-group>
         </fieldset>
 
@@ -53,7 +53,7 @@
             <hr>
           </div>
 
-          <div v-for="(scriptInput, index) in storeState.scriptInputs"
+          <div v-for="(scriptInput, index) in scriptForm.scriptInputs"
                v-bind:item="scriptInput"
                v-bind:index="index"
                :key="scriptInput.id">
@@ -75,10 +75,10 @@
           <legend class="scheduler-border">Two-way binding example</legend>
 
           <b-form-group>
-            <p>Script Name: {{ storeState.scriptName }}</p>
-            <p>Shell Type: {{ storeState.shellType }}</p>
+            <p>Script Name: {{ scriptForm.scriptName }}</p>
+            <p>Shell Type: {{ scriptForm.shellType }}</p>
             <p>All Inputs:
-              {{ storeState.scriptInputs }}
+              {{ scriptForm.scriptInputs }}
             </p>
             <p>Server Message: {{ serverMessage }}</p>
           </b-form-group>
@@ -128,7 +128,8 @@ export default {
       serverMessage: '-1',
       isVerboseCommandPushed: false,
       isQuietCommandPushed: false,
-      storeState: store.state
+      storeState: store.state,
+      scriptForm: store.state.scriptForm
     }
   },
   mounted () {
@@ -146,7 +147,7 @@ export default {
       if (!this.isVerboseCommandPushed) {
         let newScriptId = this.getNextScriptId()
         this.storeState.verboseCommandId = newScriptId
-        this.storeState.scriptInputs.unshift({
+        this.scriptForm.scriptInputs.unshift({
           id: newScriptId,
           longName: 'verbose',
           shortName: 'v',
@@ -163,7 +164,7 @@ export default {
       if (!this.isQuietCommandPushed) {
         let newScriptId = this.getNextScriptId()
         this.storeState.quietCommandId = newScriptId
-        this.storeState.scriptInputs.unshift({
+        this.scriptForm.scriptInputs.unshift({
           id: newScriptId,
           longName: 'quiet',
           shortName: 'q',
@@ -183,11 +184,11 @@ export default {
     },
     addScriptInput: function () {
       let newScriptId = this.getNextScriptId()
-      this.storeState.scriptInputs.unshift({ id: newScriptId, longName: '', shortName: '', decree: false, helpText: '' })
+      this.scriptForm.scriptInputs.unshift({ id: newScriptId, longName: '', shortName: '', decree: false, helpText: '' })
     },
     removeScriptInputById: function (id) {
-      let index = this.storeState.scriptInputs.findIndex(scriptInput => scriptInput.id === id)
-      this.$delete(this.storeState.scriptInputs, index)
+      let index = this.scriptForm.scriptInputs.findIndex(scriptInput => scriptInput.id === id)
+      this.$delete(this.scriptForm.scriptInputs, index)
 
       if (id === this.storeState.quietCommandId) {
         this.isQuietCommandPushed = false
