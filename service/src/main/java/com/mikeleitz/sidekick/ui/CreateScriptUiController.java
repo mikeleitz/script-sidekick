@@ -16,25 +16,28 @@
 
 package com.mikeleitz.sidekick.ui;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author leitz@mikeleitz.com
  */
-@Controller
+@RestController("/")
 public class CreateScriptUiController {
     private List<String> tasks = Arrays.asList("a", "b", "c", "d", "e", "f", "g");
 
-    @GetMapping("/")
-    public String main(Model model) {
-        model.addAttribute("message", "hello there");
-        model.addAttribute("tasks", tasks);
+    @GetMapping
+    public Map<String, Object> main(Model model) {
+        Map<String, Object> returnValue = new HashMap<>();
+        returnValue.put("message", "hello there");
+        returnValue.put("tasks", tasks);
 
-        return "welcome"; //view
+        return returnValue;
     }
 }

@@ -80,6 +80,7 @@
             <p>All Inputs:
               {{ storeState.scriptInputs }}
             </p>
+            <p>Server Message: {{ serverMessage }}</p>
           </b-form-group>
         </fieldset>
 
@@ -94,6 +95,7 @@
 <script>
 // @ is an alias to /src
 import ScriptInput from '@/components/ScriptInput.vue'
+import axios from 'axios'
 
 import { store } from '../store.js'
 
@@ -123,10 +125,18 @@ export default {
   },
   data () {
     return {
+      serverMessage: '-1',
       isVerboseCommandPushed: false,
       isQuietCommandPushed: false,
       storeState: store.state
     }
+  },
+  mounted () {
+    axios({ method: 'GET', 'url': 'http://localhost:8080/' }).then(result => {
+      this.serverMessage = result.data.message
+    }, error => {
+      console.error(error)
+    })
   },
   methods: {
     onSubmit: function () {
