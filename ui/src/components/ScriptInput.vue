@@ -90,13 +90,10 @@ export default {
     }
   },
   created () {
-    this.thisScriptInput = this.scriptForm.scriptInputs.find(scriptInput => {
-      return scriptInput.id === this.id
-    })
+    this.thisScriptInput = store.getScriptInputById(this.id)
   },
   data () {
     return {
-      scriptForm: store.state.scriptForm,
       thisScriptInput: {}
     }
   },
