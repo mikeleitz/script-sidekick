@@ -82,6 +82,10 @@
             </p>
           </b-form-group>
         </fieldset>
+
+        <b-form-group>
+          <b-button type="submit" variant="primary">Create Script</b-button>
+        </b-form-group>
       </b-form>
     </main>
   </div>
@@ -126,6 +130,7 @@ export default {
   },
   methods: {
     onSubmit: function () {
+      alert('Submitting!')
     },
     quickAddVerbose: function () {
       if (!this.isVerboseCommandPushed) {
