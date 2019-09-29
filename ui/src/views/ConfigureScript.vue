@@ -127,8 +127,9 @@ export default {
     return {
       serverMessage: '-1',
       isVerboseCommandPushed: false,
+      verboseCommandId: store.state.verboseCommandId,
       isQuietCommandPushed: false,
-      storeState: store.state,
+      quietCommandId: store.state.quietCommandId,
       scriptForm: store.state.scriptForm
     }
   },
@@ -145,8 +146,8 @@ export default {
     },
     quickAddVerbose: function () {
       if (!this.isVerboseCommandPushed) {
-        let newScriptId = this.getNextScriptId()
-        this.storeState.verboseCommandId = newScriptId
+        let newScriptId = store.getNextScriptId()
+        this.verboseCommandId = newScriptId
         this.scriptForm.scriptInputs.unshift({
           id: newScriptId,
           longName: 'verbose',
@@ -156,14 +157,14 @@ export default {
         })
         this.isVerboseCommandPushed = true
       } else {
-        this.removeScriptInputById(this.storeState.verboseCommandId)
+        this.removeScriptInputById(this.verboseCommandId)
         this.isVerboseCommandPushed = false
       }
     },
     quickAddQuiet: function () {
       if (!this.isQuietCommandPushed) {
-        let newScriptId = this.getNextScriptId()
-        this.storeState.quietCommandId = newScriptId
+        let newScriptId = store.getNextScriptId()
+        this.quietCommandId = newScriptId
         this.scriptForm.scriptInputs.unshift({
           id: newScriptId,
           longName: 'quiet',
@@ -173,26 +174,21 @@ export default {
         })
         this.isQuietCommandPushed = true
       } else {
-        this.removeScriptInputById(this.storeState.quietCommandId)
+        this.removeScriptInputById(this.quietCommandId)
         this.isQuietCommandPushed = false
       }
     },
-    getNextScriptId: function () {
-      let newScriptId = this.storeState.nextTempId
-      this.storeState.nextTempId -= 1
-      return newScriptId
-    },
     addScriptInput: function () {
-      let newScriptId = this.getNextScriptId()
+      let newScriptId = store.getNextScriptId()
       this.scriptForm.scriptInputs.unshift({ id: newScriptId, longName: '', shortName: '', decree: false, helpText: '' })
     },
     removeScriptInputById: function (id) {
       let index = this.scriptForm.scriptInputs.findIndex(scriptInput => scriptInput.id === id)
       this.$delete(this.scriptForm.scriptInputs, index)
 
-      if (id === this.storeState.quietCommandId) {
+      if (id === this.quietCommandId) {
         this.isQuietCommandPushed = false
-      } else if (id === this.storeState.verboseCommandId) {
+      } else if (id === this.verboseCommandId) {
         this.isVerboseCommandPushed = false
       }
     }
