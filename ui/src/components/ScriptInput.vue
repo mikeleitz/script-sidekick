@@ -90,13 +90,13 @@ export default {
     }
   },
   created () {
-    this.thisScriptInput = store.state.scriptInputs.find(scriptInput => {
+    this.thisScriptInput = this.scriptForm.scriptInputs.find(scriptInput => {
       return scriptInput.id === this.id
     })
   },
   data () {
     return {
-      storeState: store.state,
+      scriptForm: store.state.scriptForm,
       thisScriptInput: {}
     }
   },
