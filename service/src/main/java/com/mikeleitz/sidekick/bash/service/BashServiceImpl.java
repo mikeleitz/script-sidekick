@@ -34,12 +34,12 @@ public class BashServiceImpl implements BashService {
     public String createBashScriptContents(BashScriptConfiguration bashScriptConfiguration) {
         String returnValue = null;
 
-        log.debug("Started creating bash script [{}].", bashScriptConfiguration.getBashScriptName());
+        log.debug("Started creating bash script [{}].", bashScriptConfiguration.getScriptName());
 
         BashFile bashFile = new BashFile(bashScriptConfiguration);
         returnValue = bashFile.getFileContents();
 
-        log.debug("Completed creating bash script [{}].  It has content length [{}].", bashScriptConfiguration.getBashScriptName(), returnValue.length());
+        log.debug("Completed creating bash script [{}].  It has content length [{}].", bashScriptConfiguration.getScriptName(), returnValue.length());
 
         return returnValue;
     }

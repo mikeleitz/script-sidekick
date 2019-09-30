@@ -43,13 +43,13 @@ public class BashFile extends ApplicationFile {
     }
 
     protected void populateSnippets() throws IOException {
-        ShebangBashSnippet shebangBashSnippet = new ShebangBashSnippet(snippetContext, bashScriptConfiguration.getScriptShell());
+        ShebangBashSnippet shebangBashSnippet = new ShebangBashSnippet(snippetContext, bashScriptConfiguration.getShellType());
         LoggingBashSnippet loggingBashSnippet = new LoggingBashSnippet(snippetContext);
 
         InputBashSnippet inputBashSnippet = new InputBashSnippet(snippetContext, bashScriptConfiguration.getScriptInputs());
         ProcessingBashSnippet processingBashSnippet = new ProcessingBashSnippet(snippetContext);
 
-        fileName = bashScriptConfiguration.getBashScriptName();
+        fileName = bashScriptConfiguration.getScriptName();
 
         preambleList.add(shebangBashSnippet);
 
@@ -96,7 +96,7 @@ public class BashFile extends ApplicationFile {
 
     @Override
     public File toFile(String fullPath) throws IOException {
-        File returnValue = new File(fullPath + fileName + bashScriptConfiguration.getScriptShell().extension);
+        File returnValue = new File(fullPath + fileName + bashScriptConfiguration.getShellType().extension);
 
         FileUtils.writeStringToFile(returnValue, getFileContents(), Charset.defaultCharset());
 

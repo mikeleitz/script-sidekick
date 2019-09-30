@@ -21,7 +21,7 @@ export const store = {
     quietCommandId: 0,
     scriptForm: {
       scriptName: 'xyz',
-      shellType: 'bash',
+      shellType: 'BASH',
       scriptInputs: [
       ]
     }
