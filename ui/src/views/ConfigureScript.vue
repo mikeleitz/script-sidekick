@@ -31,7 +31,7 @@
           </b-form-group>
 
           <b-form-group label="Shell">
-            <b-form-radio v-model="scriptForm.shellType" name="scriptShell" value="bash" checked>Bash</b-form-radio>
+            <b-form-radio v-model="scriptForm.shellType" name="scriptShell" value="BASH" checked>Bash</b-form-radio>
           </b-form-group>
         </fieldset>
 
@@ -96,6 +96,7 @@
 // @ is an alias to /src
 import ScriptInput from '@/components/ScriptInput.vue'
 import axios from 'axios'
+import querystring from 'querystring'
 
 import { store } from '../store.js'
 
@@ -142,7 +143,10 @@ export default {
   },
   methods: {
     onSubmit: function () {
-      alert('Submitting!')
+      axios.post(`http://localhost:8080/`,
+        this.scriptForm
+      ).then(response => {})
+        .catch(e => { this.errors.push(e) })
     },
     quickAddVerbose: function () {
       if (!this.isVerboseCommandPushed) {

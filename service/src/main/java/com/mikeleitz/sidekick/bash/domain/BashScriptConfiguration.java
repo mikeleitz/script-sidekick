@@ -25,8 +25,8 @@ import java.util.Set;
  */
 @Data
 public class BashScriptConfiguration {
-    private String bashScriptName;
-    private ShellOptionEnum scriptShell;
+    private String scriptName;
+    private ShellOptionEnum shellType;
     private Set<BashOption> scriptInputs;
 
 
