@@ -12,6 +12,9 @@
  */
 package com.mikeleitz.sidekick;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,6 +23,8 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.io.IOException;
+
+//import com.xebia.jacksonlombok.JacksonLombokAnnotationIntrospector;
 
 /**
  * @author leitz@mikeleitz.com
@@ -30,6 +35,17 @@ public class ScriptSidekickApplication {
 
     public static void main(String[] args) throws IOException {
         SpringApplication.run(ScriptSidekickApplication.class, args);
+    }
+
+    @Bean
+    ObjectMapper objectMapper() {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.findAndRegisterModules(); //Registers all modules on classpath
+
+//        mapper.setAnnotationIntrospector(new JacksonLombokAnnotationIntrospector());
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        return mapper;
     }
 
     @Bean

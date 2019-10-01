@@ -83,19 +83,19 @@ public class InputBashSnippet extends Snippet {
         if (CollectionUtils.isNotEmpty(allInputOptions)) {
             for (BashOption bashOption : allInputOptions) {
                 if (bashOption.getShortName() != null) {
-                    String shortOptArgsValue = bashOption.isArgNeeded() ?
+                    String shortOptArgsValue = bashOption.getDecree() ?
                             bashOption.getShortName() + ":" : bashOption.getShortName() + "";
                     allShortOpts.add(shortOptArgsValue);
                 }
 
                 if (StringUtils.isNotBlank(bashOption.getLongName())) {
-                    String longOptArgsValue = bashOption.isArgNeeded() ?
+                    String longOptArgsValue = bashOption.getDecree() ?
                             bashOption.getLongName() + ":" : bashOption.getLongName() + "";
                     allLongOpts.add(longOptArgsValue);
 
                     allVariables.add(bashOption.getIsSetVariableName());
 
-                    if (bashOption.isArgNeeded()) {
+                    if (bashOption.getDecree()) {
                         allVariables.add(bashOption.getVariableName());
                     }
                 }
@@ -134,7 +134,7 @@ public class InputBashSnippet extends Snippet {
         returnValue += bashOption.getIsSetVariableName() + "=1";
         returnValue += "\n";
 
-        if (bashOption.isArgNeeded()) {
+        if (bashOption.getDecree()) {
             returnValue += bashOption.getVariableName() + "=\"$2\"";
             returnValue += "\n";
             returnValue += "shift 2";

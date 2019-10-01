@@ -87,7 +87,7 @@ public class HelpBashSnippet extends Snippet {
         String formatString = "echo \"%-" + columnOneSpace + "s     %s\"";
 
         for (BashOption inputOption : allInputOptions) {
-            returnValue += String.format(formatString, "      -" + inputOption.getShortName() + ", --" + inputOption.getLongName(), StringUtils.isNotBlank(inputOption.getHelpDescription()) ? inputOption.getHelpDescription() : "");
+            returnValue += String.format(formatString, "      -" + inputOption.getShortName() + ", --" + inputOption.getLongName(), StringUtils.isNotBlank(inputOption.getHelpText()) ? inputOption.getHelpText() : "");
             returnValue += "\n";
         }
 

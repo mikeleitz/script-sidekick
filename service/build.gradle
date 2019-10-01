@@ -36,8 +36,11 @@ dependencies {
     implementation 'commons-io:commons-io:2.6'
     implementation 'org.antlr:ST4:4.1'
     implementation 'org.apache.commons:commons-collections4:4.4'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.9.9'
 
     compileOnly 'org.projectlombok:lombok'
+
+//    compile 'com.xebia:jackson-lombok:1.1'
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
