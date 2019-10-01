@@ -33,13 +33,13 @@ import java.util.List;
 @Builder
 @Setter(AccessLevel.NONE)
 public class BashOption implements ApplicationInput {
-    public static BashOption VERBOSE = BashOption.builder().argNeeded(false).shortName('v').longName("verbose").helpDescription("verbose operation").build();
-    public static BashOption HELP = BashOption.builder().argNeeded(false).shortName('h').longName("help").helpDescription("give this help list").build();
+    public static BashOption VERBOSE = BashOption.builder().decree(false).shortName('v').longName("verbose").helpText("verbose operation").build();
+    public static BashOption HELP = BashOption.builder().decree(false).shortName('h').longName("help").helpText("give this help list").build();
 
     private Character shortName;
-    @Builder.Default private boolean argNeeded = false;
+    private Boolean decree = false;
     @NonNull private String longName;
-    @Builder.Default private String helpDescription = "";
+    private String helpText = "";
     @Singular private List<BashValidationEnum> validations;
 
     @Override
