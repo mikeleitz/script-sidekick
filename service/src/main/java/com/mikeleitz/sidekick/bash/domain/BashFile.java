@@ -23,6 +23,7 @@ import com.mikeleitz.sidekick.bash.snippet.InputBashSnippet;
 import com.mikeleitz.sidekick.bash.snippet.LoggingBashSnippet;
 import com.mikeleitz.sidekick.bash.snippet.ProcessingBashSnippet;
 import com.mikeleitz.sidekick.bash.snippet.ShebangBashSnippet;
+import lombok.SneakyThrows;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -36,7 +37,8 @@ public class BashFile extends ApplicationFile {
     protected SnippetContext snippetContext = new SnippetContext();
     protected BashScriptConfiguration bashScriptConfiguration;
 
-    public BashFile(BashScriptConfiguration bashScriptConfiguration) throws IOException {
+    @SneakyThrows
+    public BashFile(BashScriptConfiguration bashScriptConfiguration) {
         this.bashScriptConfiguration = bashScriptConfiguration;
 
         populateSnippets();

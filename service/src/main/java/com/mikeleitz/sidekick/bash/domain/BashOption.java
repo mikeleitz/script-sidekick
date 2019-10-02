@@ -37,7 +37,7 @@ public class BashOption implements ApplicationInput {
     public static BashOption HELP = BashOption.builder().decree(false).shortName('h').longName("help").helpText("give this help list").build();
 
     private Character shortName;
-    private Boolean decree = false;
+    @NonNull private Boolean decree = false;
     @NonNull private String longName;
     private String helpText = "";
     @Singular private List<BashValidationEnum> validations;
