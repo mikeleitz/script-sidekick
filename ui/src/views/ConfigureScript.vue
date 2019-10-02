@@ -135,7 +135,10 @@ export default {
     }
   },
   mounted () {
-    axios({ method: 'GET', 'url': 'http://localhost:8080/' }).then(result => {
+    axios({
+      url: 'http://localhost:8080/',
+      method: 'GET'
+    }).then(result => {
       this.serverMessage = result.data.message
     }, error => {
       console.error(error)
