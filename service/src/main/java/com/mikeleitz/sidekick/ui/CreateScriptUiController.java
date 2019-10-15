@@ -20,8 +20,8 @@ import com.mikeleitz.sidekick.bash.domain.BashFile;
 import com.mikeleitz.sidekick.bash.domain.BashScriptConfiguration;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.codec.binary.StringUtils;
+import org.json.JSONObject;
 import org.springframework.http.MediaType;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,9 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author leitz@mikeleitz.com
@@ -42,14 +40,19 @@ public class CreateScriptUiController {
     private List<String> tasks = Arrays.asList("a", "b", "c", "d", "e", "f", "g");
 
     @GetMapping
-    public Map<String, Object> getScript(Model model) {
-        Map<String, Object> returnValue = new HashMap<>();
-        returnValue.put("message", "hello there");
-        returnValue.put("tasks", tasks);
+    public @ResponseBody String getScript() {
+        JSONObject jo = new JSONObject();
+        jo.put("message", "Hello There!");
 
-        return returnValue;
+        return jo.toString();
     }
 
+    /**
+     * Creates a file that's streamed back to the client.
+     *
+     * @param configuration
+     * @return
+     */
     @PostMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
