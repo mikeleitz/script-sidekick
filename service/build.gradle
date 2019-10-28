@@ -1,4 +1,6 @@
 // Build docker file with jib: gradle jibDockerBuild
+// Saving to Nexus here: https://github.com/GoogleContainerTools/jib/issues/531
+// Saving to Nexus here: https://github.com/GoogleContainerTools/jib/issues/539
 
 plugins {
     id 'org.springframework.boot' version '2.1.7.RELEASE'
