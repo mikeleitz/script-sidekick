@@ -1,6 +1,9 @@
 /*
  * Configuration helped by blog: https://dzone.com/articles/integrating-java-and-npm-builds-using-gradle
  *
+ * Add Docker support
+ * https://bmuschko.com/blog/gradle-docker-convention-plugin/
+ *
  */
 buildscript {
     repositories {
