@@ -9,15 +9,52 @@ buildscript {
     repositories {
         mavenCentral()
         maven {
-            url "https://plugins.gradle.org/m2/"
+            url 'https://plugins.gradle.org/m2/'
         }
     }
     dependencies {
-        classpath 'com.moowork.gradle:gradle-node-plugin:1.2.0'
+        classpath 'com.moowork.gradle:gradle-node-plugin:1.3.0'
+        classpath 'gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.22.1'
     }
 }
-apply plugin: 'base'
+plugins {
+    id 'base'
+    id 'com.moowork.node' version '1.3.1'
+    id 'com.palantir.docker' version '0.22.1'
+}
+
 apply plugin: 'com.moowork.node'
+apply plugin: 'com.palantir.docker'
+
+dependencies {
+//    docker 'foogroup:barmodule:0.1.2'
+//    docker project(':someSubProject')
+}
+
+docker {
+    name 'sidescript:0.0.1'
+
+//    files 'build.gradle'
+    copySpec.with {
+        from('.') {
+            include 'src/**'
+            into ''
+        }
+    }
+    // TODO add these files to the files property above.
+    copySpec.from('package.json').into('.')
+    copySpec.from('package-lock.json').into('.')
+    copySpec.from('.browserslistrc').into('.')
+    copySpec.from('.editorconfig').into('.')
+    copySpec.from('.eslintrc.js').into('.')
+    copySpec.from('.gitignore').into('.')
+    copySpec.from('babel.config.js').into('.')
+    copySpec.from('build.gradle').into('.')
+    copySpec.from('cypress.json').into('.')
+    copySpec.from('postcss.config.js').into('.')
+    copySpec.from('tsconfig.json').into('.')
+    copySpec.from('vue.config.js').into('.')
+}
 
 node {
     /* gradle-node-plugin configuration
@@ -35,8 +72,8 @@ node {
 }
 
 npm_run_build {
-    inputs.files fileTree("public")
-    inputs.files fileTree("src")
+    inputs.files fileTree('public')
+    inputs.files fileTree('src')
     inputs.file 'package.json'
     inputs.file 'package-lock.json'
     outputs.dir 'build'

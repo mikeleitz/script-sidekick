@@ -4,6 +4,8 @@ MAINTAINER leitz@mikeleitz.com
 
 WORKDIR /app
 COPY package*.json ./
+# For some reason, vue cli doesn't work here.  Have to install it manually.
+RUN npm i @vue/cli-service
 RUN npm install --production
 COPY . .
 RUN npm run build
