@@ -1,0 +1,2 @@
+<allVariables:{ variable |.log 2 '<variable>: ' $<variable>
+}>

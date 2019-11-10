@@ -1,0 +1,4 @@
+rootProject.name = 'script-sidekick'
+
+include 'service'
+include 'ui'

@@ -1,0 +1,10 @@
+project(':service') {
+	apply plugin: 'java'
+
+	repositories {
+		mavenCentral()
+	}
+}
+
+project(':ui') {
+}

@@ -1,0 +1,73 @@
+// Build docker file with jib: gradle jibDockerBuild
+// Saving to Nexus here: https://github.com/GoogleContainerTools/jib/issues/531
+// Saving to Nexus here: https://github.com/GoogleContainerTools/jib/issues/539
+
+plugins {
+    id 'org.springframework.boot' version '2.1.7.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id 'org.asciidoctor.convert' version '1.5.8'
+    id 'java'
+    id 'idea'
+    id 'com.google.cloud.tools.jib' version '1.7.0'
+}
+
+group = 'com.mikeleitz'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    set('snippetsDir', file("build/generated-snippets"))
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+    implementation 'org.springframework.boot:spring-boot-devtools'
+    implementation 'commons-io:commons-io:2.6'
+    implementation 'org.antlr:ST4:4.1'
+    implementation 'org.apache.commons:commons-collections4:4.4'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.9.9'
+    implementation 'org.json:json:20190722'
+
+    compileOnly 'org.projectlombok:lombok'
+
+//    compile 'com.xebia:jackson-lombok:1.1'
+
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    annotationProcessor 'org.projectlombok:lombok'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+}
+
+// Configure IntelliJ.
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
+
+test {
+    outputs.dir snippetsDir
+}
+
+asciidoctor {
+    inputs.dir snippetsDir
+    dependsOn test
+}
