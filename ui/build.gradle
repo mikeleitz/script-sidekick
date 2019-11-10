@@ -1,0 +1,82 @@
+/*
+ * Configuration helped by blog: https://dzone.com/articles/integrating-java-and-npm-builds-using-gradle
+ *
+ * Add Docker support
+ * https://bmuschko.com/blog/gradle-docker-convention-plugin/
+ *
+ */
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            url 'https://plugins.gradle.org/m2/'
+        }
+    }
+    dependencies {
+        classpath 'com.github.node-gradle:gradle-node-plugin:2.2.0'
+        classpath 'gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.22.1'
+    }
+}
+plugins {
+    id 'base'
+    id 'com.github.node-gradle.node' version '2.2.0'
+    id 'com.palantir.docker' version '0.22.1'
+}
+
+apply plugin: 'com.github.node-gradle.node'
+apply plugin: 'com.palantir.docker'
+
+dependencies {
+//    docker 'foogroup:barmodule:0.1.2'
+//    docker project(':someSubProject')
+}
+
+docker {
+    name 'sidescript:0.0.1'
+
+//    files 'build.gradle'
+    copySpec.with {
+        from('.') {
+            include 'src/**'
+            into ''
+        }
+    }
+    // TODO add these files to the files property above.
+    copySpec.from('package.json').into('.')
+    copySpec.from('package-lock.json').into('.')
+    copySpec.from('.browserslistrc').into('.')
+    copySpec.from('.editorconfig').into('.')
+    copySpec.from('.eslintrc.js').into('.')
+    copySpec.from('.gitignore').into('.')
+    copySpec.from('babel.config.js').into('.')
+    copySpec.from('build.gradle').into('.')
+    copySpec.from('cypress.json').into('.')
+    copySpec.from('postcss.config.js').into('.')
+    copySpec.from('tsconfig.json').into('.')
+    copySpec.from('vue.config.js').into('.')
+}
+
+node {
+    /* gradle-node-plugin configuration
+       https://github.com/srs/gradle-node-plugin/blob/master/docs/node.md
+       Task name pattern:
+       ./gradlew npm_<command> Executes an NPM command.
+    */
+    // Version of node to use.
+    version = '10.16.3'
+    // Version of npm to use.
+    npmVersion = '6.9.0'
+    // If true, it will download node using above parameters.
+    // If false, it will try to use globally installed node.
+    download = true
+}
+
+npm_run_build {
+    inputs.files fileTree('public')
+    inputs.files fileTree('src')
+    inputs.file 'package.json'
+    inputs.file 'package-lock.json'
+    outputs.dir 'build'
+}
+
+assemble.dependsOn npm_run_build
