@@ -41,8 +41,7 @@ dependencies {
     implementation 'org.antlr:ST4:4.1'
     implementation 'org.apache.commons:commons-collections4:4.4'
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.9.9'
-
-    compile 'org.json:json:20190722'
+    implementation 'org.json:json:20190722'
 
     compileOnly 'org.projectlombok:lombok'
 
