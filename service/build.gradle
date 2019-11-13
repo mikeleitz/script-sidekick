@@ -25,6 +25,13 @@ configurations {
     }
 }
 
+jib {
+    to {
+        image = 'mikeleitz/sidescript-service'
+        credHelper = 'osxkeychain'
+    }
+}
+
 repositories {
     mavenCentral()
 }
