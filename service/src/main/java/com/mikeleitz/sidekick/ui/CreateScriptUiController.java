@@ -28,21 +28,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * @author leitz@mikeleitz.com
  */
 @Slf4j
 @RestController("/")
 public class CreateScriptUiController {
-    private List<String> tasks = Arrays.asList("a", "b", "c", "d", "e", "f", "g");
-
-    @GetMapping
-    public @ResponseBody String getScript() {
+    @GetMapping(path="status")
+    public @ResponseBody String getGeneratorStatus() {
         JSONObject jo = new JSONObject();
-        jo.put("message", "Hello There!");
+        jo.put("status", "Ready");
 
         return jo.toString();
     }
