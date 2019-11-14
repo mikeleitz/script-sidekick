@@ -17,13 +17,13 @@ For this simple application we'll use option 2.  A Node application to serve up 
 Start the Spring boot application using Docker
 
 ```bash
-docker run  -p 8080:8080 --rm c813eeebfb4c
+docker run  -p 8080:8080 --rm -t mikeleitz/sidescript-service
 ```
 
 ## VueJs
 
 ```bash
-docker run -p 8081:80 --rm 06e2c1ecc0ab
+docker run -p 8081:80 --rm -t mikeleitz/sidescript-ui
 ```
 
 ## Access via Browser

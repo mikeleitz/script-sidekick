@@ -17,7 +17,15 @@
 <template>
 
   <div class="script-form">
-    <main role="main" class="container">
+    <div v-if="loading" class="loading">
+      Loading...
+    </div>
+
+    <div v-if="generatorStatus !== 'Ready'" class="error">
+      The generator is not ready.  Can not generate scripts.  Status : {{ generatorStatus }}
+    </div>
+
+    <main v-if="generatorStatus === 'Ready'" role="main" class="container">
       <b-form @submit.prevent="onSubmit" autocomplete="off">
         <fieldset class="scheduler-border">
           <legend class="scheduler-border">Script Details</legend>
@@ -71,19 +79,6 @@
           </div>
         </fieldset>
 
-        <fieldset class="scheduler-border">
-          <legend class="scheduler-border">Two-way binding example</legend>
-
-          <b-form-group>
-            <p>Script Name: {{ scriptForm.scriptName }}</p>
-            <p>Shell Type: {{ scriptForm.shellType }}</p>
-            <p>All Inputs:
-              {{ scriptForm.scriptInputs }}
-            </p>
-            <p>Server Message: {{ serverMessage }}</p>
-          </b-form-group>
-        </fieldset>
-
         <b-form-group>
           <b-button type="submit" variant="primary">Create Script</b-button>
         </b-form-group>
@@ -96,7 +91,6 @@
 // @ is an alias to /src
 import ScriptInput from '@/components/ScriptInput.vue'
 import axios from 'axios'
-import querystring from 'querystring'
 
 import { store } from '../store.js'
 
@@ -126,7 +120,8 @@ export default {
   },
   data () {
     return {
-      serverMessage: '-1',
+      generatorStatus: 'Not Ready',
+      loading: false,
       isVerboseCommandPushed: false,
       verboseCommandId: store.state.verboseCommandId,
       isQuietCommandPushed: false,
@@ -134,17 +129,27 @@ export default {
       scriptForm: store.state.scriptForm
     }
   },
-  mounted () {
-    axios({
-      url: 'http://localhost:8080/',
-      method: 'GET'
-    }).then(result => {
-      this.serverMessage = result.data.message
-    }, error => {
-      console.error(error)
-    })
+  created () {
+    this.getStatus()
+  },
+  watch: {
+    // call again the method if the route changes
+    '$route': 'getStatus'
   },
   methods: {
+    getStatus: function () {
+      this.loading = true
+      axios({
+        url: 'http://localhost:8080/status',
+        method: 'GET'
+      }).then(result => {
+        this.generatorStatus = result.data.status
+        this.loading = false
+      }, error => {
+        console.error(error)
+        this.loading = false
+      })
+    },
     onSubmit: function () {
       axios({
         url: `http://localhost:8080/`,
