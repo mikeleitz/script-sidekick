@@ -16,11 +16,13 @@
 
 package com.mikeleitz.sidekick.ui;
 
-import com.mikeleitz.sidekick.bash.domain.BashFile;
+import com.mikeleitz.sidekick.bash.domain.BashOption;
 import com.mikeleitz.sidekick.bash.domain.BashScriptConfiguration;
+import com.mikeleitz.sidekick.bash.service.BashService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.codec.binary.StringUtils;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,6 +36,8 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController("/")
 public class CreateScriptUiController {
+    @Autowired BashService bashService;
+
     @GetMapping(path="status")
     public @ResponseBody String getGeneratorStatus() {
         JSONObject jo = new JSONObject();
@@ -54,9 +58,9 @@ public class CreateScriptUiController {
     public @ResponseBody byte[] createScript(@RequestBody BashScriptConfiguration configuration) {
         log.info("Received create script request for data [{}].", configuration);
 
-        BashFile bashFile = new BashFile(configuration);
-        String scriptContents = bashFile.getFileContents();
+        configuration.addScriptInput(BashOption.HELP);
 
+        String scriptContents = bashService.createBashScriptContents(configuration);
         byte[] returnValue = StringUtils.getBytesUtf8(scriptContents);
 
         return returnValue;

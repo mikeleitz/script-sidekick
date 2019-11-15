@@ -19,6 +19,7 @@ package com.mikeleitz.sidekick.bash.domain;
 import com.mikeleitz.sidekick.base.Snippet;
 import com.mikeleitz.sidekick.base.SnippetContext;
 import com.mikeleitz.sidekick.base.application.ApplicationFile;
+import com.mikeleitz.sidekick.bash.snippet.HelpBashSnippet;
 import com.mikeleitz.sidekick.bash.snippet.InputBashSnippet;
 import com.mikeleitz.sidekick.bash.snippet.LoggingBashSnippet;
 import com.mikeleitz.sidekick.bash.snippet.ProcessingBashSnippet;
@@ -51,11 +52,20 @@ public class BashFile extends ApplicationFile {
         InputBashSnippet inputBashSnippet = new InputBashSnippet(snippetContext, bashScriptConfiguration.getScriptInputs());
         ProcessingBashSnippet processingBashSnippet = new ProcessingBashSnippet(snippetContext);
 
+        HelpBashSnippet helpBashSnippet = new HelpBashSnippet(snippetContext,
+                bashScriptConfiguration.getScriptInputs(),
+                bashScriptConfiguration.getAuthor(),
+                bashScriptConfiguration.getShellType(),
+                bashScriptConfiguration.getScriptName(),
+                bashScriptConfiguration.getVersion(),
+                bashScriptConfiguration.getPurpose());
+
         fileName = bashScriptConfiguration.getScriptName();
 
         preambleList.add(shebangBashSnippet);
 
         functionsAndSupplementList.add(loggingBashSnippet);
+        functionsAndSupplementList.add(helpBashSnippet);
         applicationInputList.add(inputBashSnippet);
 
         processingList.add(processingBashSnippet);
