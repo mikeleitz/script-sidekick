@@ -20,7 +20,7 @@ export const store = {
     verboseCommandId: 0,
     quietCommandId: 0,
     scriptForm: {
-      scriptName: 'xyz',
+      scriptName: '',
       shellType: 'BASH',
       scriptInputs: [
       ]

@@ -31,3 +31,18 @@ docker run -p 8081:80 --rm -t mikeleitz/sidescript-ui
 ```
 http://localhost:8081/
 ```
+
+# Todo
+
+[Best practices](https://www.tothenew.com/blog/foolproof-your-bash-script-some-best-practices/)
+
+## Installer 
+
+## Delivery
+
+ 1. Bundle as .zip file.
+ 2. As place for new code.
+ 3. Add installer.  Check for OS? copy to /usr/local/bin?
+ 4. Install support: getopts
+ 5. Option for w/o getopts
+ 6. Format code/linter
