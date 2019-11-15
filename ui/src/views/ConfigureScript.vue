@@ -22,67 +22,75 @@
     </div>
 
     <div v-if="generatorStatus !== 'Ready'" class="error">
-      The generator is not ready.  Can not generate scripts.  Status : {{ generatorStatus }}
+      The generator is not ready. Can not generate scripts. Status : {{ generatorStatus }}
     </div>
 
     <main v-if="generatorStatus === 'Ready'" role="main" class="container">
-      <b-form @submit.prevent="onSubmit" autocomplete="off">
-        <fieldset class="scheduler-border">
-          <legend class="scheduler-border">Script Details</legend>
+      <ValidationObserver v-slot="{ invalid }">
+        <b-form @submit.prevent="onSubmit" autocomplete="off">
+          <fieldset class="scheduler-border">
+            <legend class="scheduler-border">Script Details</legend>
 
-          <b-form-group label="Name">
-            <ValidationProvider name="Name" rules="required|lengthBetween:3,50" v-slot="{ errors }">
+            <b-form-group label="Name">
+              <ValidationProvider name="Name" rules="required|lengthBetween:3,50" v-slot="{ errors }">
 
-              <b-form-input placeholder="Script Name" v-model="scriptForm.scriptName" />
-              <span>{{ errors[0] }}</span>
-            </ValidationProvider>
-          </b-form-group>
+                <b-form-input placeholder="Script Name" v-model="scriptForm.scriptName"/>
+                <span>{{ errors[0] }}</span>
+              </ValidationProvider>
+            </b-form-group>
 
-          <b-form-group label="Shell">
-            <b-form-radio v-model="scriptForm.shellType" name="scriptShell" value="BASH" checked>Bash</b-form-radio>
-          </b-form-group>
-        </fieldset>
+            <b-form-group label="Shell">
+              <b-form-radio v-model="scriptForm.shellType" name="scriptShell" value="BASH" checked>Bash</b-form-radio>
+            </b-form-group>
+          </fieldset>
 
-        <fieldset class="scheduler-border">
-          <legend class="scheduler-border">Script Inputs</legend>
+          <fieldset class="scheduler-border">
+            <legend class="scheduler-border">Script Inputs</legend>
 
-          <b-form-group>
+            <b-form-group>
               <b-button-group class="mr-5">
                 <b-button size="sm" variant="outline-primary" @click="addScriptInput">Add input</b-button>
               </b-button-group>
 
               <b-button-group>
-                <b-button size="sm" variant="outline-secondary" @click="quickAddVerbose" :pressed="isVerboseCommandPushed">Verbose</b-button>
-                <b-button size="sm" variant="outline-secondary" @click="quickAddQuiet" :pressed="isQuietCommandPushed">Quiet</b-button>
+                <b-button size="sm" variant="outline-secondary" @click="quickAddVerbose"
+                          :pressed="isVerboseCommandPushed">Verbose
+                </b-button>
+                <b-button size="sm" variant="outline-secondary" @click="quickAddQuiet" :pressed="isQuietCommandPushed">
+                  Quiet
+                </b-button>
               </b-button-group>
-          </b-form-group>
-
-          <div>
-            <hr>
-          </div>
-
-          <div v-for="(scriptInput, index) in scriptForm.scriptInputs"
-               v-bind:item="scriptInput"
-               v-bind:index="index"
-               :key="scriptInput.id">
-
-            <ScriptInput :id="scriptInput.id" />
-
-            <b-form-group>
-              <b-button variant="outline-danger" size="sm" @click="removeScriptInputById(scriptInput.id)">Remove this input</b-button>
             </b-form-group>
 
             <div>
               <hr>
             </div>
 
-          </div>
-        </fieldset>
+            <div v-for="(scriptInput, index) in scriptForm.scriptInputs"
+                 v-bind:item="scriptInput"
+                 v-bind:index="index"
+                 :key="scriptInput.id">
 
-        <b-form-group>
-          <b-button type="submit" variant="primary">Create Script</b-button>
-        </b-form-group>
-      </b-form>
+              <ScriptInput :id="scriptInput.id"/>
+
+              <b-form-group>
+                <b-button variant="outline-danger" size="sm" @click="removeScriptInputById(scriptInput.id)">Remove this
+                  input
+                </b-button>
+              </b-form-group>
+
+              <div>
+                <hr>
+              </div>
+
+            </div>
+          </fieldset>
+
+          <b-form-group>
+            <b-button type="submit" variant="primary" :disabled="invalid">Create Script</b-button>
+          </b-form-group>
+        </b-form>
+      </ValidationObserver>
     </main>
   </div>
 </template>
@@ -94,7 +102,7 @@ import axios from 'axios'
 
 import { store } from '../store.js'
 
-import { ValidationProvider, extend } from 'vee-validate'
+import { ValidationObserver, ValidationProvider, extend } from 'vee-validate'
 import { required } from 'vee-validate/dist/rules'
 
 extend('required', {
@@ -116,6 +124,7 @@ export default {
   name: 'configure-script',
   components: {
     ValidationProvider,
+    ValidationObserver,
     ScriptInput
   },
   data () {
