@@ -18,6 +18,7 @@ package com.mikeleitz.sidekick.bash.domain;
 
 import lombok.Data;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -28,6 +29,15 @@ public class BashScriptConfiguration {
     private String scriptName;
     private ShellOptionEnum shellType;
     private Set<BashOption> scriptInputs;
+    private String author = "";
+    private String version = "";
+    private String purpose = "";
 
+    public void addScriptInput(BashOption bashOption) {
+        if (scriptInputs == null) {
+            scriptInputs = new HashSet<>();
+        }
 
+        scriptInputs.add(bashOption);
+    }
 }
