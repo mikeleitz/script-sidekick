@@ -8,4 +8,4 @@
 . ./setup-env.sh
 
 # Create the VPC
-gcloud compute --project=$ENVIRONMENT_PROJECT_NAME networks create $VPC_NAME --subnet-mode=custom
+gcloud compute --project="${PROJECT_NAME}"-"${ENVIRONMENT}" networks create "${VPC_NAME}" --subnet-mode=custom

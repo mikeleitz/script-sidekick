@@ -35,6 +35,7 @@ gcloud container clusters create "${GKE_CLUSTER_NAME}" \
   --enable-ip-alias \
   --machine-type="${GKE_MACHINE_TYPE}" \
   --num-nodes="${GKE_CLUSTER_NODES}" \
+  --network "${VPC_NAME}" \
   --max-pods-per-node="${GKE_CLUSTER_MAX_PODS_PER_NODE}" \
   --create-subnetwork=name="${GKE_SUBNET_NAME}",range="${GKE_CLUSTER_NODE_SUBNET_IP_RANGE}" \
   --cluster-ipv4-cidr="${GKE_CLUSTER_POD_SUBNET_IP_RANGE}" \
