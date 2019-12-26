@@ -1,20 +1,14 @@
 #!/bin/zsh
 
-###
-# TODO: Create VPC and routes/firewall
-# TODO: Create docker registry in google
-# TODO: Push docker image
-# TODO: Add IAM and roles
-# TODO: Add to org/folders
-# TODO: Lock down k8s cluster from public access: https://github.com/GoogleCloudPlatform/gke-private-cluster-demo
-###
+####
+# This script will:
+# 1. Join the VPC named $VPC_NAME
+# 2. Create a subnet for the nodes named $GKE_CLUSTER_NODE_SUBNET_IP_RANGE.
+# 3. Create a subnet for the pods named $GKE_CLUSTER_POD_SUBNET_IP_RANGE.
+# 4. Create a subnet for the services named $GKE_CLUSTER_SERVICE_SUBNET_IP_RANGE.
+# 5. Create the Kubernetes cluster.
+####
 
-###
-# This script will run and create:
-# 1. A VPC for the project.  There's a VPC for dev and a VPC for prod.
-# 2. A single subnet for the VPC.
-# 3. A Kubernetes cluster.
-###
 
 # Load common variables for all deployment scripts.
 . ./setup-env.sh
@@ -25,8 +19,7 @@
 
 ###
 # Values below and their purpose
-# subnetwork         : use existing subnet for this cluster.  This is the primary ip
-#                      range and is used for nodes.
+# network            : The VPC that this cluster will reside in.
 # cluster-ipv4-cidr  : Secondary ip range for pods.
 # services-ipv4-cidr : Secondary ip range for services.
 ###
