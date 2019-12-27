@@ -30,11 +30,14 @@
       </ValidationProvider>
     </b-form-group>
 
+    <ScriptInputType :id="thisScriptInput.id"/>
+<!--
     <b-form-group label="Decree">
       <b-form-checkbox v-model="thisScriptInput.decree" name="check-button" switch>
         {{ thisScriptInput.decree ? 'Required' : 'Optional' }}
       </b-form-checkbox>
     </b-form-group>
+-->
 
     <b-form-group label="Help text">
       <ValidationProvider name="Help text" rules="max:80" v-slot="{ errors }">
@@ -47,6 +50,7 @@
 
 <script>
 import { store } from '../store.js'
+import ScriptInputType from '@/components/ScriptInputType.vue'
 
 import { ValidationProvider, extend } from 'vee-validate'
 import { required } from 'vee-validate/dist/rules'
@@ -77,7 +81,8 @@ extend('max', {
 export default {
   name: 'ScriptInput',
   components: {
-    ValidationProvider
+    ValidationProvider,
+    ScriptInputType
   },
   props: {
     // These properties include the database id (or -1 if not saved) and the index from the array.
