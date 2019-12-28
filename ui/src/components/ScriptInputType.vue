@@ -17,12 +17,14 @@
   <div>
     <b-form-group label="Data type"
                   label-for="input-type-selection">
-      <b-button-group id="input-type-selection" class="mr-5">
-        <b-button size="sm" variant="outline-primary">Number</b-button>
-        <b-button size="sm" variant="outline-primary">String</b-button>
-        <b-button size="sm" variant="outline-primary">Boolean</b-button>
-        <b-button size="sm" variant="outline-primary">Other</b-button>
-      </b-button-group>
+      <b-card no-body>
+        <b-tabs pills card vertical>
+          <b-tab title="String" active><b-card-text>Tab contents 1</b-card-text></b-tab>
+          <b-tab title="Number"><b-card-text>I'm the second tab</b-card-text></b-tab>
+          <b-tab title="Boolean"><b-card-text>I'm a disabled tab!</b-card-text></b-tab>
+          <b-tab title="Other"><b-card-text>I'm a disabled tab!</b-card-text></b-tab>
+        </b-tabs>
+      </b-card>
     </b-form-group>
   </div>
 </template>
@@ -49,10 +51,37 @@ export default {
   },
   data () {
     return {
-      thisScriptInput: {}
+      thisScriptInput: {},
+      isNumberPushed: false,
+      isStringPushed: true,
+      isBooleanPushed: false,
+      isOtherPushed: false
     }
   },
-  methods: {}
+  methods: {
+    numberPressed: function () {
+      this.unselectAll()
+      this.isNumberPushed = true
+    },
+    stringPressed: function () {
+      this.unselectAll()
+      this.isStringPushed = true
+    },
+    booleanPressed: function () {
+      this.unselectAll()
+      this.isBooleanPushed = true
+    },
+    otherPressed: function () {
+      this.unselectAll()
+      this.isOtherPushed = true
+    },
+    unselectAll: function () {
+      this.isNumberPushed = false
+      this.isStringPushed = false
+      this.isBooleanPushed = false
+      this.isOtherPushed = false
+    }
+  }
 }
 </script>
 
