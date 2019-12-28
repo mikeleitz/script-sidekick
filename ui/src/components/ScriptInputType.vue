@@ -18,11 +18,133 @@
     <b-form-group label="Data type"
                   label-for="input-type-selection">
       <b-card no-body>
-        <b-tabs pills card vertical>
-          <b-tab title="String" active><b-card-text>Tab contents 1</b-card-text></b-tab>
-          <b-tab title="Number"><b-card-text>I'm the second tab</b-card-text></b-tab>
-          <b-tab title="Boolean"><b-card-text>I'm a disabled tab!</b-card-text></b-tab>
-          <b-tab title="Other"><b-card-text>I'm a disabled tab!</b-card-text></b-tab>
+        <b-tabs card
+                active-nav-item-class=""
+                active-tab-class="">
+          <b-tab title="String">
+            <b-form-group
+              label-cols-lg="2"
+              label="Value is"
+              label-size="lg"
+              label-class="pt-0"
+              class="mb-0">
+              <b-form-group>
+                <b-form-checkbox v-model="thisScriptInput.aNumber" name="check-button" switch>
+                  {{ thisScriptInput.aNumber ? 'A string' : 'Not a string' }}
+                </b-form-checkbox>
+              </b-form-group>
+              <b-form-group>
+                <b-form-checkbox v-model="thisScriptInput.required" name="check-button" switch>
+                  {{ thisScriptInput.required ? 'Required' : 'Not required' }}
+                </b-form-checkbox>
+              </b-form-group>
+              <b-form-group>
+                <b-form-checkbox v-model="thisScriptInput.email" name="check-button" switch>
+                  {{ thisScriptInput.email ? 'An email address' : 'Not an email address' }}
+                </b-form-checkbox>
+              </b-form-group>
+              <b-form-group>
+                <b-form-checkbox v-model="thisScriptInput.url" name="check-button" switch>
+                  {{ thisScriptInput.url ? 'A url' : 'Not a url' }}
+                </b-form-checkbox>
+              </b-form-group>
+              <b-form-group>
+                <b-form-checkbox v-model="thisScriptInput.regex" name="check-button" switch>
+                  {{ thisScriptInput.regex ? 'A regex' : 'Not a regex' }}
+                </b-form-checkbox>
+              </b-form-group>
+              <b-form-group label="defaulted to" label-cols-sm="2">
+                <b-form-input/>
+              </b-form-group>
+              <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
+            </b-form-group>
+          </b-tab>
+          <b-tab title="Number" active>
+            <b-form-group
+              label-cols-lg="2"
+              label="Value is"
+              label-size="lg"
+              label-class="pt-0"
+              class="mb-0">
+              <b-form-group>
+                <b-form-checkbox v-model="thisScriptInput.aNumber" name="check-button" switch>
+                  {{ thisScriptInput.aNumber ? 'A number' : 'Not a number' }}
+                </b-form-checkbox>
+              </b-form-group>
+              <b-form-group>
+                <b-form-checkbox v-model="thisScriptInput.required" name="check-button" switch>
+                  {{ thisScriptInput.required ? 'Required' : 'Not required' }}
+                </b-form-checkbox>
+              </b-form-group>
+              <b-form-group>
+                <b-form-checkbox v-model="thisScriptInput.signed" name="check-button" switch>
+                  {{ thisScriptInput.signed ? 'Signed' : 'Unsigned' }}
+                </b-form-checkbox>
+              </b-form-group>
+              <b-form-group label="at least" label-cols-sm="2">
+                <b-form-input/>
+              </b-form-group>
+              <b-form-group label="at most" label-cols-sm="2">
+                <b-form-input/>
+              </b-form-group>
+              <b-form-group label="defaulted to" label-cols-sm="2">
+                <b-form-input/>
+              </b-form-group>
+            </b-form-group>
+          </b-tab>
+          <b-tab title="Boolean">
+            <b-form-group
+              label-cols-lg="2"
+              label="Value is"
+              label-size="lg"
+              label-class="pt-0"
+              class="mb-0">
+              <b-form-group>
+                <b-form-checkbox v-model="thisScriptInput.aNumber" name="check-button" switch>
+                  {{ thisScriptInput.aNumber ? 'A boolean' : 'Not a boolean' }}
+                </b-form-checkbox>
+              </b-form-group>
+              <b-form-group>
+                <b-form-checkbox v-model="thisScriptInput.required" name="check-button" switch>
+                  {{ thisScriptInput.required ? 'Required' : 'Not required' }}
+                </b-form-checkbox>
+              </b-form-group>
+              <b-form-group label="defaulted to" label-cols-sm="2">
+                <b-form-input/>
+              </b-form-group>
+              <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
+              <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
+              <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
+              <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
+              <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
+              <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
+            </b-form-group>
+          </b-tab>
+          <b-tab title="Other">
+            <b-form-group
+              label-cols-lg="2"
+              label="Value is"
+              label-size="lg"
+              label-class="pt-0"
+              class="mb-0">
+              <b-form-group>
+                <b-form-checkbox v-model="thisScriptInput.required" name="check-button" switch>
+                  {{ thisScriptInput.required ? 'Required' : 'Not required' }}
+                </b-form-checkbox>
+              </b-form-group>
+              <b-form-group label="defaulted to" label-cols-sm="2">
+                <b-form-input/>
+              </b-form-group>
+              <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
+              <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
+              <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
+              <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
+              <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
+              <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
+              <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
+              <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
+            </b-form-group>
+          </b-tab>
         </b-tabs>
       </b-card>
     </b-form-group>
@@ -55,7 +177,13 @@ export default {
       isNumberPushed: false,
       isStringPushed: true,
       isBooleanPushed: false,
-      isOtherPushed: false
+      isOtherPushed: false,
+      signed: true,
+      required: true,
+      aNumber: true,
+      email: false,
+      url: false,
+      regex: false
     }
   },
   methods: {
