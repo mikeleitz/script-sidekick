@@ -21,73 +21,66 @@
         <b-tabs card
                 active-nav-item-class=""
                 active-tab-class="">
-          <b-tab title="String">
+          <b-tab title="String" active>
             <b-form-group
               label-cols-lg="2"
-              label="Value is"
+              label="This value is"
               label-size="lg"
               label-class="pt-0"
               class="mb-0">
               <b-form-group>
-                <b-form-checkbox v-model="thisScriptInput.aNumber" name="check-button" switch>
-                  {{ thisScriptInput.aNumber ? 'A string' : 'Not a string' }}
+                <b-form-checkbox name="check-button" v-model="stringTypeSelected" @change="typeSelected" switch>
+                  {{stringTypeSelected ? 'A string' : 'Not a string' }}
                 </b-form-checkbox>
               </b-form-group>
               <b-form-group>
-                <b-form-checkbox v-model="thisScriptInput.required" name="check-button" switch>
+                <b-form-checkbox v-model="thisScriptInput.required" name="check-button" :disabled="!stringTypeSelected" switch>
                   {{ thisScriptInput.required ? 'Required' : 'Not required' }}
                 </b-form-checkbox>
               </b-form-group>
-              <b-form-group>
-                <b-form-checkbox v-model="thisScriptInput.email" name="check-button" switch>
-                  {{ thisScriptInput.email ? 'An email address' : 'Not an email address' }}
-                </b-form-checkbox>
+
+              <b-form-group required="true" :disabled="!stringTypeSelected">
+                <b-form-radio v-model="selected" value="plain-string">A plain string</b-form-radio>
+                <b-form-radio v-model="selected" value="email">An email address</b-form-radio>
+                <b-form-radio v-model="selected" value="url">A url</b-form-radio>
+                <b-form-radio v-model="selected" value="regex">Specified via RegEx</b-form-radio>
               </b-form-group>
-              <b-form-group>
-                <b-form-checkbox v-model="thisScriptInput.url" name="check-button" switch>
-                  {{ thisScriptInput.url ? 'A url' : 'Not a url' }}
-                </b-form-checkbox>
-              </b-form-group>
-              <b-form-group>
-                <b-form-checkbox v-model="thisScriptInput.regex" name="check-button" switch>
-                  {{ thisScriptInput.regex ? 'A regex' : 'Not a regex' }}
-                </b-form-checkbox>
-              </b-form-group>
-              <b-form-group label="defaulted to" label-cols-sm="2">
+
+              <b-form-group label="Defaulted to" label-cols-sm="2" :disabled="!stringTypeSelected">
                 <b-form-input/>
               </b-form-group>
               <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
             </b-form-group>
           </b-tab>
-          <b-tab title="Number" active>
+          <b-tab title="Number">
             <b-form-group
               label-cols-lg="2"
-              label="Value is"
+              label="This value is"
               label-size="lg"
               label-class="pt-0"
               class="mb-0">
               <b-form-group>
-                <b-form-checkbox v-model="thisScriptInput.aNumber" name="check-button" switch>
-                  {{ thisScriptInput.aNumber ? 'A number' : 'Not a number' }}
+                <b-form-checkbox v-model="numberTypeSelected" name="check-button" @change="typeSelected" switch>
+                  {{ numberTypeSelected ? 'A number' : 'Not a number' }}
                 </b-form-checkbox>
               </b-form-group>
               <b-form-group>
-                <b-form-checkbox v-model="thisScriptInput.required" name="check-button" switch>
+                <b-form-checkbox v-model="thisScriptInput.required" name="check-button" :disabled="!numberTypeSelected" switch>
                   {{ thisScriptInput.required ? 'Required' : 'Not required' }}
                 </b-form-checkbox>
               </b-form-group>
               <b-form-group>
-                <b-form-checkbox v-model="thisScriptInput.signed" name="check-button" switch>
+                <b-form-checkbox v-model="thisScriptInput.signed" name="check-button" :disabled="!numberTypeSelected" switch>
                   {{ thisScriptInput.signed ? 'Signed' : 'Unsigned' }}
                 </b-form-checkbox>
               </b-form-group>
-              <b-form-group label="at least" label-cols-sm="2">
+              <b-form-group label="at least" label-cols-sm="2" :disabled="!numberTypeSelected">
                 <b-form-input/>
               </b-form-group>
-              <b-form-group label="at most" label-cols-sm="2">
+              <b-form-group label="at most" label-cols-sm="2" :disabled="!numberTypeSelected">
                 <b-form-input/>
               </b-form-group>
-              <b-form-group label="defaulted to" label-cols-sm="2">
+              <b-form-group label="Defaulted to" label-cols-sm="2" :disabled="!numberTypeSelected">
                 <b-form-input/>
               </b-form-group>
             </b-form-group>
@@ -95,21 +88,21 @@
           <b-tab title="Boolean">
             <b-form-group
               label-cols-lg="2"
-              label="Value is"
+              label="This value is"
               label-size="lg"
               label-class="pt-0"
               class="mb-0">
               <b-form-group>
-                <b-form-checkbox v-model="thisScriptInput.aNumber" name="check-button" switch>
-                  {{ thisScriptInput.aNumber ? 'A boolean' : 'Not a boolean' }}
+                <b-form-checkbox v-model="booleanTypeSelected" name="check-button" @change="typeSelected" switch>
+                  {{ booleanTypeSelected ? 'A boolean' : 'Not a boolean' }}
                 </b-form-checkbox>
               </b-form-group>
               <b-form-group>
-                <b-form-checkbox v-model="thisScriptInput.required" name="check-button" switch>
+                <b-form-checkbox v-model="thisScriptInput.required" name="check-button" :disabled="!booleanTypeSelected" switch>
                   {{ thisScriptInput.required ? 'Required' : 'Not required' }}
                 </b-form-checkbox>
               </b-form-group>
-              <b-form-group label="defaulted to" label-cols-sm="2">
+              <b-form-group label="Defaulted to" label-cols-sm="2" :disabled="!booleanTypeSelected">
                 <b-form-input/>
               </b-form-group>
               <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
@@ -123,16 +116,21 @@
           <b-tab title="Other">
             <b-form-group
               label-cols-lg="2"
-              label="Value is"
+              label="This value is"
               label-size="lg"
               label-class="pt-0"
               class="mb-0">
               <b-form-group>
-                <b-form-checkbox v-model="thisScriptInput.required" name="check-button" switch>
-                  {{ thisScriptInput.required ? 'Required' : 'Not required' }}
+                <b-form-group>
+                  <b-form-checkbox name="check-button" v-model="otherTypeSelected" @change="typeSelected" switch>
+                    {{otherTypeSelected ? 'Any other type' : 'Not any other type' }}
+                  </b-form-checkbox>
+                </b-form-group>
+                <b-form-checkbox v-model="isValueRequired" name="check-button" :disabled="!otherTypeSelected" switch>
+                  {{ isValueRequired ? 'Required' : 'Not required' }}
                 </b-form-checkbox>
               </b-form-group>
-              <b-form-group label="defaulted to" label-cols-sm="2">
+              <b-form-group label="Defaulted to" :disabled="!otherTypeSelected" label-cols-sm="2">
                 <b-form-input/>
               </b-form-group>
               <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
@@ -174,19 +172,24 @@ export default {
   data () {
     return {
       thisScriptInput: {},
-      isNumberPushed: false,
-      isStringPushed: true,
-      isBooleanPushed: false,
-      isOtherPushed: false,
-      signed: true,
-      required: true,
-      aNumber: true,
-      email: false,
-      url: false,
-      regex: false
+      dataType: '',
+      dataSubtype: '',
+      defaultValue: '',
+      isValueRequired: false,
+      selected: 'plain-string',
+      stringTypeSelected: false,
+      numberTypeSelected: false,
+      booleanTypeSelected: false,
+      otherTypeSelected: false
     }
   },
   methods: {
+    typeSelected: function () {
+      this.stringTypeSelected = false
+      this.numberTypeSelected = false
+      this.booleanTypeSelected = false
+      this.otherTypeSelected = false
+    },
     numberPressed: function () {
       this.unselectAll()
       this.isNumberPushed = true
