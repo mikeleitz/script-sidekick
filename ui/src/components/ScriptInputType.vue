@@ -30,12 +30,12 @@
               class="mb-0">
               <b-form-group>
                 <b-form-checkbox name="check-button" v-model="stringTypeSelected" @change="typeSelected" switch>
-                  {{stringTypeSelected ? 'A string' : 'Not a string' }}
+                  {{ stringTypeSelected ? 'A string' : 'Not a string' }}
                 </b-form-checkbox>
               </b-form-group>
               <b-form-group>
-                <b-form-checkbox v-model="thisScriptInput.required" name="check-button" :disabled="!stringTypeSelected" switch>
-                  {{ thisScriptInput.required ? 'Required' : 'Not required' }}
+                <b-form-checkbox v-model="stringRequired" name="check-button" :disabled="!stringTypeSelected" switch>
+                  {{ stringRequired ? 'Required' : 'Not required' }}
                 </b-form-checkbox>
               </b-form-group>
 
@@ -46,7 +46,7 @@
                 <b-form-radio v-model="selected" value="regex">Specified via RegEx</b-form-radio>
               </b-form-group>
 
-              <b-form-group label="Defaulted to" label-cols-sm="2" :disabled="!stringTypeSelected">
+              <b-form-group label="Defaulted to" v-model="stringDefault" label-cols-sm="2" :disabled="!stringTypeSelected">
                 <b-form-input/>
               </b-form-group>
               <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
@@ -65,22 +65,22 @@
                 </b-form-checkbox>
               </b-form-group>
               <b-form-group>
-                <b-form-checkbox v-model="thisScriptInput.required" name="check-button" :disabled="!numberTypeSelected" switch>
-                  {{ thisScriptInput.required ? 'Required' : 'Not required' }}
+                <b-form-checkbox v-model="numericRequired" name="check-button" :disabled="!numberTypeSelected" switch>
+                  {{ numericRequired ? 'Required' : 'Not required' }}
                 </b-form-checkbox>
               </b-form-group>
               <b-form-group>
-                <b-form-checkbox v-model="thisScriptInput.signed" name="check-button" :disabled="!numberTypeSelected" switch>
-                  {{ thisScriptInput.signed ? 'Signed' : 'Unsigned' }}
+                <b-form-checkbox v-model="signed" name="check-button" :disabled="!numberTypeSelected" switch>
+                  {{ signed ? 'Signed' : 'Unsigned' }}
                 </b-form-checkbox>
               </b-form-group>
-              <b-form-group label="at least" label-cols-sm="2" :disabled="!numberTypeSelected">
+              <b-form-group label="at least" v-model="numericAtLeast" label-cols-sm="2" :disabled="!numberTypeSelected">
                 <b-form-input/>
               </b-form-group>
-              <b-form-group label="at most" label-cols-sm="2" :disabled="!numberTypeSelected">
+              <b-form-group label="at most" v-model="numericAtMost" label-cols-sm="2" :disabled="!numberTypeSelected">
                 <b-form-input/>
               </b-form-group>
-              <b-form-group label="Defaulted to" label-cols-sm="2" :disabled="!numberTypeSelected">
+              <b-form-group label="Defaulted to" v-model="numericDefault" label-cols-sm="2" :disabled="!numberTypeSelected">
                 <b-form-input/>
               </b-form-group>
             </b-form-group>
@@ -98,11 +98,11 @@
                 </b-form-checkbox>
               </b-form-group>
               <b-form-group>
-                <b-form-checkbox v-model="thisScriptInput.required" name="check-button" :disabled="!booleanTypeSelected" switch>
-                  {{ thisScriptInput.required ? 'Required' : 'Not required' }}
+                <b-form-checkbox v-model="booleanRequired" name="check-button" :disabled="!booleanTypeSelected" switch>
+                  {{ booleanRequired ? 'Required' : 'Not required' }}
                 </b-form-checkbox>
               </b-form-group>
-              <b-form-group label="Defaulted to" label-cols-sm="2" :disabled="!booleanTypeSelected">
+              <b-form-group label="Defaulted to" v-model="booleanDefault" label-cols-sm="2" :disabled="!booleanTypeSelected">
                 <b-form-input/>
               </b-form-group>
               <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
@@ -123,14 +123,14 @@
               <b-form-group>
                 <b-form-group>
                   <b-form-checkbox name="check-button" v-model="otherTypeSelected" @change="typeSelected" switch>
-                    {{otherTypeSelected ? 'Any other type' : 'Not any other type' }}
+                    {{ otherTypeSelected ? 'Any other type' : 'Not any other type' }}
                   </b-form-checkbox>
                 </b-form-group>
-                <b-form-checkbox v-model="isValueRequired" name="check-button" :disabled="!otherTypeSelected" switch>
-                  {{ isValueRequired ? 'Required' : 'Not required' }}
+                <b-form-checkbox v-model="otherRequired" name="check-button" :disabled="!otherTypeSelected" switch>
+                  {{ otherRequired ? 'Required' : 'Not required' }}
                 </b-form-checkbox>
               </b-form-group>
-              <b-form-group label="Defaulted to" :disabled="!otherTypeSelected" label-cols-sm="2">
+              <b-form-group label="Defaulted to" v-model="otherDefault" :disabled="!otherTypeSelected" label-cols-sm="2">
                 <b-form-input/>
               </b-form-group>
               <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
@@ -180,7 +180,18 @@ export default {
       stringTypeSelected: false,
       numberTypeSelected: false,
       booleanTypeSelected: false,
-      otherTypeSelected: false
+      otherTypeSelected: false,
+      signed: false,
+      stringRequired: false,
+      numericRequired: false,
+      booleanRequired: false,
+      otherRequired: false,
+      stringDefault: '',
+      numericDefault: '',
+      booleanDefault: '',
+      otherDefault: '',
+      numericAtMost: '',
+      numericAtLeast: ''
     }
   },
   methods: {
