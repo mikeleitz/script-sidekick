@@ -149,7 +149,7 @@ export default {
     getStatus: function () {
       this.loading = true
       axios({
-        url: 'http://side-script-engine:8080/status',
+        url: 'http://sidescript-service.mikeleitz.com:8080/status',
         method: 'GET'
       }).then(result => {
         this.generatorStatus = result.data.status
@@ -161,7 +161,7 @@ export default {
     },
     onSubmit: function () {
       axios({
-        url: `http://side-script-engine:8080/`,
+        url: `http://sidescript-service.mikeleitz.com:8080/`,
         method: 'POST',
         data: this.scriptForm,
         responseType: 'blob'

@@ -15,6 +15,7 @@ spec:
       targetPort: 80
   selector:
     app: side-script-ui   # Must match the pod name below.  See field below: template.metadata.labels.app.
+  loadBalancerIP: 34.66.176.194
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -36,6 +37,7 @@ spec:
       containers:
         - name: sidescript-ui
           image: gcr.io/side-script-dev/sidescript-ui:current
+          imagePullPolicy: Always
           resources:
             requests:
               cpu: 10m
@@ -58,6 +60,7 @@ spec:
       targetPort: 8080
   selector:
     app: side-script-engine # Must match the pod name below.  See field below: template.metadata.labels.app.
+  loadBalancerIP: 35.224.69.191
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -79,6 +82,7 @@ spec:
       containers:
         - name: sidescript-engine-current
           image: gcr.io/side-script-dev/sidescript-service:current
+          imagePullPolicy: Always
           resources:
             requests:
               cpu: 10m

@@ -59,9 +59,13 @@ Currently the build uses two separate mechanisms to create the deliverable (Dock
 
 ## Copy Docker image over to Google registry
 
-```bash
-docker push gcr.io/side-script-dev/sidescript-ui:current
+You must tag before pushing.
 
+```bash
+docker tag mikeleitz/sidescript-ui gcr.io/side-script-dev/sidescript-ui:current
+docker tag mikeleitz/sidescript-service gcr.io/side-script-dev/sidescript-service:current
+
+docker push gcr.io/side-script-dev/sidescript-ui:current
 docker push gcr.io/side-script-dev/sidescript-service:current
 ```
 
@@ -77,5 +81,18 @@ docker push gcr.io/side-script-dev/sidescript-service:current
 # Resources
 
  1. [Best practices](https://www.tothenew.com/blog/foolproof-your-bash-script-some-best-practices/)
+
+
+# Todo
+
+Next configure both the UI and REST endpoint for external access.
+
+Use kubernetes service for http.
+
+Use kubernetes ingress for https.
+
+ * [Use static IP and DNS](https://cloud.google.com/kubernetes-engine/docs/tutorials/configuring-domain-name-static-ip)
+ 
+ 
 
 
