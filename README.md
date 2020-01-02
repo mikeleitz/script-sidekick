@@ -93,7 +93,7 @@ docker push gcr.io/side-script-dev/sidescript-service:current
 
 Next configure both the UI and REST endpoint for external access.
 
-Use kubernetes service for http.
+(done) Use kubernetes service for http.
 
 Use kubernetes ingress for https.
 
