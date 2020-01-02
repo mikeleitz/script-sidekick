@@ -57,6 +57,12 @@ Currently the build uses two separate mechanisms to create the deliverable (Dock
 ./gradlew jib dockerPush
 ```
 
+### Both build images locally and deploy to Docker Hub.
+
+```bash
+./gradlew jibDockerBuild jib docker dockerPush
+```
+
 ## Copy Docker image over to Google registry
 
 You must tag before pushing.

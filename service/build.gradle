@@ -32,6 +32,7 @@ jib {
     }
     from {
         // image = 'gcr.io/distroless/java:11-debug' // Use debug image so it includes shell access.
+        image = 'gcr.io/distroless/java:11'
     }
 }
 
