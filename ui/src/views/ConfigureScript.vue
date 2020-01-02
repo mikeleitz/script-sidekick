@@ -17,77 +17,80 @@
 <template>
 
   <div class="script-form">
-    <main role="main" class="container">
-      <b-form @submit.prevent="onSubmit" autocomplete="off">
-        <fieldset class="scheduler-border">
-          <legend class="scheduler-border">Script Details</legend>
+    <div v-if="loading" class="loading">
+      Loading...
+    </div>
 
-          <b-form-group label="Name">
-            <ValidationProvider name="Name" rules="required|lengthBetween:3,50" v-slot="{ errors }">
+    <div v-if="generatorStatus !== 'Ready'" class="error">
+      The generator is not ready. Can not generate scripts. Status : {{ generatorStatus }}
+    </div>
 
-              <b-form-input placeholder="Script Name" v-model="scriptForm.scriptName" />
-              <span>{{ errors[0] }}</span>
-            </ValidationProvider>
-          </b-form-group>
+    <main v-if="generatorStatus === 'Ready'" role="main" class="container">
+      <ValidationObserver v-slot="{ invalid }">
+        <b-form @submit.prevent="onSubmit" autocomplete="off">
+          <fieldset class="scheduler-border">
+            <legend class="scheduler-border">Script Details</legend>
 
-          <b-form-group label="Shell">
-            <b-form-radio v-model="scriptForm.shellType" name="scriptShell" value="BASH" checked>Bash</b-form-radio>
-          </b-form-group>
-        </fieldset>
+            <b-form-group label="Name">
+              <ValidationProvider name="Name" rules="required|lengthBetween:3,50" v-slot="{ errors }">
 
-        <fieldset class="scheduler-border">
-          <legend class="scheduler-border">Script Inputs</legend>
+                <b-form-input placeholder="Script Name" v-model="scriptForm.scriptName"/>
+                <span>{{ errors[0] }}</span>
+              </ValidationProvider>
+            </b-form-group>
 
-          <b-form-group>
+            <b-form-group label="Shell">
+              <b-form-radio v-model="scriptForm.shellType" name="scriptShell" value="BASH" checked>Bash</b-form-radio>
+            </b-form-group>
+          </fieldset>
+
+          <fieldset class="scheduler-border">
+            <legend class="scheduler-border">Script Inputs</legend>
+
+            <b-form-group>
               <b-button-group class="mr-5">
                 <b-button size="sm" variant="outline-primary" @click="addScriptInput">Add input</b-button>
               </b-button-group>
 
               <b-button-group>
-                <b-button size="sm" variant="outline-secondary" @click="quickAddVerbose" :pressed="isVerboseCommandPushed">Verbose</b-button>
-                <b-button size="sm" variant="outline-secondary" @click="quickAddQuiet" :pressed="isQuietCommandPushed">Quiet</b-button>
+                <b-button size="sm" variant="outline-secondary" @click="quickAddVerbose"
+                          :pressed="isVerboseCommandPushed">Verbose
+                </b-button>
+                <b-button size="sm" variant="outline-secondary" @click="quickAddQuiet" :pressed="isQuietCommandPushed">
+                  Quiet
+                </b-button>
               </b-button-group>
-          </b-form-group>
-
-          <div>
-            <hr>
-          </div>
-
-          <div v-for="(scriptInput, index) in scriptForm.scriptInputs"
-               v-bind:item="scriptInput"
-               v-bind:index="index"
-               :key="scriptInput.id">
-
-            <ScriptInput :id="scriptInput.id" />
-
-            <b-form-group>
-              <b-button variant="outline-danger" size="sm" @click="removeScriptInputById(scriptInput.id)">Remove this input</b-button>
             </b-form-group>
 
             <div>
               <hr>
             </div>
 
-          </div>
-        </fieldset>
+            <div v-for="(scriptInput, index) in scriptForm.scriptInputs"
+                 v-bind:item="scriptInput"
+                 v-bind:index="index"
+                 :key="scriptInput.id">
 
-        <fieldset class="scheduler-border">
-          <legend class="scheduler-border">Two-way binding example</legend>
+              <ScriptInput :id="scriptInput.id"/>
+
+              <b-form-group>
+                <b-button variant="outline-danger" size="sm" @click="removeScriptInputById(scriptInput.id)">Remove this
+                  input
+                </b-button>
+              </b-form-group>
+
+              <div>
+                <hr>
+              </div>
+
+            </div>
+          </fieldset>
 
           <b-form-group>
-            <p>Script Name: {{ scriptForm.scriptName }}</p>
-            <p>Shell Type: {{ scriptForm.shellType }}</p>
-            <p>All Inputs:
-              {{ scriptForm.scriptInputs }}
-            </p>
-            <p>Server Message: {{ serverMessage }}</p>
+            <b-button type="submit" variant="primary" :disabled="invalid">Create Script</b-button>
           </b-form-group>
-        </fieldset>
-
-        <b-form-group>
-          <b-button type="submit" variant="primary">Create Script</b-button>
-        </b-form-group>
-      </b-form>
+        </b-form>
+      </ValidationObserver>
     </main>
   </div>
 </template>
@@ -96,11 +99,10 @@
 // @ is an alias to /src
 import ScriptInput from '@/components/ScriptInput.vue'
 import axios from 'axios'
-import querystring from 'querystring'
 
 import { store } from '../store.js'
 
-import { ValidationProvider, extend } from 'vee-validate'
+import { ValidationObserver, ValidationProvider, extend } from 'vee-validate'
 import { required } from 'vee-validate/dist/rules'
 
 extend('required', {
@@ -122,11 +124,13 @@ export default {
   name: 'configure-script',
   components: {
     ValidationProvider,
+    ValidationObserver,
     ScriptInput
   },
   data () {
     return {
-      serverMessage: '-1',
+      generatorStatus: 'Not Ready',
+      loading: false,
       isVerboseCommandPushed: false,
       verboseCommandId: store.state.verboseCommandId,
       isQuietCommandPushed: false,
@@ -134,20 +138,30 @@ export default {
       scriptForm: store.state.scriptForm
     }
   },
-  mounted () {
-    axios({
-      url: 'http://localhost:8080/',
-      method: 'GET'
-    }).then(result => {
-      this.serverMessage = result.data.message
-    }, error => {
-      console.error(error)
-    })
+  created () {
+    this.getStatus()
+  },
+  watch: {
+    // call again the method if the route changes
+    '$route': 'getStatus'
   },
   methods: {
+    getStatus: function () {
+      this.loading = true
+      axios({
+        url: 'http://side-script-engine:8080/status',
+        method: 'GET'
+      }).then(result => {
+        this.generatorStatus = result.data.status
+        this.loading = false
+      }, error => {
+        console.error(error)
+        this.loading = false
+      })
+    },
     onSubmit: function () {
       axios({
-        url: `http://localhost:8080/`,
+        url: `http://side-script-engine:8080/`,
         method: 'POST',
         data: this.scriptForm,
         responseType: 'blob'

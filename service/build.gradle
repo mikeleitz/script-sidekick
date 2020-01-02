@@ -25,6 +25,16 @@ configurations {
     }
 }
 
+jib {
+    to {
+        image = 'mikeleitz/sidescript-service'
+        credHelper = 'osxkeychain'
+    }
+    from {
+        // image = 'gcr.io/distroless/java:11-debug' // Use debug image so it includes shell access.
+    }
+}
+
 repositories {
     mavenCentral()
 }

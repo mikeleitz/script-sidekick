@@ -32,7 +32,7 @@ dependencies {
 }
 
 docker {
-    name 'sidescript:0.0.1'
+    name 'mikeleitz/sidescript-ui'
 
 //    files 'build.gradle'
     copySpec.with {

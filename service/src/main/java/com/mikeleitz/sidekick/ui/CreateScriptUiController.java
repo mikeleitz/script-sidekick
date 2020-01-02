@@ -16,11 +16,13 @@
 
 package com.mikeleitz.sidekick.ui;
 
-import com.mikeleitz.sidekick.bash.domain.BashFile;
+import com.mikeleitz.sidekick.bash.domain.BashOption;
 import com.mikeleitz.sidekick.bash.domain.BashScriptConfiguration;
+import com.mikeleitz.sidekick.bash.service.BashService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.codec.binary.StringUtils;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,21 +30,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * @author leitz@mikeleitz.com
  */
 @Slf4j
 @RestController("/")
 public class CreateScriptUiController {
-    private List<String> tasks = Arrays.asList("a", "b", "c", "d", "e", "f", "g");
+    @Autowired BashService bashService;
 
-    @GetMapping
-    public @ResponseBody String getScript() {
+    @GetMapping(path="status")
+    public @ResponseBody String getGeneratorStatus() {
         JSONObject jo = new JSONObject();
-        jo.put("message", "Hello There!");
+        jo.put("status", "Ready");
 
         return jo.toString();
     }
@@ -59,9 +58,9 @@ public class CreateScriptUiController {
     public @ResponseBody byte[] createScript(@RequestBody BashScriptConfiguration configuration) {
         log.info("Received create script request for data [{}].", configuration);
 
-        BashFile bashFile = new BashFile(configuration);
-        String scriptContents = bashFile.getFileContents();
+        configuration.addScriptInput(BashOption.HELP);
 
+        String scriptContents = bashService.createBashScriptContents(configuration);
         byte[] returnValue = StringUtils.getBytesUtf8(scriptContents);
 
         return returnValue;
