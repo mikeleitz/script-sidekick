@@ -11,6 +11,10 @@ ENVIRONMENT=dev
 # Physical resources
 REGION=us-central1
 ZONE=us-central1-a
+
+# Micro doesn't seem to accept any deployments for some reason.
+# It creates error unschedulable pods.
+#GKE_MACHINE_TYPE=f1-micro
 GKE_MACHINE_TYPE=g1-small
 
 # Networking Resources

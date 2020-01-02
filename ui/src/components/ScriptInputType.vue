@@ -196,32 +196,13 @@ export default {
   },
   methods: {
     typeSelected: function () {
+      this.unselectAll()
+    },
+    unselectAll: function () {
       this.stringTypeSelected = false
       this.numberTypeSelected = false
       this.booleanTypeSelected = false
       this.otherTypeSelected = false
-    },
-    numberPressed: function () {
-      this.unselectAll()
-      this.isNumberPushed = true
-    },
-    stringPressed: function () {
-      this.unselectAll()
-      this.isStringPushed = true
-    },
-    booleanPressed: function () {
-      this.unselectAll()
-      this.isBooleanPushed = true
-    },
-    otherPressed: function () {
-      this.unselectAll()
-      this.isOtherPushed = true
-    },
-    unselectAll: function () {
-      this.isNumberPushed = false
-      this.isStringPushed = false
-      this.isBooleanPushed = false
-      this.isOtherPushed = false
     }
   }
 }
