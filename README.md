@@ -57,6 +57,14 @@ Currently the build uses two separate mechanisms to create the deliverable (Dock
 ./gradlew jib dockerPush
 ```
 
+## Copy Docker image over to Google registry
+
+```bash
+docker push gcr.io/side-script-dev/sidescript-ui:current
+
+docker push gcr.io/side-script-dev/sidescript-service:current
+```
+
 # Next features
 
  1. Bundle as .zip file.
