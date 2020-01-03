@@ -14,37 +14,44 @@
   -  limitations under the License.
   -->
 <template>
-<div>
-  <b-form-group
-    label-cols-lg="2"
-    label="This value is"
-    label-size="lg"
-    label-class="pt-0"
-    class="mb-0">
-    <b-form-group>
-      <b-form-checkbox name="check-button" v-model="stringTypeSelected" @change="typeSelected" switch>
-        {{ stringTypeSelected ? 'A string' : 'Not a string' }}
-      </b-form-checkbox>
-    </b-form-group>
-    <b-form-group>
-      <b-form-checkbox v-model="stringRequired" name="check-button" :disabled="!stringTypeSelected" switch>
-        {{ stringRequired ? 'Required' : 'Not required' }}
-      </b-form-checkbox>
-    </b-form-group>
+  <div>
+    <b-tab active>
+      <template v-slot:title>
+        String <b-badge variant="info" v-if="totalValidations > 0">{{ totalValidations }}</b-badge>
+      </template>
+      <b-form-group
+        label-cols-lg="2"
+        label="This value is"
+        label-size="lg"
+        label-class="pt-0"
+        class="mb-0">
+        <b-form-group>
+          <b-form-checkbox name="check-button" v-model="stringTypeSelected" @change="typeSelected" switch>
+            {{ stringTypeSelected ? 'A string' : 'Not a string' }}
+          </b-form-checkbox>
+        </b-form-group>
+        <b-form-group>
+          <b-form-checkbox v-model="stringRequired" name="check-button" :disabled="!stringTypeSelected" switch>
+            {{ stringRequired ? 'Required' : 'Not required' }}
+          </b-form-checkbox>
+        </b-form-group>
 
-    <b-form-group required="true" :disabled="!stringTypeSelected">
-      <b-form-radio v-model="selected" value="plain-string">A plain string</b-form-radio>
-      <b-form-radio v-model="selected" value="email">An email address</b-form-radio>
-      <b-form-radio v-model="selected" value="url">A url</b-form-radio>
-      <b-form-radio v-model="selected" value="regex">Specified via RegEx</b-form-radio>
-    </b-form-group>
+        <b-form-group required="true" :disabled="!stringTypeSelected">
+          <b-form-radio v-model="selected" value="plain-string">A plain string</b-form-radio>
+          <b-form-radio v-model="selected" value="email">An email address</b-form-radio>
+          <b-form-radio v-model="selected" value="url">A url</b-form-radio>
+          <b-form-radio v-model="selected" value="regex">Specified via RegEx</b-form-radio>
+        </b-form-group>
 
-    <b-form-group label="Defaulted to" v-model="stringDefault" label-cols-sm="2" :disabled="!stringTypeSelected">
-      <b-form-input/>
-    </b-form-group>
-    <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
-  </b-form-group>
-</div>
+        <b-form-group label="Defaulted to" v-model="stringDefault" label-cols-sm="2" :disabled="!stringTypeSelected">
+          <b-form-input/>
+        </b-form-group>
+        <b-form-row>
+          <b-col>&nbsp;</b-col>
+        </b-form-row>
+      </b-form-group>
+    </b-tab>
+  </div>
 </template>
 
 <script>
@@ -78,7 +85,8 @@ export default {
       selected: 'plain-string',
       stringTypeSelected: false,
       stringRequired: false,
-      stringDefault: ''
+      stringDefault: '',
+      totalValidations: 0
     }
   },
   methods: {

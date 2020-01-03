@@ -21,18 +21,10 @@
         <b-tabs card
                 active-nav-item-class=""
                 active-tab-class="">
-          <b-tab title="String" active>
-            <ScriptInputTypeString />
-          </b-tab>
-          <b-tab title="Number">
-            <ScriptInputTypeNumber />
-          </b-tab>
-          <b-tab title="Boolean">
-            <ScriptInputTypeBoolean />
-          </b-tab>
-          <b-tab title="Other">
-            <ScriptInputTypeOther />
-          </b-tab>
+          <ScriptInputTypeString />
+          <ScriptInputTypeNumber />
+          <ScriptInputTypeBoolean />
+          <ScriptInputTypeOther />
         </b-tabs>
       </b-card>
     </b-form-group>
@@ -91,7 +83,8 @@ export default {
       booleanDefault: '',
       otherDefault: '',
       numericAtMost: '',
-      numericAtLeast: ''
+      numericAtLeast: '',
+      totalValidations: 0
     }
   },
   methods: {

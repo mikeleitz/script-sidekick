@@ -15,37 +15,42 @@
   -->
 <template>
 <div>
-  <b-form-group
-    label-cols-lg="2"
-    label="This value is"
-    label-size="lg"
-    label-class="pt-0"
-    class="mb-0">
-    <b-form-group>
-      <b-form-checkbox v-model="numberTypeSelected" name="check-button" @change="typeSelected" switch>
-        {{ numberTypeSelected ? 'A number' : 'Not a number' }}
-      </b-form-checkbox>
+  <b-tab>
+    <template v-slot:title>
+      Number <b-badge variant="info" v-if="totalValidations > 0">{{ totalValidations }}</b-badge>
+    </template>
+    <b-form-group
+      label-cols-lg="2"
+      label="This value is"
+      label-size="lg"
+      label-class="pt-0"
+      class="mb-0">
+      <b-form-group>
+        <b-form-checkbox v-model="numberTypeSelected" name="check-button" @change="typeSelected" switch>
+          {{ numberTypeSelected ? 'A number' : 'Not a number' }}
+        </b-form-checkbox>
+      </b-form-group>
+      <b-form-group>
+        <b-form-checkbox v-model="numericRequired" name="check-button" :disabled="!numberTypeSelected" switch>
+          {{ numericRequired ? 'Required' : 'Not required' }}
+        </b-form-checkbox>
+      </b-form-group>
+      <b-form-group>
+        <b-form-checkbox v-model="signed" name="check-button" :disabled="!numberTypeSelected" switch>
+          {{ signed ? 'Signed' : 'Unsigned' }}
+        </b-form-checkbox>
+      </b-form-group>
+      <b-form-group label="at least" v-model="numericAtLeast" label-cols-sm="2" :disabled="!numberTypeSelected">
+        <b-form-input/>
+      </b-form-group>
+      <b-form-group label="at most" v-model="numericAtMost" label-cols-sm="2" :disabled="!numberTypeSelected">
+        <b-form-input/>
+      </b-form-group>
+      <b-form-group label="Defaulted to" v-model="numericDefault" label-cols-sm="2" :disabled="!numberTypeSelected">
+        <b-form-input/>
+      </b-form-group>
     </b-form-group>
-    <b-form-group>
-      <b-form-checkbox v-model="numericRequired" name="check-button" :disabled="!numberTypeSelected" switch>
-        {{ numericRequired ? 'Required' : 'Not required' }}
-      </b-form-checkbox>
-    </b-form-group>
-    <b-form-group>
-      <b-form-checkbox v-model="signed" name="check-button" :disabled="!numberTypeSelected" switch>
-        {{ signed ? 'Signed' : 'Unsigned' }}
-      </b-form-checkbox>
-    </b-form-group>
-    <b-form-group label="at least" v-model="numericAtLeast" label-cols-sm="2" :disabled="!numberTypeSelected">
-      <b-form-input/>
-    </b-form-group>
-    <b-form-group label="at most" v-model="numericAtMost" label-cols-sm="2" :disabled="!numberTypeSelected">
-      <b-form-input/>
-    </b-form-group>
-    <b-form-group label="Defaulted to" v-model="numericDefault" label-cols-sm="2" :disabled="!numberTypeSelected">
-      <b-form-input/>
-    </b-form-group>
-  </b-form-group>
+  </b-tab>
 </div>
 </template>
 
@@ -81,7 +86,8 @@ export default {
       numericRequired: false,
       numericDefault: '',
       numericAtMost: '',
-      numericAtLeast: ''
+      numericAtLeast: '',
+      totalValidations: 0
     }
   },
   methods: {

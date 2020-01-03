@@ -15,32 +15,37 @@
   -->
 <template>
 <div>
-  <b-form-group
-    label-cols-lg="2"
-    label="This value is"
-    label-size="lg"
-    label-class="pt-0"
-    class="mb-0">
-    <b-form-group>
-      <b-form-checkbox v-model="booleanTypeSelected" name="check-button" @change="typeSelected" switch>
-        {{ booleanTypeSelected ? 'A boolean' : 'Not a boolean' }}
-      </b-form-checkbox>
+  <b-tab>
+    <template v-slot:title>
+      Boolean <b-badge variant="info" v-if="totalValidations > 0">{{ totalValidations }}</b-badge>
+    </template>
+    <b-form-group
+      label-cols-lg="2"
+      label="This value is"
+      label-size="lg"
+      label-class="pt-0"
+      class="mb-0">
+      <b-form-group>
+        <b-form-checkbox v-model="booleanTypeSelected" name="check-button" @change="typeSelected" switch>
+          {{ booleanTypeSelected ? 'A boolean' : 'Not a boolean' }}
+        </b-form-checkbox>
+      </b-form-group>
+      <b-form-group>
+        <b-form-checkbox v-model="booleanRequired" name="check-button" :disabled="!booleanTypeSelected" switch>
+          {{ booleanRequired ? 'Required' : 'Not required' }}
+        </b-form-checkbox>
+      </b-form-group>
+      <b-form-group label="Defaulted to" v-model="booleanDefault" label-cols-sm="2" :disabled="!booleanTypeSelected">
+        <b-form-input/>
+      </b-form-group>
+      <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
+      <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
+      <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
+      <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
+      <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
+      <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
     </b-form-group>
-    <b-form-group>
-      <b-form-checkbox v-model="booleanRequired" name="check-button" :disabled="!booleanTypeSelected" switch>
-        {{ booleanRequired ? 'Required' : 'Not required' }}
-      </b-form-checkbox>
-    </b-form-group>
-    <b-form-group label="Defaulted to" v-model="booleanDefault" label-cols-sm="2" :disabled="!booleanTypeSelected">
-      <b-form-input/>
-    </b-form-group>
-    <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
-    <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
-    <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
-    <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
-    <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
-    <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
-  </b-form-group>
+  </b-tab>
 </div>
 </template>
 
@@ -74,7 +79,8 @@ export default {
       isValueRequired: false,
       booleanTypeSelected: false,
       booleanRequired: false,
-      booleanDefault: ''
+      booleanDefault: '',
+      totalValidations: 0
     }
   },
   methods: {

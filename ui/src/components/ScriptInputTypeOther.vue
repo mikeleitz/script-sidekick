@@ -15,34 +15,39 @@
   -->
 <template>
 <div>
-  <b-form-group
-    label-cols-lg="2"
-    label="This value is"
-    label-size="lg"
-    label-class="pt-0"
-    class="mb-0">
-    <b-form-group>
+  <b-tab>
+    <template v-slot:title>
+      Other <b-badge variant="info" v-if="totalValidations > 0">{{ totalValidations }}</b-badge>
+    </template>
+    <b-form-group
+      label-cols-lg="2"
+      label="This value is"
+      label-size="lg"
+      label-class="pt-0"
+      class="mb-0">
       <b-form-group>
-        <b-form-checkbox name="check-button" v-model="otherTypeSelected" @change="typeSelected" switch>
-          {{ otherTypeSelected ? 'Any other type' : 'Not any other type' }}
+        <b-form-group>
+          <b-form-checkbox name="check-button" v-model="otherTypeSelected" @change="typeSelected" switch>
+            {{ otherTypeSelected ? 'Any other type' : 'Not any other type' }}
+          </b-form-checkbox>
+        </b-form-group>
+        <b-form-checkbox v-model="otherRequired" name="check-button" :disabled="!otherTypeSelected" switch>
+          {{ otherRequired ? 'Required' : 'Not required' }}
         </b-form-checkbox>
       </b-form-group>
-      <b-form-checkbox v-model="otherRequired" name="check-button" :disabled="!otherTypeSelected" switch>
-        {{ otherRequired ? 'Required' : 'Not required' }}
-      </b-form-checkbox>
+      <b-form-group label="Defaulted to" v-model="otherDefault" :disabled="!otherTypeSelected" label-cols-sm="2">
+        <b-form-input/>
+      </b-form-group>
+      <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
+      <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
+      <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
+      <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
+      <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
+      <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
+      <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
+      <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
     </b-form-group>
-    <b-form-group label="Defaulted to" v-model="otherDefault" :disabled="!otherTypeSelected" label-cols-sm="2">
-      <b-form-input/>
-    </b-form-group>
-    <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
-    <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
-    <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
-    <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
-    <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
-    <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
-    <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
-    <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
-  </b-form-group>
+  </b-tab>
 </div>
 </template>
 
@@ -76,7 +81,8 @@ export default {
       isValueRequired: false,
       otherTypeSelected: false,
       otherRequired: false,
-      otherDefault: ''
+      otherDefault: '',
+      totalValidations: 0
     }
   },
   methods: {
