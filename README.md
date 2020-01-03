@@ -87,11 +87,22 @@ docker push gcr.io/side-script-dev/sidescript-service:current
 # Resources
 
  1. [Best practices](https://www.tothenew.com/blog/foolproof-your-bash-script-some-best-practices/)
+ 2. [GKE using static IP and DNS](https://cloud.google.com/kubernetes-engine/docs/tutorials/configuring-domain-name-static-ip)
 
 
 # Todo
 
-Next configure both the UI and REST endpoint for external access.
+## Aggregate build and deploy
+
+Create higher level scripts to build and deploy to GKE automatically.
+
+## Continue working on type section
+
+Since the deployment is figured out.  Get back to functionality. 
+
+Finishing adding validations for each data type: numeric, string, boolean, and other.
+
+## Configure both the UI and REST endpoint for https access.
 
 (done) Use kubernetes service for http.
 
@@ -99,6 +110,8 @@ Use kubernetes ingress for https.
 
  * [Use static IP and DNS](https://cloud.google.com/kubernetes-engine/docs/tutorials/configuring-domain-name-static-ip)
  
- 
+## Troubleshoot multiple replicas
+
+Find out why GKE doesn't want to run two instances of both pods on the node pair.  There's always some un-described resource issue.
 
 
