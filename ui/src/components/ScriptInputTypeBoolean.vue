@@ -15,10 +15,77 @@
   -->
 <template>
 <div>
+  <b-form-group
+    label-cols-lg="2"
+    label="This value is"
+    label-size="lg"
+    label-class="pt-0"
+    class="mb-0">
+    <b-form-group>
+      <b-form-checkbox v-model="booleanTypeSelected" name="check-button" @change="typeSelected" switch>
+        {{ booleanTypeSelected ? 'A boolean' : 'Not a boolean' }}
+      </b-form-checkbox>
+    </b-form-group>
+    <b-form-group>
+      <b-form-checkbox v-model="booleanRequired" name="check-button" :disabled="!booleanTypeSelected" switch>
+        {{ booleanRequired ? 'Required' : 'Not required' }}
+      </b-form-checkbox>
+    </b-form-group>
+    <b-form-group label="Defaulted to" v-model="booleanDefault" label-cols-sm="2" :disabled="!booleanTypeSelected">
+      <b-form-input/>
+    </b-form-group>
+    <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
+    <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
+    <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
+    <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
+    <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
+    <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
+  </b-form-group>
 </div>
 </template>
 
 <script>
+import { store } from '../store.js'
+
+// import { ValidationProvider } from 'vee-validate'
+
+export default {
+  name: 'ScriptInputTypeBoolean',
+  components: {
+    // ValidationProvider
+  },
+  props: {
+    // Script input id for this type component.
+    id: {
+      required: false,
+      type: Number,
+      default: -1
+    }
+  },
+  created () {
+    this.thisScriptInput = store.getScriptInputById(this.id)
+  },
+  data () {
+    return {
+      thisScriptInput: {},
+      dataType: '',
+      dataSubtype: '',
+      defaultValue: '',
+      isValueRequired: false,
+      booleanTypeSelected: false,
+      booleanRequired: false,
+      booleanDefault: ''
+    }
+  },
+  methods: {
+    typeSelected: function () {
+      this.unselectAll()
+    },
+    unselectAll: function () {
+      this.booleanTypeSelected = false
+    }
+  }
+}
 </script>
 
 <style scoped>

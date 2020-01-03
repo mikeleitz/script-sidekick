@@ -15,10 +15,81 @@
   -->
 <template>
 <div>
+  <b-form-group
+    label-cols-lg="2"
+    label="This value is"
+    label-size="lg"
+    label-class="pt-0"
+    class="mb-0">
+    <b-form-group>
+      <b-form-checkbox name="check-button" v-model="stringTypeSelected" @change="typeSelected" switch>
+        {{ stringTypeSelected ? 'A string' : 'Not a string' }}
+      </b-form-checkbox>
+    </b-form-group>
+    <b-form-group>
+      <b-form-checkbox v-model="stringRequired" name="check-button" :disabled="!stringTypeSelected" switch>
+        {{ stringRequired ? 'Required' : 'Not required' }}
+      </b-form-checkbox>
+    </b-form-group>
+
+    <b-form-group required="true" :disabled="!stringTypeSelected">
+      <b-form-radio v-model="selected" value="plain-string">A plain string</b-form-radio>
+      <b-form-radio v-model="selected" value="email">An email address</b-form-radio>
+      <b-form-radio v-model="selected" value="url">A url</b-form-radio>
+      <b-form-radio v-model="selected" value="regex">Specified via RegEx</b-form-radio>
+    </b-form-group>
+
+    <b-form-group label="Defaulted to" v-model="stringDefault" label-cols-sm="2" :disabled="!stringTypeSelected">
+      <b-form-input/>
+    </b-form-group>
+    <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
+  </b-form-group>
 </div>
 </template>
 
 <script>
+import { store } from '../store.js'
+
+// import { ValidationProvider } from 'vee-validate'
+
+export default {
+  name: 'ScriptInputTypeString',
+  components: {
+    // ValidationProvider
+  },
+  props: {
+    // Script input id for this type component.
+    id: {
+      required: false,
+      type: Number,
+      default: -1
+    }
+  },
+  created () {
+    this.thisScriptInput = store.getScriptInputById(this.id)
+  },
+  data () {
+    return {
+      thisScriptInput: {},
+      dataType: '',
+      dataSubtype: '',
+      defaultValue: '',
+      isValueRequired: false,
+      selected: 'plain-string',
+      stringTypeSelected: false,
+      stringRequired: false,
+      stringDefault: ''
+    }
+  },
+  methods: {
+    typeSelected: function () {
+      this.unselectAll()
+    },
+    unselectAll: function () {
+      this.stringTypeSelected = false
+    }
+  }
+}
 </script>
 
 <style scoped>
