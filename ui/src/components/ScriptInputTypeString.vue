@@ -43,8 +43,8 @@
           <b-form-radio value="regex" v-model="dataSubtype" @change="subtypeSelected">Specified via RegEx</b-form-radio>
         </b-form-group>
 
-        <b-form-group label="Defaulted to" v-model="defaultValue" label-cols-sm="2" :disabled="!stringTypeSelected">
-          <b-form-input/>
+        <b-form-group label="Defaulted to" label-cols-sm="2">
+          <b-form-input v-model="defaultValue" :disabled="!stringTypeSelected" />
         </b-form-group>
       </b-form-group>
     </b-tab>
@@ -83,6 +83,17 @@ export default {
       totalValidations: 0
     }
   },
+  watch: {
+    defaultValue: function(val, oldVal) {
+      if (oldVal.length === 0 && val.length > 0) {
+        this.totalValidations = this.totalValidations + 1
+      } else if (oldVal.length > 0 && val.length === 0) {
+        this.totalValidations = this.totalValidations - 1
+      }
+
+      console.log('Updated default value to: [' + val + ']')
+    }
+  },
   methods: {
     typeSelected: function (stringTypeCheckboxValue) {
       if (stringTypeCheckboxValue) {
@@ -119,9 +130,7 @@ export default {
       }
 
       this.dataSubtype = selectedSubtype
-      console.log(selectedSubtype)
-    },
-    defaultEntered: function () {
+      console.log('Selected subtype: [' + selectedSubtype + ']')
     }
   }
 }
