@@ -31,24 +31,21 @@
           </b-form-checkbox>
         </b-form-group>
         <b-form-group>
-          <b-form-checkbox v-model="stringRequired" name="check-button" :disabled="!stringTypeSelected" switch>
-            {{ stringRequired ? 'Required' : 'Not required' }}
+          <b-form-checkbox v-model="isValueRequired" name="check-button" :disabled="!stringTypeSelected" @change="requiredSelected" switch>
+            {{ isValueRequired ? 'Required' : 'Not required' }}
           </b-form-checkbox>
         </b-form-group>
 
         <b-form-group required="true" :disabled="!stringTypeSelected">
-          <b-form-radio v-model="selected" value="plain-string">A plain string</b-form-radio>
-          <b-form-radio v-model="selected" value="email">An email address</b-form-radio>
-          <b-form-radio v-model="selected" value="url">A url</b-form-radio>
-          <b-form-radio v-model="selected" value="regex">Specified via RegEx</b-form-radio>
+          <b-form-radio value="plain-string" v-model="dataSubtype" @change="subtypeSelected">A plain string</b-form-radio>
+          <b-form-radio value="email" v-model="dataSubtype" @change="subtypeSelected">An email address</b-form-radio>
+          <b-form-radio value="url" v-model="dataSubtype" @change="subtypeSelected">A url</b-form-radio>
+          <b-form-radio value="regex" v-model="dataSubtype" @change="subtypeSelected">Specified via RegEx</b-form-radio>
         </b-form-group>
 
-        <b-form-group label="Defaulted to" v-model="stringDefault" label-cols-sm="2" :disabled="!stringTypeSelected">
+        <b-form-group label="Defaulted to" v-model="defaultValue" label-cols-sm="2" :disabled="!stringTypeSelected">
           <b-form-input/>
         </b-form-group>
-        <b-form-row>
-          <b-col>&nbsp;</b-col>
-        </b-form-row>
       </b-form-group>
     </b-tab>
   </div>
@@ -78,23 +75,53 @@ export default {
   data () {
     return {
       thisScriptInput: {},
-      dataType: '',
-      dataSubtype: '',
-      defaultValue: '',
-      isValueRequired: false,
-      selected: 'plain-string',
+      dataType: 'string',
+      dataSubtype: 'plain-string',
       stringTypeSelected: false,
-      stringRequired: false,
-      stringDefault: '',
+      isValueRequired: false,
+      defaultValue: '',
       totalValidations: 0
     }
   },
   methods: {
-    typeSelected: function () {
-      this.unselectAll()
+    typeSelected: function (stringTypeCheckboxValue) {
+      if (stringTypeCheckboxValue) {
+        this.dataType = 'String'
+        this.totalValidations = 1
+      } else {
+        this.dataType = ''
+        this.totalValidations = 0
+      }
     },
-    unselectAll: function () {
-      this.stringTypeSelected = false
+    requiredSelected: function (requiredCheckboxValue) {
+      if ((this.isValueRequired === true && requiredCheckboxValue) ||
+        (this.isValueRequired === false && !requiredCheckboxValue)
+      ) {
+        // No change.
+      } else if (this.isValueRequired === false && requiredCheckboxValue) {
+        this.isValueRequired = true
+        this.totalValidations = this.totalValidations + 1
+      } else {
+        // this.isValueRequired === true && !requiredCheckboxValue
+        this.isValueRequired = false
+        this.totalValidations = this.totalValidations - 1
+      }
+    },
+    subtypeSelected: function (selectedSubtype) {
+      if ((this.dataSubtype === 'plain-string') && (selectedSubtype !== 'plain-string')) {
+        // Change from plain-string to something else.
+        this.totalValidations = this.totalValidations + 1
+      } else if ((this.dataSubtype !== 'plain-string') && (selectedSubtype === 'plain-string')) {
+        // Change from non-plain-string to plain-string.
+        this.totalValidations = this.totalValidations - 1
+      } else {
+        // No change to the number of validations.
+      }
+
+      this.dataSubtype = selectedSubtype
+      console.log(selectedSubtype)
+    },
+    defaultEntered: function () {
     }
   }
 }

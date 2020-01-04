@@ -18,11 +18,11 @@
     <b-form-group label="Data type"
                   label-for="input-type-selection">
       <b-card no-body>
-        <b-tabs card="true" no-fade="false">
-          <ScriptInputTypeString />
-          <ScriptInputTypeNumber />
-          <ScriptInputTypeBoolean />
-          <ScriptInputTypeOther />
+        <b-tabs card=true no-fade=false>
+          <ScriptInputTypeString :id="thisScriptInput.id" />
+          <ScriptInputTypeNumber :id="thisScriptInput.id" />
+          <ScriptInputTypeBoolean :id="thisScriptInput.id" />
+          <ScriptInputTypeOther :id="thisScriptInput.id" />
         </b-tabs>
       </b-card>
     </b-form-group>
@@ -61,40 +61,10 @@ export default {
   },
   data () {
     return {
-      thisScriptInput: {},
-      dataType: '',
-      dataSubtype: '',
-      defaultValue: '',
-      isValueRequired: false,
-      selected: 'plain-string',
-      stringTypeSelected: false,
-      numberTypeSelected: false,
-      booleanTypeSelected: false,
-      otherTypeSelected: false,
-      signed: false,
-      stringRequired: false,
-      numericRequired: false,
-      booleanRequired: false,
-      otherRequired: false,
-      stringDefault: '',
-      numericDefault: '',
-      booleanDefault: '',
-      otherDefault: '',
-      numericAtMost: '',
-      numericAtLeast: '',
-      totalValidations: 0
+      thisScriptInput: {}
     }
   },
   methods: {
-    typeSelected: function () {
-      this.unselectAll()
-    },
-    unselectAll: function () {
-      this.stringTypeSelected = false
-      this.numberTypeSelected = false
-      this.booleanTypeSelected = false
-      this.otherTypeSelected = false
-    }
   }
 }
 </script>
