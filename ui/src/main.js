@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { VBScrollspyPlugin, BootstrapVue, DropdownPlugin, TablePlugin, LayoutPlugin, ModalPlugin, CardPlugin } from 'bootstrap-vue'
+import { VBScrollspyPlugin, BootstrapVue, DropdownPlugin, TablePlugin, LayoutPlugin, ModalPlugin, CardPlugin, TabsPlugin } from 'bootstrap-vue'
 import App from './App.vue'
 import router from './router'
 
@@ -10,6 +10,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 Vue.config.productionTip = false
 Vue.use(BootstrapVue)
+Vue.use(TabsPlugin)
 
 // This imports all the layout components such as <b-container>, <b-row>, <b-col>:
 Vue.use(LayoutPlugin)

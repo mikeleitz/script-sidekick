@@ -18,9 +18,7 @@
     <b-form-group label="Data type"
                   label-for="input-type-selection">
       <b-card no-body>
-        <b-tabs card
-                active-nav-item-class=""
-                active-tab-class="">
+        <b-tabs card="true" no-fade="false">
           <ScriptInputTypeString />
           <ScriptInputTypeNumber />
           <ScriptInputTypeBoolean />

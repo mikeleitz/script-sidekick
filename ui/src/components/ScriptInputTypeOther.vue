@@ -38,14 +38,6 @@
       <b-form-group label="Defaulted to" v-model="otherDefault" :disabled="!otherTypeSelected" label-cols-sm="2">
         <b-form-input/>
       </b-form-group>
-      <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
-      <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
-      <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
-      <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
-      <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
-      <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
-      <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
-      <b-form-row ><b-col>&nbsp;</b-col></b-form-row>
     </b-form-group>
   </b-tab>
 </div>

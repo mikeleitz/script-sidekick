@@ -31,13 +31,6 @@
     </b-form-group>
 
     <ScriptInputType :id="thisScriptInput.id"/>
-<!--
-    <b-form-group label="Decree">
-      <b-form-checkbox v-model="thisScriptInput.decree" name="check-button" switch>
-        {{ thisScriptInput.decree ? 'Required' : 'Optional' }}
-      </b-form-checkbox>
-    </b-form-group>
--->
 
     <b-form-group label="Help text">
       <ValidationProvider name="Help text" rules="max:80" v-slot="{ errors }">
