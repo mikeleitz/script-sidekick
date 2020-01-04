@@ -100,7 +100,7 @@ export default {
     }
   },
   watch: {
-    defaultValue: function(val, oldVal) {
+    defaultValue: function (val, oldVal) {
       if (oldVal.length === 0 && val.length > 0) {
         this.totalValidations = this.totalValidations + 1
       } else if (oldVal.length > 0 && val.length === 0) {
@@ -109,7 +109,7 @@ export default {
 
       console.log('New default value: [' + val + '].')
     },
-    isValueRequired: function(val, oldVal) {
+    isValueRequired: function (val, oldVal) {
       if (val !== oldVal) {
         if (val) {
           this.totalValidations = this.totalValidations + 1
@@ -118,7 +118,7 @@ export default {
         }
       }
     },
-    dataSubtype: function(val, oldVal) {
+    dataSubtype: function (val, oldVal) {
       if (val !== oldVal) {
         if (val === 'plain-string') {
           this.totalValidations = this.totalValidations - 1

@@ -31,12 +31,12 @@
         </b-form-checkbox>
       </b-form-group>
       <b-form-group>
-        <b-form-checkbox v-model="booleanRequired" name="check-button" :disabled="!booleanTypeSelected" switch>
-          {{ booleanRequired ? 'Required' : 'Not required' }}
+        <b-form-checkbox v-model="isValueRequired" name="check-button" :disabled="!booleanTypeSelected" switch>
+          {{ isValueRequired ? 'Required' : 'Not required' }}
         </b-form-checkbox>
       </b-form-group>
-      <b-form-group label="Defaulted to" v-model="booleanDefault" label-cols-sm="2" :disabled="!booleanTypeSelected">
-        <b-form-input/>
+      <b-form-group label="Defaulted to" label-cols-sm="2" >
+        <b-form-input v-model="defaultValue" :disabled="!booleanTypeSelected"/>
       </b-form-group>
     </b-form-group>
   </b-tab>
@@ -67,22 +67,43 @@ export default {
   data () {
     return {
       thisScriptInput: {},
-      dataType: '',
+      dataType: 'boolean',
       dataSubtype: '',
-      defaultValue: '',
-      isValueRequired: false,
       booleanTypeSelected: false,
-      booleanRequired: false,
-      booleanDefault: '',
+      isValueRequired: false,
+      defaultValue: '',
       totalValidations: 0
     }
   },
-  methods: {
-    typeSelected: function () {
-      this.unselectAll()
+  watch: {
+    defaultValue: function (val, oldVal) {
+      if (oldVal.length === 0 && val.length > 0) {
+        this.totalValidations = this.totalValidations + 1
+      } else if (oldVal.length > 0 && val.length === 0) {
+        this.totalValidations = this.totalValidations - 1
+      }
+
+      console.log('New default value: [' + val + '].')
     },
-    unselectAll: function () {
-      this.booleanTypeSelected = false
+    isValueRequired: function (val, oldVal) {
+      if (val !== oldVal) {
+        if (val) {
+          this.totalValidations = this.totalValidations + 1
+        } else {
+          this.totalValidations = this.totalValidations - 1
+        }
+      }
+    }
+  },
+  methods: {
+    typeSelected: function (booleanTypeCheckboxValue) {
+      if (booleanTypeCheckboxValue) {
+        this.dataType = 'boolean'
+        this.totalValidations = 1
+      } else {
+        this.dataType = ''
+        this.totalValidations = 0
+      }
     }
   }
 }

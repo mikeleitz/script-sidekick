@@ -31,12 +31,12 @@
             {{ otherTypeSelected ? 'Any other type' : 'Not any other type' }}
           </b-form-checkbox>
         </b-form-group>
-        <b-form-checkbox v-model="otherRequired" name="check-button" :disabled="!otherTypeSelected" switch>
-          {{ otherRequired ? 'Required' : 'Not required' }}
+        <b-form-checkbox v-model="isValueRequired" name="check-button" :disabled="!otherTypeSelected" switch>
+          {{ isValueRequired ? 'Required' : 'Not required' }}
         </b-form-checkbox>
       </b-form-group>
-      <b-form-group label="Defaulted to" v-model="otherDefault" :disabled="!otherTypeSelected" label-cols-sm="2">
-        <b-form-input/>
+      <b-form-group label="Defaulted to" label-cols-sm="2">
+        <b-form-input v-model="defaultValue" :disabled="!otherTypeSelected"/>
       </b-form-group>
     </b-form-group>
   </b-tab>
@@ -67,22 +67,43 @@ export default {
   data () {
     return {
       thisScriptInput: {},
-      dataType: '',
+      dataType: 'other',
       dataSubtype: '',
-      defaultValue: '',
-      isValueRequired: false,
       otherTypeSelected: false,
-      otherRequired: false,
-      otherDefault: '',
+      isValueRequired: false,
+      defaultValue: '',
       totalValidations: 0
     }
   },
-  methods: {
-    typeSelected: function () {
-      this.unselectAll()
+  watch: {
+    defaultValue: function (val, oldVal) {
+      if (oldVal.length === 0 && val.length > 0) {
+        this.totalValidations = this.totalValidations + 1
+      } else if (oldVal.length > 0 && val.length === 0) {
+        this.totalValidations = this.totalValidations - 1
+      }
+
+      console.log('New default value: [' + val + '].')
     },
-    unselectAll: function () {
-      this.otherTypeSelected = false
+    isValueRequired: function (val, oldVal) {
+      if (val !== oldVal) {
+        if (val) {
+          this.totalValidations = this.totalValidations + 1
+        } else {
+          this.totalValidations = this.totalValidations - 1
+        }
+      }
+    }
+  },
+  methods: {
+    typeSelected: function (otherTypeCheckboxValue) {
+      if (otherTypeCheckboxValue) {
+        this.dataType = 'other'
+        this.totalValidations = 1
+      } else {
+        this.dataType = ''
+        this.totalValidations = 0
+      }
     }
   }
 }
