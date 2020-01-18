@@ -1,5 +1,5 @@
 <!--
-  -  Copyright (c) 2019, Michael Leitz
+  -  Copyright (c) 2020, Michael Leitz
   -  <p/>
   -  Licensed under the Apache License, Version 2.0 (the "License");
   -  you may not use this file except in compliance with the License.
@@ -68,7 +68,7 @@
 
 <script>
 import { store } from '../store.js'
-import ScriptInputTypeMixin from './ScriptInputTypeMixin.js'
+import ScriptInputTypeMixin from './mixins/ScriptInputTypeMixin.js'
 
 // import { ValidationProvider } from 'vee-validate'
 
@@ -88,18 +88,6 @@ export default {
   },
   created () {
     this.thisScriptInput = store.getScriptInputById(this.id)
-  },
-  data () {
-    return {
-      thisScriptInput: {},
-      dataType: 'string',
-      dataSubtype: 'plain-string',
-      stringTypeSelected: false,
-      isValueRequired: false,
-      regexValue: '',
-      defaultValue: '',
-      totalValidations: 0
-    }
   },
   watch: {
     defaultValue: function (val, oldVal) {

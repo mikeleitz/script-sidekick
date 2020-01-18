@@ -1,5 +1,5 @@
 <!--
-  -  Copyright (c) 2019, Michael Leitz
+  -  Copyright (c) 2020, Michael Leitz
   -  <p/>
   -  Licensed under the Apache License, Version 2.0 (the "License");
   -  you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
     <b-form-group label="Data type"
                   label-for="input-type-selection">
       <b-card no-body>
-        <b-tabs card=true no-fade=false>
+        <b-tabs :card="true" :noFade="false">
           <ScriptInputTypeString :id="thisScriptInput.id" />
           <ScriptInputTypeNumber :id="thisScriptInput.id" />
           <ScriptInputTypeBoolean :id="thisScriptInput.id" />
