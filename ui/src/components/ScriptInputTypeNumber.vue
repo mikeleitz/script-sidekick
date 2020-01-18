@@ -91,11 +91,14 @@ export default {
     }
   },
   methods: {
-    typeSelected: function () {
-      this.unselectAll()
-    },
-    unselectAll: function () {
-      this.numberTypeSelected = false
+    typeSelected: function (numberTypeCheckboxValue) {
+      if (numberTypeCheckboxValue) {
+        this.dataType = 'Integer'
+        this.totalValidations = 1
+      } else {
+        this.dataType = ''
+        this.totalValidations = 0
+      }
     }
   }
 }

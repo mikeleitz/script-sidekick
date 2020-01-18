@@ -68,11 +68,13 @@
 
 <script>
 import { store } from '../store.js'
+import ScriptInputTypeMixin from './ScriptInputTypeMixin.js'
 
 // import { ValidationProvider } from 'vee-validate'
 
 export default {
   name: 'ScriptInputTypeString',
+  mixins: [ScriptInputTypeMixin],
   components: {
     // ValidationProvider
   },
