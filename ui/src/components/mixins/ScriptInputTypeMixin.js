@@ -44,6 +44,11 @@ export default {
   data () {
     return {
       stringTypeSelected: false,
+      isValueRequired: false,
+      typeSelected: '',
+      defaultValue: '',
+      regexValue: '',
+      dataSubtype: '',
       thisScriptInput: {},
       validations: [ ]
     }
@@ -79,14 +84,25 @@ export default {
     hello: function () {
       console.log('hello from mixin!  ' + this.validations.length)
     },
-    isValueRequired: function () {
-      console.log('isValueRequired:  ' + isValueRequired)
-    },
     changeValueRequired: function (isValueRequired) {
       console.log('changeValueRequired:  ' + isValueRequired)
     },
-    typeSelected: function (val, oldVal) {
-      console.log('typeSelected: [' + val + '].')
+    changeTypeSelected: function (event, val) {
+      if (event) {
+        this.typeSelected = val
+      } else {
+        this.typeSelected = null
+      }
+      console.log('typeSelected: [' + this.typeSelected + '].')
+    },
+    changeIsValueRequired: function (event) {
+      if (event) {
+        this.isValueRequired = event
+      } else {
+        this.isValueRequired = false
+      }
+
+      console.log('isValueRequired: [' + this.isValueRequired + '].')
     }
   }
 }

@@ -26,12 +26,12 @@
         label-class="pt-0"
         class="mb-0">
         <b-form-group>
-          <b-form-checkbox name="check-button" v-model="stringTypeSelected" @change="typeSelected" switch>
-            {{ stringTypeSelected ? 'A string' : 'Not a string' }}
+          <b-form-checkbox name="check-button" @change="changeTypeSelected($event, 'string')" switch>
+            {{ typeSelected === 'string' ? 'A string' : 'Not a string' }}
           </b-form-checkbox>
         </b-form-group>
         <b-form-group>
-          <b-form-checkbox v-model="isValueRequired" name="check-button" :disabled="!stringTypeSelected" switch>
+          <b-form-checkbox name="check-button" @change="changeIsValueRequired($event)" :disabled="typeSelected !== 'string'" switch>
             {{ isValueRequired ? 'Required' : 'Not required' }}
           </b-form-checkbox>
         </b-form-group>
@@ -72,6 +72,10 @@ import ScriptInputTypeMixin from './mixins/ScriptInputTypeMixin.js'
 
 // import { ValidationProvider } from 'vee-validate'
 
+/*
+The fields in the html above invoke local methods and data. These then delegate
+to the mixins to create the validations.
+ */
 export default {
   name: 'ScriptInputTypeString',
   mixins: [ScriptInputTypeMixin],
@@ -99,15 +103,6 @@ export default {
 
       console.log('New default value: [' + val + '].')
     },
-    isValueRequired: function (val, oldVal) {
-      if (val !== oldVal) {
-        if (val) {
-          this.totalValidations = this.totalValidations + 1
-        } else {
-          this.totalValidations = this.totalValidations - 1
-        }
-      }
-    },
     dataSubtype: function (val, oldVal) {
       if (val !== oldVal) {
         if (val === 'plain-string') {
@@ -120,17 +115,7 @@ export default {
       console.log('New selected subtype: [' + val + '].')
     }
   },
-  methods: {
-    typeSelected: function (stringTypeCheckboxValue) {
-      if (stringTypeCheckboxValue) {
-        this.dataType = 'String'
-        this.totalValidations = 1
-      } else {
-        this.dataType = ''
-        this.totalValidations = 0
-      }
-    }
-  }
+  methods: { }
 }
 </script>
 
