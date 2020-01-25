@@ -14,7 +14,28 @@
  *  limitations under the License.
  */
 
-import ValidationTypeConstants from '../ValidationTypeConstants.js'
+export const ValidationTypes = Object.freeze({
+  INTEGER: { id: 1, name: 'Integer' },
+  BOOLEAN: { id: 2, name: 'Boolean' },
+  REAL: { id: 3, name: 'Real' },
+  STRING: { id: 4, name: 'String' },
+  CURRENCY: { id: 5, name: 'Currency' },
+  DATE: { id: 6, name: 'Date' },
+  TIMESTAMP: { id: 7, name: 'Timestamp' },
+  ENUMERATED: { id: 8, name: 'Enumerated Type' },
+  URL: { id: 9, name: 'URL' },
+  EMAIL: { id: 10, name: 'Email' },
+  IPV4: { id: 11, name: 'Ipv4' },
+  IPV6: { id: 12, name: 'Ipv6' },
+  CUSTOM_REGEX: { id: 13, name: 'Regex' },
+  GREATER_THAN: { id: 14, name: 'Greater than' },
+  GREATER_THAN_EQUAL: { id: 16, name: 'Greater than or equal' },
+  LESS_THAN: { id: 17, name: 'Less than' },
+  LESS_THAN_EQUAL: { id: 18, name: 'Less than or equal' },
+  SIGNED: { id: 19, name: 'Signed' },
+  UNSIGNED: { id: 20, name: 'Unsigned' },
+  REQUIRED: { id: 21, name: 'Required' }
+})
 
 export default {
   created: function () {
@@ -22,28 +43,50 @@ export default {
   },
   data () {
     return {
-      thisScriptInput: {},
-      validation: {
-        id: -1,
-        validationTypeId: -1,
-        args: [
-          // Example: { key: 'Foo', value: 'Bar' },
-        ],
-        dependsOnId: -1,
-        enabled: true
-      },
-      dataType: 'string',
-      dataSubtype: 'plain-string',
       stringTypeSelected: false,
-      isValueRequired: false,
-      regexValue: '',
-      defaultValue: '',
-      totalValidations: 0
+      thisScriptInput: {},
+      validations: [ ]
+    }
+  },
+  watch: {
+    defaultValue: function (val, oldVal) {
+      if (oldVal.length === 0 && val.length > 0) {
+        this.totalValidations = this.totalValidations + 1
+      } else if (oldVal.length > 0 && val.length === 0) {
+        this.totalValidations = this.totalValidations - 1
+      }
+
+      console.log('New default value: [' + val + '].')
+    },
+    isValueRequired: function (val, oldVal) {
+      console.log('isValueRequired: [' + val + '].')
+
+      if (val !== oldVal) {
+        if (val) {
+          this.totalValidations = this.totalValidations + 1
+        } else {
+          this.totalValidations = this.totalValidations - 1
+        }
+      }
+    }
+  },
+  computed: {
+    totalValidations: function () {
+      return this.validations.length
     }
   },
   methods: {
     hello: function () {
-      console.log('hello from mixin!')
+      console.log('hello from mixin!  ' + this.validations.length)
+    },
+    isValueRequired: function () {
+      console.log('isValueRequired:  ' + isValueRequired)
+    },
+    changeValueRequired: function (isValueRequired) {
+      console.log('changeValueRequired:  ' + isValueRequired)
+    },
+    typeSelected: function (val, oldVal) {
+      console.log('typeSelected: [' + val + '].')
     }
   }
 }
