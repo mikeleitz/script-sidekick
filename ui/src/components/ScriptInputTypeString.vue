@@ -35,23 +35,6 @@
             {{ isValueRequired ? 'Required' : 'Not required' }}
           </b-form-checkbox>
         </b-form-group>
-
-        <b-form-group required="true" :disabled="!stringTypeSelected">
-          <b-form-radio value="plain-string" v-model="dataSubtype">A plain string</b-form-radio>
-          <b-form-radio value="email" v-model="dataSubtype">An email address</b-form-radio>
-          <b-form-radio value="url" v-model="dataSubtype">A url</b-form-radio>
-          <b-row no-gutters>
-            <b-col cols="3">
-              <b-form-radio value="regex" v-model="dataSubtype">Specified via RegEx</b-form-radio>
-            </b-col>
-            <b-col cols="4">
-              <b-form-input v-model="regexValue" :disabled="dataSubtype !== 'regex'" />
-            </b-col>
-            <b-col cols="5">
-            </b-col>
-          </b-row>
-        </b-form-group>
-
         <b-form-group label="Defaulted to" label-cols="3">
           <b-row no-gutters>
             <b-col cols="5">
@@ -93,19 +76,7 @@ export default {
   created () {
     this.thisScriptInput = store.getScriptInputById(this.id)
   },
-  watch: {
-    dataSubtype: function (val, oldVal) {
-      if (val !== oldVal) {
-        if (val === 'plain-string') {
-          this.totalValidations = this.totalValidations - 1
-        } else if (oldVal === 'plain-string') {
-          this.totalValidations = this.totalValidations + 1
-        }
-      }
-
-      console.log('New selected subtype: [' + val + '].')
-    }
-  },
+  watch: { },
   methods: { }
 }
 </script>
