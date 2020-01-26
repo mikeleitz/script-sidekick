@@ -14,6 +14,9 @@
  *  limitations under the License.
  */
 
+/*
+This mixin creates a new instance of 'data' for each component. To share values across instances, it's using state.
+ */
 export const ValidationTypes = Object.freeze({
   INTEGER: { id: 1, name: 'Integer' },
   BOOLEAN: { id: 2, name: 'Boolean' },
@@ -39,11 +42,9 @@ export const ValidationTypes = Object.freeze({
 
 export default {
   created: function () {
-    this.hello()
   },
   data () {
     return {
-      stringTypeSelected: false,
       isValueRequired: false,
       typeSelected: '',
       defaultValue: '',
@@ -59,7 +60,6 @@ export default {
     },
     isValueRequired: function (val, oldVal) {
       console.log('isValueRequired: [' + val + '].')
-
     }
   },
   computed: {
@@ -72,16 +72,24 @@ export default {
     }
   },
   methods: {
-    hello: function () {
-      console.log('hello from mixin!  ' + this.validations.length)
-    },
     changeTypeSelected: function (event, val) {
+      console.log('Current type selected: [' + this.typeSelected + ']. User just selected: [' + val + '].')
+
       if (event) {
-        this.typeSelected = val
+        let selectedType = val
+        if (selectedType !== this.typeSelected) {
+          console.log('New type selected. Changing type from [' + this.typeSelected + '] to [' + val + '].')
+          this.resetType()
+          this.typeSelected = selectedType
+        } else {
+          // User somehow selected the currently selected type. No changes needed
+        }
       } else {
+        console.log('Current type [' + this.typeSelected + '] is now disabled.')
+
         this.typeSelected = null
+        this.resetType()
       }
-      console.log('typeSelected: [' + this.typeSelected + '].')
     },
     changeIsValueRequired: function (event) {
       if (event) {
@@ -91,6 +99,9 @@ export default {
       }
 
       console.log('isValueRequired: [' + this.isValueRequired + '].')
+    },
+    resetType: function () {
+      this.validations.splice(0, this.validations.length)
     }
   }
 }

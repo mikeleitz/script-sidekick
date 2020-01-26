@@ -26,15 +26,45 @@ export const store = {
       ]
     }
   },
-  getScriptInputById (scriptInputId) {
+  getNextScriptId: function () {
+    let newScriptId = this.state.nextTempId
+    this.state.nextTempId -= 1
+    return newScriptId
+  },
+  getNextValidationId: function () {
+    let newValidationId = this.state.nextTempId
+    this.state.nextTempId -= 1
+    return newValidationId
+  },
+  addScriptInput: function (scriptInput) {
+    let newScriptId = store.getNextScriptId()
+    scriptInput.id = newScriptId
+    this.state.scriptForm.scriptInputs.unshift(scriptInput)
+    return newScriptId
+  },
+  removeScriptInput: function (scriptInputId) {
+    let index = this.state.scriptForm.scriptInputs.findIndex(scriptInput => scriptInput.id === scriptInputId)
+    this.state.scriptForm.scriptInputs.splice(index, 1)
+  },
+  getScriptInput: function (scriptInputId) {
     let scriptInput = this.state.scriptForm.scriptInputs.find(scriptInput => {
       return scriptInput.id === scriptInputId
     })
     return scriptInput
   },
-  getNextScriptId: function () {
-    let newScriptId = this.state.nextTempId
-    this.state.nextTempId -= 1
-    return newScriptId
+  getAllScriptInputs: function () {
+
+  },
+  addValidation: function (scriptInputId, validationId, validation) {
+
+  },
+  removeValidation: function (scriptInputId, validationId, validation) {
+
+  },
+  getValidation: function (validationId) {
+
+  },
+  getAllValidations: function (scriptInputId) {
+
   }
 }

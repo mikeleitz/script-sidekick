@@ -88,7 +88,7 @@ export default {
     }
   },
   created () {
-    this.thisScriptInput = store.getScriptInputById(this.id)
+    this.thisScriptInput = store.getScriptInput(this.id)
   },
   data () {
     return {
