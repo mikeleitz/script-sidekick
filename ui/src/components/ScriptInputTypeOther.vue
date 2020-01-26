@@ -27,16 +27,16 @@
       class="mb-0">
       <b-form-group>
         <b-form-group>
-          <b-form-checkbox name="check-button" v-model="otherTypeSelected" @change="typeSelected" switch>
-            {{ otherTypeSelected ? 'Any other type' : 'Not any other type' }}
+          <b-form-checkbox name="check-button" @change="changeTypeSelected($event, 'other')" switch>
+            {{ typeSelected === 'other' ? 'Any other type' : 'Not any other type' }}
           </b-form-checkbox>
         </b-form-group>
-        <b-form-checkbox v-model="isValueRequired" name="check-button" :disabled="!otherTypeSelected" switch>
+        <b-form-checkbox name="check-button" @change="changeIsValueRequired($event)" :disabled="typeSelected !== 'other'" switch>
           {{ isValueRequired ? 'Required' : 'Not required' }}
         </b-form-checkbox>
       </b-form-group>
       <b-form-group label="Defaulted to" label-cols-sm="2">
-        <b-form-input v-model="defaultValue" :disabled="!otherTypeSelected"/>
+        <b-form-input v-model="defaultValue" :disabled="typeSelected !== 'other'" />
       </b-form-group>
     </b-form-group>
   </b-tab>
@@ -45,11 +45,13 @@
 
 <script>
 import { store } from '../store.js'
+import ScriptInputTypeMixin from './mixins/ScriptInputTypeMixin.js'
 
 // import { ValidationProvider } from 'vee-validate'
 
 export default {
   name: 'ScriptInputTypeOther',
+  mixins: [ScriptInputTypeMixin],
   components: {
     // ValidationProvider
   },
@@ -64,48 +66,8 @@ export default {
   created () {
     this.thisScriptInput = store.getScriptInputById(this.id)
   },
-  data () {
-    return {
-      thisScriptInput: {},
-      dataType: 'other',
-      dataSubtype: '',
-      otherTypeSelected: false,
-      isValueRequired: false,
-      defaultValue: '',
-      totalValidations: 0
-    }
-  },
-  watch: {
-    defaultValue: function (val, oldVal) {
-      if (oldVal.length === 0 && val.length > 0) {
-        this.totalValidations = this.totalValidations + 1
-      } else if (oldVal.length > 0 && val.length === 0) {
-        this.totalValidations = this.totalValidations - 1
-      }
-
-      console.log('New default value: [' + val + '].')
-    },
-    isValueRequired: function (val, oldVal) {
-      if (val !== oldVal) {
-        if (val) {
-          this.totalValidations = this.totalValidations + 1
-        } else {
-          this.totalValidations = this.totalValidations - 1
-        }
-      }
-    }
-  },
-  methods: {
-    typeSelected: function (otherTypeCheckboxValue) {
-      if (otherTypeCheckboxValue) {
-        this.dataType = 'other'
-        this.totalValidations = 1
-      } else {
-        this.dataType = ''
-        this.totalValidations = 0
-      }
-    }
-  }
+  watch: { },
+  methods: { }
 }
 </script>
 

@@ -55,7 +55,7 @@
         <b-form-group label="Defaulted to" label-cols="3">
           <b-row no-gutters>
             <b-col cols="5">
-              <b-form-input v-model="defaultValue" :disabled="!stringTypeSelected" />
+              <b-form-input v-model="defaultValue" :disabled="typeSelected !== 'string'" />
             </b-col>
             <b-col cols="4">
             </b-col>
@@ -94,15 +94,6 @@ export default {
     this.thisScriptInput = store.getScriptInputById(this.id)
   },
   watch: {
-    defaultValue: function (val, oldVal) {
-      if (oldVal.length === 0 && val.length > 0) {
-        this.totalValidations = this.totalValidations + 1
-      } else if (oldVal.length > 0 && val.length === 0) {
-        this.totalValidations = this.totalValidations - 1
-      }
-
-      console.log('New default value: [' + val + '].')
-    },
     dataSubtype: function (val, oldVal) {
       if (val !== oldVal) {
         if (val === 'plain-string') {

@@ -77,15 +77,16 @@ export default {
   },
   computed: {
     totalValidations: function () {
-      return this.validations.length
+      if (this.validations !== null) {
+        return 0
+      } else {
+        return this.validations.length
+      }
     }
   },
   methods: {
     hello: function () {
       console.log('hello from mixin!  ' + this.validations.length)
-    },
-    changeValueRequired: function (isValueRequired) {
-      console.log('changeValueRequired:  ' + isValueRequired)
     },
     changeTypeSelected: function (event, val) {
       if (event) {

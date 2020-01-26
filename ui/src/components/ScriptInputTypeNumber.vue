@@ -26,28 +26,17 @@
       label-class="pt-0"
       class="mb-0">
       <b-form-group>
-        <b-form-checkbox v-model="numberTypeSelected" name="check-button" @change="typeSelected" switch>
-          {{ numberTypeSelected ? 'A number' : 'Not a number' }}
+        <b-form-checkbox @change="changeTypeSelected($event, 'number')" switch>
+          {{ typeSelected === 'number' ? 'A number' : 'Not a number' }}
         </b-form-checkbox>
       </b-form-group>
       <b-form-group>
-        <b-form-checkbox v-model="numericRequired" name="check-button" :disabled="!numberTypeSelected" switch>
-          {{ numericRequired ? 'Required' : 'Not required' }}
+        <b-form-checkbox name="check-button" @change="changeIsValueRequired($event)" :disabled="typeSelected !== 'number'" switch>
+          {{ isValueRequired ? 'Required' : 'Not required' }}
         </b-form-checkbox>
       </b-form-group>
-      <b-form-group>
-        <b-form-checkbox v-model="signed" name="check-button" :disabled="!numberTypeSelected" switch>
-          {{ signed ? 'Signed' : 'Unsigned' }}
-        </b-form-checkbox>
-      </b-form-group>
-      <b-form-group label="at least" v-model="numericAtLeast" label-cols-sm="2" :disabled="!numberTypeSelected">
-        <b-form-input/>
-      </b-form-group>
-      <b-form-group label="at most" v-model="numericAtMost" label-cols-sm="2" :disabled="!numberTypeSelected">
-        <b-form-input/>
-      </b-form-group>
-      <b-form-group label="Defaulted to" v-model="numericDefault" label-cols-sm="2" :disabled="!numberTypeSelected">
-        <b-form-input/>
+      <b-form-group label="Defaulted to" label-cols-sm="2">
+        <b-form-input v-model="defaultValue" :disabled="typeSelected !== 'numeric'" />
       </b-form-group>
     </b-form-group>
   </b-tab>
@@ -56,10 +45,13 @@
 
 <script>
 import { store } from '../store.js'
+import ScriptInputTypeMixin from './mixins/ScriptInputTypeMixin.js'
+
 // import { ValidationProvider } from 'vee-validate'
 
 export default {
   name: 'ScriptInputTypeNumber',
+  mixins: [ScriptInputTypeMixin],
   components: {
     // ValidationProvider
   },
@@ -74,33 +66,8 @@ export default {
   created () {
     this.thisScriptInput = store.getScriptInputById(this.id)
   },
-  data () {
-    return {
-      thisScriptInput: {},
-      dataType: '',
-      dataSubtype: '',
-      defaultValue: '',
-      isValueRequired: false,
-      numberTypeSelected: false,
-      signed: false,
-      numericRequired: false,
-      numericDefault: '',
-      numericAtMost: '',
-      numericAtLeast: '',
-      totalValidations: 0
-    }
-  },
-  methods: {
-    typeSelected: function (numberTypeCheckboxValue) {
-      if (numberTypeCheckboxValue) {
-        this.dataType = 'Integer'
-        this.totalValidations = 1
-      } else {
-        this.dataType = ''
-        this.totalValidations = 0
-      }
-    }
-  }
+  watch: { },
+  methods: { }
 }
 </script>
 
