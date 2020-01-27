@@ -75,6 +75,7 @@ export default {
   },
   created () {
     this.thisScriptInput = store.getScriptInput(this.id)
+    this.validations = this.thisScriptInput.validations
   },
   watch: { },
   methods: { }

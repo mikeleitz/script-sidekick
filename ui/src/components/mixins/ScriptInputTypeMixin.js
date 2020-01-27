@@ -45,40 +45,29 @@ export default {
   },
   data () {
     return {
+      thisScriptInput: {},
       isValueRequired: false,
       typeSelected: '',
       defaultValue: '',
-      regexValue: '',
-      dataSubtype: '',
-      thisScriptInput: {},
-      validations: [ ]
+      validations: [ ],
+      totalValidations: 0
     }
   },
   watch: {
     defaultValue: function (val, oldVal) {
       console.log('New default value: [' + val + '].')
-    },
-    isValueRequired: function (val, oldVal) {
-      console.log('isValueRequired: [' + val + '].')
     }
   },
-  computed: {
-    totalValidations: function () {
-      if (this.validations !== null) {
-        return 0
-      } else {
-        return this.validations.length
-      }
-    }
-  },
+  computed: { },
   methods: {
     changeTypeSelected: function (event, val) {
-      console.log('Current type selected: [' + this.typeSelected + ']. User just selected: [' + val + '].')
+      let selectedType = val
+
+      console.log('Current type selected: [' + this.typeSelected + ']. User just selected: [' + selectedType + '].')
 
       if (event) {
-        let selectedType = val
         if (selectedType !== this.typeSelected) {
-          console.log('New type selected. Changing type from [' + this.typeSelected + '] to [' + val + '].')
+          console.log('New type selected. Changing type from [' + this.typeSelected + '] to [' + selectedType + '].')
           this.resetType()
           this.typeSelected = selectedType
         } else {
@@ -94,8 +83,20 @@ export default {
     changeIsValueRequired: function (event) {
       if (event) {
         this.isValueRequired = event
+
+        let index = this.validations.findIndex(val => val.id === ValidationTypes.REQUIRED.id)
+        if (index === -1 || index === undefined) {
+          this.validations.unshift(ValidationTypes.REQUIRED)
+          this.totalValidations = this.totalValidations + 1
+        }
       } else {
         this.isValueRequired = false
+
+        let index = this.validations.findIndex(validation => validation.id === ValidationTypes.REQUIRED.id)
+        if (index !== -1) {
+          this.validations.splice(index, 1)
+          this.totalValidations = this.totalValidations - 1
+        }
       }
 
       console.log('isValueRequired: [' + this.isValueRequired + '].')

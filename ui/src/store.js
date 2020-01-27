@@ -55,7 +55,7 @@ export const store = {
   getAllScriptInputs: function () {
 
   },
-  addValidation: function (scriptInputId, validationId, validation) {
+  addValidation: function (scriptInputId, validation) {
 
   },
   removeValidation: function (scriptInputId, validationId, validation) {
