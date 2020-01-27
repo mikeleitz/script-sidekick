@@ -75,8 +75,6 @@ export default {
         }
       } else {
         console.log('Current type [' + this.typeSelected + '] is now disabled.')
-
-        this.typeSelected = null
         this.resetType()
       }
     },
@@ -102,7 +100,11 @@ export default {
       console.log('isValueRequired: [' + this.isValueRequired + '].')
     },
     resetType: function () {
+      this.isValueRequired = false
+
       this.validations.splice(0, this.validations.length)
+      this.typeSelected = null
+      this.totalValidations = 0
     }
   }
 }

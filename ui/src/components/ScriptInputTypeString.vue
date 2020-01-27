@@ -31,7 +31,7 @@
           </b-form-checkbox>
         </b-form-group>
         <b-form-group>
-          <b-form-checkbox name="check-button" @change="changeIsValueRequired($event)" :disabled="typeSelected !== 'string'" switch>
+          <b-form-checkbox name="check-button" v-model="isValueRequired" @change="changeIsValueRequired($event)" :disabled="typeSelected !== 'string'" switch>
             {{ isValueRequired ? 'Required' : 'Not required' }}
           </b-form-checkbox>
         </b-form-group>
