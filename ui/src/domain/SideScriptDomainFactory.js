@@ -130,7 +130,7 @@ let BashValidation = function (id) {
     if (this.hasArg(key)) {
       console.log('Arg key [' + key + '] already exists for BashValidation id [' + this.id + ']. Not adding it.')
     } else {
-      this.validations.unshift({ 'key': key, 'value': value })
+      this.args.unshift({ 'key': key, 'value': value })
 
       console.log('Added arg key [' + key + '] BashValidation id [' + this.id + '] now has total args: [' + this.totalArgs() + '].')
     }
