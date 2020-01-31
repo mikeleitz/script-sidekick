@@ -25,14 +25,15 @@ A BashOption has zero or more BashValidations.
 These objects will be deserialized to JSON and sent to the relevant service.
 */
 
-import { ValidationTypes } from '../components/mixins/ScriptInputTypeMixin'
+// import { ValidationTypes } from '../components/mixins/ScriptInputTypeMixin'
 
 let BashScript = function () {
   this.domainObjectType = 'bash-script'
 
-  this.longName = 'abc'
-  this.shortName = 'xyz'
-  this.helpText = '123'
+  this.id = null
+  this.scriptName = ''
+  this.shellType = 'BASH'
+
   this.bashOptions = [] // BashOption objects
 
   this.addOption = function (bashOption) {

@@ -14,6 +14,8 @@
  *  limitations under the License.
  */
 
+import { DomainFactory } from './domain/SideScriptDomainFactory.js'
+
 export const store = {
   state: {
     nextTempId: -1,
@@ -24,7 +26,8 @@ export const store = {
       shellType: 'BASH',
       scriptInputs: [
       ]
-    }
+    },
+    scriptInProgress: DomainFactory.createBashScript()
   },
   getNextScriptId: function () {
     let newScriptId = this.state.nextTempId
