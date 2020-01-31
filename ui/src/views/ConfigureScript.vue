@@ -1,5 +1,5 @@
 <!--
-  -  Copyright (c) 2019, Michael Leitz
+  -  Copyright (c) 2020, Michael Leitz
   -  <p/>
   -  Licensed under the Apache License, Version 2.0 (the "License");
   -  you may not use this file except in compliance with the License.
@@ -34,13 +34,13 @@
             <b-form-group label="Name">
               <ValidationProvider name="Name" rules="required|lengthBetween:3,50" v-slot="{ errors }">
 
-                <b-form-input placeholder="Script Name" v-model="scriptForm.scriptName"/>
+                <b-form-input placeholder="Script Name" v-model="scriptInProgress.scriptName"/>
                 <span>{{ errors[0] }}</span>
               </ValidationProvider>
             </b-form-group>
 
             <b-form-group label="Shell">
-              <b-form-radio v-model="scriptForm.shellType" name="scriptShell" value="BASH" checked>Bash</b-form-radio>
+              <b-form-radio v-model="scriptInProgress.shellType" name="scriptShell" value="BASH" checked>Bash</b-form-radio>
             </b-form-group>
           </fieldset>
 
@@ -66,12 +66,12 @@
               <hr>
             </div>
 
-            <div v-for="(scriptInput, index) in scriptForm.scriptInputs"
-                 v-bind:item="scriptInput"
+            <div v-for="(bashOption, index) in scriptInProgress.bashOptions"
+                 v-bind:item="bashOption"
                  v-bind:index="index"
-                 :key="scriptInput.id">
+                 v-bind:key="bashOption.id" >
 
-              <ScriptInput :id="scriptInput.id"/>
+              <ScriptInput :id="bashOption.id" :bashOption="bashOption"/>
 
               <b-form-group>
                 <b-button variant="outline-danger" size="sm" @click="removeScriptInputById(scriptInput.id)">Remove this
@@ -101,6 +101,7 @@ import ScriptInput from '@/components/ScriptInput.vue'
 import axios from 'axios'
 
 import { store } from '../store.js'
+import { DomainFactory } from '../domain/SideScriptDomainFactory.js'
 
 import { ValidationObserver, ValidationProvider, extend } from 'vee-validate'
 import { required } from 'vee-validate/dist/rules'
@@ -135,21 +136,25 @@ export default {
       verboseCommandId: store.state.verboseCommandId,
       isQuietCommandPushed: false,
       quietCommandId: store.state.quietCommandId,
-      scriptForm: store.state.scriptForm
+      scriptInProgress: store.state.scriptInProgress
     }
   },
   created () {
     this.getStatus()
+    let scriptId = store.getNextScriptId()
+    // AFAICT we have to create the initial BashScript domain object in the store.js
+    // We set the id when the page is initially created.
+    this.scriptInProgress.id = scriptId
   },
   watch: {
-    // call again the method if the route changes
+    // call the status method again if the route changes
     '$route': 'getStatus'
   },
   methods: {
     getStatus: function () {
       this.loading = true
       axios({
-        url: 'http://sidescript-service.mikeleitz.com:8080/status',
+        url: 'http://localhost:8080/status',
         method: 'GET'
       }).then(result => {
         this.generatorStatus = result.data.status
@@ -161,60 +166,65 @@ export default {
     },
     onSubmit: function () {
       axios({
-        url: `http://sidescript-service.mikeleitz.com:8080/`,
+        url: `http://localhost:8080/`,
         method: 'POST',
-        data: this.scriptForm,
+        data: this.scriptInProgress.toJson(),
         responseType: 'blob'
       }).then(response => {
         const url = window.URL.createObjectURL(new Blob([response.data]))
         const link = document.createElement('a')
         link.href = url
-        link.setAttribute('download', this.scriptForm.scriptName + '.sh')
+        link.setAttribute('download', this.scriptInProgress.scriptName + '.sh')
         document.body.appendChild(link)
         link.click()
       }).catch(e => { this.errors.push(e) })
     },
     quickAddVerbose: function () {
       if (!this.isVerboseCommandPushed) {
-        let newScriptId = store.getNextScriptId()
-        this.verboseCommandId = newScriptId
-        this.scriptForm.scriptInputs.unshift({
-          id: newScriptId,
-          longName: 'verbose',
-          shortName: 'v',
-          decree: false,
-          helpText: 'Maximum script output.'
-        })
+        this.verboseCommandId = store.getNextScriptId()
+
+        let verboseOption = DomainFactory.createBashOption(this.verboseCommandId)
+        verboseOption.longName = 'verbose'
+        verboseOption.shortName = 'v'
+        verboseOption.helpText = 'Maximum script output.'
+
+        this.scriptInProgress.addOption(verboseOption)
         this.isVerboseCommandPushed = true
       } else {
-        this.removeScriptInputById(this.verboseCommandId)
+        let verboseOption = this.scriptInProgress.getOptionById(this.verboseCommandId)
+        this.scriptInProgress.removeOption(verboseOption)
+
         this.isVerboseCommandPushed = false
       }
     },
     quickAddQuiet: function () {
       if (!this.isQuietCommandPushed) {
-        let newScriptId = store.getNextScriptId()
-        this.quietCommandId = newScriptId
-        this.scriptForm.scriptInputs.unshift({
-          id: newScriptId,
-          longName: 'quiet',
-          shortName: 'q',
-          decree: false,
-          helpText: 'Quiet mode.  No output.'
-        })
+        this.quietCommandId = store.getNextScriptId()
+
+        let quietOption = DomainFactory.createBashOption(this.quietCommandId)
+        quietOption.longName = 'quiet'
+        quietOption.shortName = 'q'
+        quietOption.helpText = 'Quiet mode.  No output.'
+
+        this.scriptInProgress.addOption(quietOption)
+
         this.isQuietCommandPushed = true
       } else {
-        this.removeScriptInputById(this.quietCommandId)
+        let quietOption = this.scriptInProgress.getOptionById(this.quietCommandId)
+        this.scriptInProgress.removeOption(quietOption)
+
         this.isQuietCommandPushed = false
       }
     },
     addScriptInput: function () {
       let newScriptId = store.getNextScriptId()
-      this.scriptForm.scriptInputs.unshift({ id: newScriptId, longName: '', shortName: '', decree: false, helpText: '' })
+      let newBashOption = DomainFactory.createBashOption(newScriptId)
+
+      this.scriptInProgress.addOption(newBashOption)
     },
     removeScriptInputById: function (id) {
-      let index = this.scriptForm.scriptInputs.findIndex(scriptInput => scriptInput.id === id)
-      this.$delete(this.scriptForm.scriptInputs, index)
+      let optionToRemove = this.scriptInProgress.getOptionById(id)
+      this.scriptInProgress.removeOption(optionToRemove)
 
       if (id === this.quietCommandId) {
         this.isQuietCommandPushed = false

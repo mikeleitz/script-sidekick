@@ -52,6 +52,13 @@ let BashScript = function () {
     return existingOptionIndex
   }
 
+  this.getOptionById = function (id) {
+    let optionIndex = this.bashOptions.findIndex(arrayOption => arrayOption.id === id)
+    let option = this.bashOptions[optionIndex]
+
+    return option
+  }
+
   this.hasOption = function (bashOption) {
     let existingOptionIndex = this.getOptionIndex(bashOption)
 
@@ -78,8 +85,11 @@ let BashOption = function (id) {
   this.domainObjectType = 'bash-option'
 
   this.id = id
+  this.longName = ''
+  this.shortName = ''
   this.type = ''
   this.default = ''
+  this.helpText = ''
   this.validations = [] // BashValidation objects
 
   this.addValidation = function (bashValidation) {

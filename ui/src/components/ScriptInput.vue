@@ -85,14 +85,20 @@ export default {
       required: false,
       type: Number,
       default: -1
+    },
+    bashOption: {
+      required: false,
+      type: Object
     }
   },
   created () {
-    this.thisScriptInput = store.getScriptInput(this.id)
+    // this.thisScriptInput = store.scriptInProgress.getOptionById(this.id)
+    console.log('creating option ui for option id ' + this.id)
+    console.log('creating option ui ' + this.bashOption.toJson())
   },
   data () {
     return {
-      thisScriptInput: {}
+      thisScriptInput: this.bashOption
     }
   },
   methods: {
