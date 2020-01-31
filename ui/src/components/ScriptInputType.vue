@@ -19,10 +19,10 @@
                   label-for="input-type-selection">
       <b-card no-body>
         <b-tabs :card="true" :noFade="false">
-          <ScriptInputTypeString :id="thisScriptInput.id" />
-          <ScriptInputTypeNumber :id="thisScriptInput.id" />
-          <ScriptInputTypeBoolean :id="thisScriptInput.id" />
-          <ScriptInputTypeOther :id="thisScriptInput.id" />
+          <ScriptInputTypeString :id="thisScriptInput.id" :bashOption="this.bashOption"/>
+          <ScriptInputTypeNumber :id="thisScriptInput.id" :bashOption="this.bashOption" />
+          <ScriptInputTypeBoolean :id="thisScriptInput.id" :bashOption="this.bashOption" />
+          <ScriptInputTypeOther :id="thisScriptInput.id" :bashOption="this.bashOption" />
         </b-tabs>
       </b-card>
     </b-form-group>
@@ -54,14 +54,17 @@ export default {
       required: false,
       type: Number,
       default: -1
+    },
+    bashOption: {
+      required: false,
+      type: Object
     }
   },
   created () {
-    this.thisScriptInput = store.getScriptInput(this.id)
   },
   data () {
     return {
-      thisScriptInput: {}
+      thisScriptInput: this.bashOption
     }
   },
   methods: {

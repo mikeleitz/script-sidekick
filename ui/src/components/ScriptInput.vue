@@ -30,7 +30,7 @@
       </ValidationProvider>
     </b-form-group>
 
-    <ScriptInputType :id="thisScriptInput.id"/>
+    <ScriptInputType :id="thisScriptInput.id" :bashOption="this.bashOption"/>
 
     <b-form-group label="Help text">
       <ValidationProvider name="Help text" rules="max:80" v-slot="{ errors }">
@@ -92,8 +92,6 @@ export default {
     }
   },
   created () {
-    // this.thisScriptInput = store.scriptInProgress.getOptionById(this.id)
-    console.log('creating option ui for option id ' + this.id)
     console.log('creating option ui ' + this.bashOption.toJson())
   },
   data () {

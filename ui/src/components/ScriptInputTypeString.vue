@@ -71,10 +71,14 @@ export default {
       required: false,
       type: Number,
       default: -1
+    },
+    bashOption: {
+      required: false,
+      type: Object
     }
   },
   created () {
-    this.thisScriptInput = store.getScriptInput(this.id)
+    this.thisScriptInput = this.bashOption
     this.validations = this.thisScriptInput.validations
   },
   watch: { },
