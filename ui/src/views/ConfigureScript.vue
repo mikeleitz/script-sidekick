@@ -165,33 +165,18 @@ export default {
       })
     },
     onSubmit: function () {
-      let s = this.scriptInProgress
-      alert('script in progress' + s)
-      alert('script in progress json' + s.toJson())
-      let payload = s.toJson()
+      // let s = this.scriptInProgress
+      // alert('script in progress' + s)
+      // alert('script in progress json' + s.toJson())
+      // let payload = s.toJson()
       axios({
         url: 'http://localhost:8080/printJson',
         method: 'POST',
-        data: payload
+        data: this.scriptInProgress
       }).then(result => {
       }, error => {
         console.error(error)
       })
-/*
-      axios({
-        url: `http://localhost:8080/`,
-        method: 'POST',
-        data: this.scriptInProgress.toJson(),
-        responseType: 'blob'
-      }).then(response => {
-        const url = window.URL.createObjectURL(new Blob([response.data]))
-        const link = document.createElement('a')
-        link.href = url
-        link.setAttribute('download', this.scriptInProgress.scriptName + '.sh')
-        document.body.appendChild(link)
-        link.click()
-      }).catch(e => { this.errors.push(e) })
-*/
     },
     quickAddVerbose: function () {
       if (!this.isVerboseCommandPushed) {

@@ -36,12 +36,15 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController("/")
 public class CreateScriptUiController {
+    private BashService bashService;
+
     @Autowired
-    BashService bashService;
+    public CreateScriptUiController(BashService bashService) {
+        this.bashService = bashService;
+    }
 
     @GetMapping(path = "status")
-    public @ResponseBody
-    String getGeneratorStatus() {
+    public @ResponseBody String getGeneratorStatus() {
         JSONObject jo = new JSONObject();
         jo.put("status", "Ready");
 
@@ -57,8 +60,7 @@ public class CreateScriptUiController {
     @PostMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    public @ResponseBody
-    byte[] createScript(@RequestBody BashScriptConfiguration configuration) {
+    public @ResponseBody byte[] createScript(@RequestBody BashScriptConfiguration configuration) {
         log.info("Received create script request for data [{}].", configuration);
 
         configuration.addScriptInput(BashOption.HELP);
@@ -67,10 +69,5 @@ public class CreateScriptUiController {
         byte[] returnValue = StringUtils.getBytesUtf8(scriptContents);
 
         return returnValue;
-    }
-
-    @PostMapping(path = "printJson", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public void testJson(@RequestBody String bashScriptDomainJson) {
-        log.info("Received create script request for data [{}].", bashScriptDomainJson);
     }
 }
