@@ -190,8 +190,13 @@ export const DomainFactory = {
 
     return bashScript
   },
-  createBashOption: function (pId = undefined) {
+  createBashOption: function (pId = undefined, pLongName = '', pShortName = '', pHelpText = '') {
     let bashOption = new BashOption(pId)
+
+    bashOption.longName = pLongName
+    bashOption.shortName = pShortName
+    bashOption.helpText = pHelpText
+
     this.addCommonMethods(bashOption)
 
     return bashOption

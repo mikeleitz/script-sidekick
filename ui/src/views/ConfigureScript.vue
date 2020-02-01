@@ -183,10 +183,7 @@ export default {
       if (!this.isVerboseCommandPushed) {
         this.verboseCommandId = store.getNextScriptId()
 
-        let verboseOption = DomainFactory.createBashOption(this.verboseCommandId)
-        verboseOption.longName = 'verbose'
-        verboseOption.shortName = 'v'
-        verboseOption.helpText = 'Maximum script output.'
+        let verboseOption = DomainFactory.createBashOption(this.verboseCommandId, 'verbose', 'v', 'Maximum script logging.')
 
         this.scriptInProgress.addOption(verboseOption)
         this.isVerboseCommandPushed = true
@@ -201,10 +198,7 @@ export default {
       if (!this.isQuietCommandPushed) {
         this.quietCommandId = store.getNextScriptId()
 
-        let quietOption = DomainFactory.createBashOption(this.quietCommandId)
-        quietOption.longName = 'quiet'
-        quietOption.shortName = 'q'
-        quietOption.helpText = 'Quiet mode.  No output.'
+        let quietOption = DomainFactory.createBashOption(this.quietCommandId, 'quiet', 'q', 'Quiet mode.  No output.')
 
         this.scriptInProgress.addOption(quietOption)
 
