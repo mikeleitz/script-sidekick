@@ -26,18 +26,19 @@ import java.util.Set;
  */
 @Data
 public class BashScriptConfiguration {
+    private Long id;
     private String scriptName;
     private ShellOptionEnum shellType;
-    private Set<BashOption> scriptInputs;
+    private Set<BashOption> bashOptions;
     private String author = "";
     private String version = "";
     private String purpose = "";
 
     public void addScriptInput(BashOption bashOption) {
-        if (scriptInputs == null) {
-            scriptInputs = new HashSet<>();
+        if (bashOptions == null) {
+            bashOptions = new HashSet<>();
         }
 
-        scriptInputs.add(bashOption);
+        bashOptions.add(bashOption);
     }
 }

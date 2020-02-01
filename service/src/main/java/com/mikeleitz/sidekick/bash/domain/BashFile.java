@@ -49,11 +49,11 @@ public class BashFile extends ApplicationFile {
         ShebangBashSnippet shebangBashSnippet = new ShebangBashSnippet(snippetContext, bashScriptConfiguration.getShellType());
         LoggingBashSnippet loggingBashSnippet = new LoggingBashSnippet(snippetContext);
 
-        InputBashSnippet inputBashSnippet = new InputBashSnippet(snippetContext, bashScriptConfiguration.getScriptInputs());
+        InputBashSnippet inputBashSnippet = new InputBashSnippet(snippetContext, bashScriptConfiguration.getBashOptions());
         ProcessingBashSnippet processingBashSnippet = new ProcessingBashSnippet(snippetContext);
 
         HelpBashSnippet helpBashSnippet = new HelpBashSnippet(snippetContext,
-                bashScriptConfiguration.getScriptInputs(),
+                bashScriptConfiguration.getBashOptions(),
                 bashScriptConfiguration.getAuthor(),
                 bashScriptConfiguration.getShellType(),
                 bashScriptConfiguration.getScriptName(),

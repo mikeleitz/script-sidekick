@@ -25,17 +25,17 @@ import java.io.IOException;
 /**
  * @author leitz@mikeleitz.com
  */
-public class BashValidationFactory extends ValidationFactory<BashValidationEnum> {
+public class BashValidationFactory extends ValidationFactory {
 
     @Override
-    public Snippet createValidationSnippet(BashValidationEnum validationType, SnippetContext snippetContext, ApplicationInput applicationInput) throws IOException {
+    public Snippet createValidationSnippet(BashValidation validationType, SnippetContext snippetContext, ApplicationInput applicationInput) throws IOException {
         Snippet returnValue = null;
 
-        switch (validationType) {
-            case NOT_NULL:
+        switch (validationType.getName()) {
+            case "notnull":
                 returnValue = createNewNotNullBashValidation(snippetContext, applicationInput);
                 break;
-            case TRIM_WHITESPACE:
+            case "trim":
                 returnValue = createNewTrimBashValidation(snippetContext, applicationInput);
                 break;
             default:

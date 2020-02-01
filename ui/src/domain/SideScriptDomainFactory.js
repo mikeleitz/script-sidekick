@@ -88,7 +88,7 @@ let BashOption = function (pId = undefined) {
   this.longName = ''
   this.shortName = ''
   this.type = ''
-  this.default = ''
+  this.defaultValue = ''
   this.helpText = ''
   this.validations = [] // BashValidation objects
 

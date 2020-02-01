@@ -15,9 +15,16 @@
  */
 package com.mikeleitz.sidekick.bash.snippet.validation;
 
+import lombok.Data;
+
+import java.util.Map;
+
 /**
  * @author leitz@mikeleitz.com
  */
-public enum BashValidationEnum {
-    NOT_NULL, TRIM_WHITESPACE
+@Data
+public class BashValidation {
+    private Long id;
+    private String name;
+    private Map<String, String> args;
 }

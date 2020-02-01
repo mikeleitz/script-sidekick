@@ -16,12 +16,13 @@
 package com.mikeleitz.sidekick.base;
 
 import com.mikeleitz.sidekick.base.application.ApplicationInput;
+import com.mikeleitz.sidekick.bash.snippet.validation.BashValidation;
 
 import java.io.IOException;
 
 /**
  * @author leitz@mikeleitz.com
  */
-public abstract class ValidationFactory<E extends Enum<E>> {
-    public abstract Snippet createValidationSnippet(E validationType, SnippetContext snippetContext, ApplicationInput applicationInput) throws IOException;
+public abstract class ValidationFactory {
+    public abstract Snippet createValidationSnippet(BashValidation validationType, SnippetContext snippetContext, ApplicationInput applicationInput) throws IOException;
 }

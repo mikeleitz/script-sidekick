@@ -165,12 +165,8 @@ export default {
       })
     },
     onSubmit: function () {
-      // let s = this.scriptInProgress
-      // alert('script in progress' + s)
-      // alert('script in progress json' + s.toJson())
-      // let payload = s.toJson()
       axios({
-        url: 'http://localhost:8080/printJson',
+        url: 'http://localhost:8080/',
         method: 'POST',
         data: this.scriptInProgress
       }).then(result => {
