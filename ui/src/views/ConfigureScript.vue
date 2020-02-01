@@ -74,7 +74,7 @@
               <ScriptInput :id="bashOption.id" :bashOption="bashOption"/>
 
               <b-form-group>
-                <b-button variant="outline-danger" size="sm" @click="removeScriptInputById(scriptInput.id)">Remove this
+                <b-button variant="outline-danger" size="sm" @click="removeScriptInputById(bashOption.id)">Remove this
                   input
                 </b-button>
               </b-form-group>
