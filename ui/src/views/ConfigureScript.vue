@@ -168,11 +168,16 @@ export default {
       axios({
         url: 'http://localhost:8080/',
         method: 'POST',
-        data: this.scriptInProgress
-      }).then(result => {
-      }, error => {
-        console.error(error)
-      })
+        data: this.scriptInProgress,
+        responseType: 'blob'
+      }).then(response => {
+        const url = window.URL.createObjectURL(new Blob([response.data]))
+        const link = document.createElement('a')
+        link.href = url
+        link.setAttribute('download', this.scriptInProgress.scriptName + '.sh')
+        document.body.appendChild(link)
+        link.click()
+      }).catch(e => { this.errors.push(e) })
     },
     quickAddVerbose: function () {
       if (!this.isVerboseCommandPushed) {
