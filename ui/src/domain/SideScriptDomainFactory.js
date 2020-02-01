@@ -27,12 +27,12 @@ These objects will be deserialized to JSON and sent to the relevant service.
 
 // import { ValidationTypes } from '../components/mixins/ScriptInputTypeMixin'
 
-let BashScript = function () {
+let BashScript = function (pIid = undefined, pScriptName = '', pShellType = 'BASH') {
   this.domainObjectType = 'bash-script'
 
-  this.id = null
-  this.scriptName = ''
-  this.shellType = 'BASH'
+  this.id = pIid
+  this.scriptName = pScriptName
+  this.shellType = pShellType
 
   this.bashOptions = [] // BashOption objects
 
@@ -81,10 +81,10 @@ let BashScript = function () {
   }
 }
 
-let BashOption = function (id) {
+let BashOption = function (pId = undefined) {
   this.domainObjectType = 'bash-option'
 
-  this.id = id
+  this.id = pId
   this.longName = ''
   this.shortName = ''
   this.type = ''
@@ -130,12 +130,12 @@ let BashOption = function (id) {
   }
 }
 
-let BashValidation = function (id) {
+let BashValidation = function (pId = undefined, pName = '', pArgs = []) {
   this.domainObjectType = 'bash-validation'
 
-  this.id = id
-  this.name = ''
-  this.args = [] // Key value array
+  this.id = pId
+  this.name = pName
+  this.args = pArgs // Key value array
 
   this.addArgs = function (key, value) {
     if (this.hasArg(key)) {
@@ -184,19 +184,22 @@ export const DomainFactory = {
       return JSON.stringify(this)
     }
   },
-  createBashScript: function () {
-    let bashScript = new BashScript()
+  createBashScript: function (pId = undefined, pScriptName = '', pShellType = 'BASH') {
+    let bashScript = new BashScript(pId, pScriptName, pShellType)
     this.addCommonMethods(bashScript)
+
     return bashScript
   },
-  createBashOption: function (id) {
-    let bashOption = new BashOption(id)
+  createBashOption: function (pId = undefined) {
+    let bashOption = new BashOption(pId)
     this.addCommonMethods(bashOption)
+
     return bashOption
   },
-  createBashValidation: function (id) {
-    let bashValidation = new BashValidation(id)
+  createBashValidation: function (pId = undefined, pName = '', pArgs = []) {
+    let bashValidation = new BashValidation(pId, pName, pArgs)
     this.addCommonMethods(bashValidation)
+
     return bashValidation
   }
 }
