@@ -36,7 +36,7 @@
         </b-form-checkbox>
       </b-form-group>
       <b-form-group label="Defaulted to" label-cols-sm="2" >
-        <b-form-input v-model="thisScriptInput.type.defaultValue" :disabled="thisScriptInput.type !== 'boolean'"/>
+        <b-form-input v-model="thisScriptInput.defaultValue" :disabled="thisScriptInput.type !== 'boolean'"/>
       </b-form-group>
     </b-form-group>
   </b-tab>
