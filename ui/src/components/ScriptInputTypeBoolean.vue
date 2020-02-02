@@ -27,16 +27,16 @@
       class="mb-0">
       <b-form-group>
         <b-form-checkbox name="check-button" @change="changeTypeSelected($event, 'boolean')" switch>
-          {{ typeSelected === 'boolean' ? 'A boolean' : 'Not a boolean' }}
+          {{ thisScriptInput.type === 'boolean' ? 'A boolean' : 'Not a boolean' }}
         </b-form-checkbox>
       </b-form-group>
       <b-form-group>
-        <b-form-checkbox name="check-button" @change="changeIsValueRequired($event)" :disabled="typeSelected !== 'boolean'" switch>
+        <b-form-checkbox name="check-button" @change="changeIsValueRequired($event)" :disabled="thisScriptInput.type !== 'boolean'" switch>
           {{ isValueRequired ? 'Required' : 'Not required' }}
         </b-form-checkbox>
       </b-form-group>
       <b-form-group label="Defaulted to" label-cols-sm="2" >
-        <b-form-input v-model="defaultValue" :disabled="typeSelected !== 'boolean'"/>
+        <b-form-input v-model="thisScriptInput.type.defaultValue" :disabled="thisScriptInput.type !== 'boolean'"/>
       </b-form-group>
     </b-form-group>
   </b-tab>

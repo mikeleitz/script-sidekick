@@ -27,16 +27,16 @@
       class="mb-0">
       <b-form-group>
         <b-form-checkbox @change="changeTypeSelected($event, 'number')" switch>
-          {{ typeSelected === 'number' ? 'A number' : 'Not a number' }}
+          {{ thisScriptInput.type === 'number' ? 'A number' : 'Not a number' }}
         </b-form-checkbox>
       </b-form-group>
       <b-form-group>
-        <b-form-checkbox name="check-button" @change="changeIsValueRequired($event)" :disabled="typeSelected !== 'number'" switch>
+        <b-form-checkbox name="check-button" @change="changeIsValueRequired($event)" :disabled="thisScriptInput.type !== 'number'" switch>
           {{ isValueRequired ? 'Required' : 'Not required' }}
         </b-form-checkbox>
       </b-form-group>
       <b-form-group label="Defaulted to" label-cols-sm="2">
-        <b-form-input v-model="defaultValue" :disabled="typeSelected !== 'numeric'" />
+        <b-form-input v-model="thisScriptInput.type.defaultValue" :disabled="thisScriptInput.type !== 'numeric'" />
       </b-form-group>
     </b-form-group>
   </b-tab>
@@ -44,16 +44,12 @@
 </template>
 
 <script>
-import { store } from '../store.js'
 import ScriptInputTypeMixin from './mixins/ScriptInputTypeMixin.js'
-
-// import { ValidationProvider } from 'vee-validate'
 
 export default {
   name: 'ScriptInputTypeNumber',
   mixins: [ScriptInputTypeMixin],
   components: {
-    // ValidationProvider
   },
   props: {
     // Script input id for this type component.

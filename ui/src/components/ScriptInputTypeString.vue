@@ -27,18 +27,18 @@
         class="mb-0">
         <b-form-group>
           <b-form-checkbox name="check-button" @change="changeTypeSelected($event, 'string')" switch>
-            {{ this.thisScriptInput.type === 'string' ? 'A string' : 'Not a string' }}
+            {{ thisScriptInput.type === 'string' ? 'A string' : 'Not a string' }}
           </b-form-checkbox>
         </b-form-group>
         <b-form-group>
-          <b-form-checkbox name="check-button" v-model="isValueRequired" @change="changeIsValueRequired($event)" :disabled="this.thisScriptInput.type !== 'string'" switch>
+          <b-form-checkbox name="check-button" @change="changeIsValueRequired($event)" :disabled="thisScriptInput.type !== 'string'" switch>
             {{ isValueRequired ? 'Required' : 'Not required' }}
           </b-form-checkbox>
         </b-form-group>
         <b-form-group label="Defaulted to" label-cols="3">
           <b-row no-gutters>
             <b-col cols="5">
-              <b-form-input v-model="this.thisScriptInput.defaultValue" :disabled="this.thisScriptInput.type !== 'string'" />
+              <b-form-input v-model="thisScriptInput.defaultValue" :disabled="thisScriptInput.type !== 'string'" />
             </b-col>
             <b-col cols="4">
             </b-col>

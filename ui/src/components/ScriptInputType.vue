@@ -30,14 +30,10 @@
 </template>
 
 <script>
-import { store } from '../store.js'
-
 import ScriptInputTypeNumber from '@/components/ScriptInputTypeNumber.vue'
 import ScriptInputTypeString from '@/components/ScriptInputTypeString.vue'
 import ScriptInputTypeBoolean from '@/components/ScriptInputTypeBoolean.vue'
 import ScriptInputTypeOther from '@/components/ScriptInputTypeOther.vue'
-
-// import { ValidationProvider } from 'vee-validate'
 
 export default {
   name: 'ScriptInputType',
@@ -46,7 +42,6 @@ export default {
     ScriptInputTypeBoolean,
     ScriptInputTypeOther,
     ScriptInputTypeString
-    // ValidationProvider
   },
   props: {
     // Script input id for this type component.

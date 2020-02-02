@@ -39,8 +39,8 @@ export default {
     },
     isValueRequired: function () {
       let requiredValidation = DomainFactory.createBashValidationFromType(ValidationTypes.REQUIRED)
-      let isValueRequired = this.thisScriptInput.hasValidation(requiredValidation)
-      return isValueRequired
+      let valReq = this.thisScriptInput.hasValidation(requiredValidation)
+      return valReq
     }
   },
   methods: {
@@ -76,7 +76,7 @@ export default {
         }
       }
 
-      console.log('isValueRequired: [' + this.isValueRequired() + '].')
+      console.log('isValueRequired: [' + this.isValueRequired + '].')
     },
     resetType: function () { }
   }
