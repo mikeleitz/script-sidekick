@@ -35,7 +35,8 @@ export default {
   },
   computed: {
     totalValidations: function () {
-      this.thisScriptInput.totalValidations()
+      let totalVal = this.thisScriptInput.totalValidations()
+      return totalVal
     },
     isValueRequired: function () {
       let requiredValidation = DomainFactory.createBashValidationFromType(ValidationTypes.REQUIRED)

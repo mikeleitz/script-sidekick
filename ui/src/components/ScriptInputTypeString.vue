@@ -17,7 +17,7 @@
   <div>
     <b-tab active>
       <template v-slot:title>
-        String <b-badge variant="info" v-if="totalValidations > 0">{{ totalValidations }}</b-badge>
+        String <b-badge variant="info" v-if="totalValidations > 0 && thisScriptInput.type === 'string'">{{ totalValidations }}</b-badge>
       </template>
       <b-form-group
         label-cols-lg="2"
@@ -60,7 +60,6 @@ export default {
   name: 'ScriptInputTypeString',
   mixins: [ScriptInputTypeMixin],
   components: {
-    // ValidationProvider
   },
   props: {
     // Script input id for this type component.

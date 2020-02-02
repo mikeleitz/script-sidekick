@@ -17,7 +17,7 @@
 <div>
   <b-tab>
     <template v-slot:title>
-      Other <b-badge variant="info" v-if="totalValidations > 0">{{ totalValidations }}</b-badge>
+      Other <b-badge variant="info" v-if="totalValidations > 0 && thisScriptInput.type === 'other'">{{ totalValidations }}</b-badge>
     </template>
     <b-form-group
       label-cols-lg="2"

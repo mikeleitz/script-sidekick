@@ -17,7 +17,7 @@
 <div>
   <b-tab>
     <template v-slot:title>
-      Number <b-badge variant="info" v-if="totalValidations > 0">{{ totalValidations }}</b-badge>
+      Number <b-badge variant="info" v-if="totalValidations > 0 && thisScriptInput.type === 'number'">{{ totalValidations }}</b-badge>
     </template>
     <b-form-group
       label-cols-lg="2"
