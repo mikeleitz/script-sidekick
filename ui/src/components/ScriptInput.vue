@@ -42,7 +42,6 @@
 </template>
 
 <script>
-import { store } from '../store.js'
 import ScriptInputType from '@/components/ScriptInputType.vue'
 
 import { ValidationProvider, extend } from 'vee-validate'

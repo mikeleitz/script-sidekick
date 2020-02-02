@@ -44,16 +44,12 @@
 </template>
 
 <script>
-import { store } from '../store.js'
 import ScriptInputTypeMixin from './mixins/ScriptInputTypeMixin.js'
-
-// import { ValidationProvider } from 'vee-validate'
 
 export default {
   name: 'ScriptInputTypeBoolean',
   mixins: [ScriptInputTypeMixin],
   components: {
-    // ValidationProvider
   },
   props: {
     // Script input id for this type component.
