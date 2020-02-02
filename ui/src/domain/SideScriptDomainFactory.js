@@ -25,8 +25,6 @@ A BashOption has zero or more BashValidations.
 These objects will be deserialized to JSON and sent to the relevant service.
 */
 
-// import { ValidationTypes } from '../components/mixins/ScriptInputTypeMixin'
-
 let BashScript = function (pIid = undefined, pScriptName = '', pShellType = 'BASH') {
   this.domainObjectType = 'bash-script'
 
@@ -126,7 +124,11 @@ let BashOption = function (pId = undefined) {
   }
 
   this.totalValidations = function () {
-    return this.validations.length
+    if (this.validations === undefined) {
+      return 0
+    } else {
+      return this.validations.length
+    }
   }
 }
 
@@ -206,5 +208,34 @@ export const DomainFactory = {
     this.addCommonMethods(bashValidation)
 
     return bashValidation
+  },
+  createBashValidationFromType: function (validationType, pArgs = []) {
+    let bashValidation = new BashValidation(validationType.id, validationType.name, pArgs)
+    this.addCommonMethods(bashValidation)
+
+    return bashValidation
   }
 }
+
+export const ValidationTypes = Object.freeze({
+  INTEGER: { id: 1, name: 'Integer' },
+  BOOLEAN: { id: 2, name: 'Boolean' },
+  REAL: { id: 3, name: 'Real' },
+  STRING: { id: 4, name: 'String' },
+  CURRENCY: { id: 5, name: 'Currency' },
+  DATE: { id: 6, name: 'Date' },
+  TIMESTAMP: { id: 7, name: 'Timestamp' },
+  ENUMERATED: { id: 8, name: 'Enumerated Type' },
+  URL: { id: 9, name: 'URL' },
+  EMAIL: { id: 10, name: 'Email' },
+  IPV4: { id: 11, name: 'Ipv4' },
+  IPV6: { id: 12, name: 'Ipv6' },
+  CUSTOM_REGEX: { id: 13, name: 'Regex' },
+  GREATER_THAN: { id: 14, name: 'Greater than' },
+  GREATER_THAN_EQUAL: { id: 16, name: 'Greater than or equal' },
+  LESS_THAN: { id: 17, name: 'Less than' },
+  LESS_THAN_EQUAL: { id: 18, name: 'Less than or equal' },
+  SIGNED: { id: 19, name: 'Signed' },
+  UNSIGNED: { id: 20, name: 'Unsigned' },
+  REQUIRED: { id: 21, name: 'Required' }
+})

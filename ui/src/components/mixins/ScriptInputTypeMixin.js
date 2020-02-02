@@ -17,40 +17,15 @@
 /*
 This mixin creates a new instance of 'data' for each component. To share values across instances, it's using state.
  */
-export const ValidationTypes = Object.freeze({
-  INTEGER: { id: 1, name: 'Integer' },
-  BOOLEAN: { id: 2, name: 'Boolean' },
-  REAL: { id: 3, name: 'Real' },
-  STRING: { id: 4, name: 'String' },
-  CURRENCY: { id: 5, name: 'Currency' },
-  DATE: { id: 6, name: 'Date' },
-  TIMESTAMP: { id: 7, name: 'Timestamp' },
-  ENUMERATED: { id: 8, name: 'Enumerated Type' },
-  URL: { id: 9, name: 'URL' },
-  EMAIL: { id: 10, name: 'Email' },
-  IPV4: { id: 11, name: 'Ipv4' },
-  IPV6: { id: 12, name: 'Ipv6' },
-  CUSTOM_REGEX: { id: 13, name: 'Regex' },
-  GREATER_THAN: { id: 14, name: 'Greater than' },
-  GREATER_THAN_EQUAL: { id: 16, name: 'Greater than or equal' },
-  LESS_THAN: { id: 17, name: 'Less than' },
-  LESS_THAN_EQUAL: { id: 18, name: 'Less than or equal' },
-  SIGNED: { id: 19, name: 'Signed' },
-  UNSIGNED: { id: 20, name: 'Unsigned' },
-  REQUIRED: { id: 21, name: 'Required' }
-})
+
+import { DomainFactory, ValidationTypes } from '../../domain/SideScriptDomainFactory'
 
 export default {
   created: function () {
   },
   data () {
     return {
-      thisScriptInput: {},
-      isValueRequired: false,
-      typeSelected: '',
-      defaultValue: '',
-      validations: [ ],
-      totalValidations: 0
+      thisScriptInput: null
     }
   },
   watch: {
@@ -58,53 +33,51 @@ export default {
       console.log('New default value: [' + val + '].')
     }
   },
-  computed: { },
+  computed: {
+    totalValidations: function () {
+      this.thisScriptInput.totalValidations()
+    },
+    isValueRequired: function () {
+      let requiredValidation = DomainFactory.createBashValidationFromType(ValidationTypes.REQUIRED)
+      let isValueRequired = this.thisScriptInput.hasValidation(requiredValidation)
+      return isValueRequired
+    }
+  },
   methods: {
     changeTypeSelected: function (event, val) {
       let selectedType = val
 
-      console.log('Current type selected: [' + this.typeSelected + ']. User just selected: [' + selectedType + '].')
+      console.log('Current type selected: [' + this.thisScriptInput.type + ']. User just selected: [' + selectedType + '].')
 
       if (event) {
-        if (selectedType !== this.typeSelected) {
-          console.log('New type selected. Changing type from [' + this.typeSelected + '] to [' + selectedType + '].')
-          this.resetType()
-          this.typeSelected = selectedType
+        if (selectedType !== this.thisScriptInput.type) {
+          console.log('New type selected. Changing type from [' + this.thisScriptInput.type + '] to [' + selectedType + '].')
+
+          this.thisScriptInput.type = selectedType
         } else {
           // User somehow selected the currently selected type. No changes needed
         }
       } else {
-        console.log('Current type [' + this.typeSelected + '] is now disabled.')
-        this.resetType()
+        console.log('Current type [' + this.thisScriptInput.type + '] is now disabled.')
+
+        this.thisScriptInput.type = ''
       }
     },
     changeIsValueRequired: function (event) {
-      if (event) {
-        this.isValueRequired = event
+      let requiredValidation = DomainFactory.createBashValidationFromType(ValidationTypes.REQUIRED)
 
-        let index = this.validations.findIndex(val => val.id === ValidationTypes.REQUIRED.id)
-        if (index === -1 || index === undefined) {
-          this.validations.unshift(ValidationTypes.REQUIRED)
-          this.totalValidations = this.totalValidations + 1
+      if (event) {
+        if (!this.thisScriptInput.hasValidation(requiredValidation)) {
+          this.thisScriptInput.addValidation(requiredValidation)
         }
       } else {
-        this.isValueRequired = false
-
-        let index = this.validations.findIndex(validation => validation.id === ValidationTypes.REQUIRED.id)
-        if (index !== -1) {
-          this.validations.splice(index, 1)
-          this.totalValidations = this.totalValidations - 1
+        if (this.thisScriptInput.hasValidation(requiredValidation)) {
+          this.thisScriptInput.removeValidation(requiredValidation)
         }
       }
 
-      console.log('isValueRequired: [' + this.isValueRequired + '].')
+      console.log('isValueRequired: [' + this.isValueRequired() + '].')
     },
-    resetType: function () {
-      this.isValueRequired = false
-
-      this.validations.splice(0, this.validations.length)
-      this.typeSelected = null
-      this.totalValidations = 0
-    }
+    resetType: function () { }
   }
 }

@@ -27,18 +27,18 @@
         class="mb-0">
         <b-form-group>
           <b-form-checkbox name="check-button" @change="changeTypeSelected($event, 'string')" switch>
-            {{ typeSelected === 'string' ? 'A string' : 'Not a string' }}
+            {{ this.thisScriptInput.type === 'string' ? 'A string' : 'Not a string' }}
           </b-form-checkbox>
         </b-form-group>
         <b-form-group>
-          <b-form-checkbox name="check-button" v-model="isValueRequired" @change="changeIsValueRequired($event)" :disabled="typeSelected !== 'string'" switch>
+          <b-form-checkbox name="check-button" v-model="isValueRequired" @change="changeIsValueRequired($event)" :disabled="this.thisScriptInput.type !== 'string'" switch>
             {{ isValueRequired ? 'Required' : 'Not required' }}
           </b-form-checkbox>
         </b-form-group>
         <b-form-group label="Defaulted to" label-cols="3">
           <b-row no-gutters>
             <b-col cols="5">
-              <b-form-input v-model="defaultValue" :disabled="typeSelected !== 'string'" />
+              <b-form-input v-model="this.thisScriptInput.defaultValue" :disabled="this.thisScriptInput.type !== 'string'" />
             </b-col>
             <b-col cols="4">
             </b-col>
@@ -50,10 +50,7 @@
 </template>
 
 <script>
-import { store } from '../store.js'
 import ScriptInputTypeMixin from './mixins/ScriptInputTypeMixin.js'
-
-// import { ValidationProvider } from 'vee-validate'
 
 /*
 The fields in the html above invoke local methods and data. These then delegate
@@ -79,7 +76,6 @@ export default {
   },
   created () {
     this.thisScriptInput = this.bashOption
-    this.validations = this.thisScriptInput.validations
   },
   watch: { },
   methods: { }
