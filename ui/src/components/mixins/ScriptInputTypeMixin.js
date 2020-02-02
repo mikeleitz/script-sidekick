@@ -19,13 +19,15 @@ This mixin creates a new instance of 'data' for each component. To share values 
  */
 
 import { DomainFactory, ValidationTypes } from '../../domain/SideScriptDomainFactory'
+import { store } from '../../store'
 
 export default {
   created: function () {
   },
   data () {
     return {
-      thisScriptInput: null
+      thisScriptInput: null,
+      storeState: store.state
     }
   },
   watch: {
@@ -55,6 +57,27 @@ export default {
           console.log('New type selected. Changing type from [' + this.thisScriptInput.type + '] to [' + selectedType + '].')
 
           this.thisScriptInput.type = selectedType
+          if (selectedType === 'string') {
+            this.storeState.isStringSelected = true
+            this.storeState.isNumberSelected = false
+            this.storeState.isBooleanSelected = false
+            this.storeState.isOtherSelected = false
+          } else if (selectedType === 'number') {
+            this.storeState.isNumberSelected = true
+            this.storeState.isStringSelected = false
+            this.storeState.isBooleanSelected = false
+            this.storeState.isOtherSelected = false
+          } else if (selectedType === 'boolean') {
+            this.storeState.isBooleanSelected = true
+            this.storeState.isStringSelected = false
+            this.storeState.isNumberSelected = false
+            this.storeState.isOtherSelected = true
+          } else if (selectedType === 'other') {
+            this.storeState.isOtherSelected = true
+            this.storeState.isNumberSelected = false
+            this.storeState.isStringSelected = false
+            this.storeState.isBooleanSelected = false
+          }
         } else {
           // User somehow selected the currently selected type. No changes needed
         }

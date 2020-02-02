@@ -26,7 +26,7 @@
       label-class="pt-0"
       class="mb-0">
       <b-form-group>
-        <b-form-checkbox @change="changeTypeSelected($event, 'number')" switch>
+        <b-form-checkbox v-model="storeState.isNumberSelected" @change="changeTypeSelected($event, 'number')" switch>
           {{ thisScriptInput.type === 'number' ? 'A number' : 'Not a number' }}
         </b-form-checkbox>
       </b-form-group>

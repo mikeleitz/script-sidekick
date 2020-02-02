@@ -27,7 +27,7 @@
       class="mb-0">
       <b-form-group>
         <b-form-group>
-          <b-form-checkbox name="check-button" @change="changeTypeSelected($event, 'other')" switch>
+          <b-form-checkbox name="check-button" v-model="storeState.isOtherSelected" @change="changeTypeSelected($event, 'other')" switch>
             {{ thisScriptInput.type === 'other' ? 'Any other type' : 'Not any other type' }}
           </b-form-checkbox>
         </b-form-group>

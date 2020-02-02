@@ -26,7 +26,7 @@
         label-class="pt-0"
         class="mb-0">
         <b-form-group>
-          <b-form-checkbox name="check-button" @change="changeTypeSelected($event, 'string')" switch>
+          <b-form-checkbox name="check-button" v-model="storeState.isStringSelected" @change="changeTypeSelected($event, 'string')" switch>
             {{ thisScriptInput.type === 'string' ? 'A string' : 'Not a string' }}
           </b-form-checkbox>
         </b-form-group>
