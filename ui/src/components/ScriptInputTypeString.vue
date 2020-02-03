@@ -35,6 +35,21 @@
             {{ isValueRequired ? 'Required' : 'Not required' }}
           </b-form-checkbox>
         </b-form-group>
+        <b-form-group required="true" :disabled="thisScriptInput.type !== 'string'">
+          <b-form-radio value="plain-string" v-model="stringSubtype">A plain string</b-form-radio>
+          <b-form-radio value="email" v-model="stringSubtype">An email address</b-form-radio>
+          <b-form-radio value="url" v-model="stringSubtype">A url</b-form-radio>
+          <b-row no-gutters>
+            <b-col cols="3">
+              <b-form-radio value="regex" v-model="stringSubtype">Specified via RegEx</b-form-radio>
+            </b-col>
+            <b-col cols="4">
+              <b-form-input v-model="regexValue" :disabled="stringSubtype !== 'regex'" />
+            </b-col>
+            <b-col cols="5">
+            </b-col>
+          </b-row>
+        </b-form-group>
         <b-form-group label="Defaulted to" label-cols="3">
           <b-row no-gutters>
             <b-col cols="5">
@@ -51,6 +66,7 @@
 
 <script>
 import ScriptInputTypeMixin from './mixins/ScriptInputTypeMixin.js'
+import { DomainFactory, ValidationTypes } from '../domain/SideScriptDomainFactory'
 
 /*
 The fields in the html above invoke local methods and data. These then delegate
@@ -73,10 +89,54 @@ export default {
       type: Object
     }
   },
+  data () {
+    return {
+      stringSubtype: 'plain-string',
+      regexValue: ''
+    }
+  },
   created () {
     this.thisScriptInput = this.bashOption
   },
-  watch: { },
+  watch: {
+    stringSubtype: function (val, oldVal) {
+      console.log('stringSubtype changed from [' + oldVal + '] to [' + val + '].')
+      if (val !== oldVal) {
+        // Changed. Need to update validations.
+        let oldValidation
+        let newValidation
+
+        if (oldVal === 'email') {
+          oldValidation = DomainFactory.createBashValidationFromType(ValidationTypes.EMAIL)
+        } else if (oldVal === 'url') {
+          oldValidation = DomainFactory.createBashValidationFromType(ValidationTypes.URL)
+        } else if (oldVal === 'regex') {
+          oldValidation = DomainFactory.createBashValidationFromType(ValidationTypes.CUSTOM_REGEX)
+        } else if (oldVal === 'plain-string') {
+          // I don't think we need to do anything with this.
+        }
+
+        if (val === 'email') {
+          newValidation = DomainFactory.createBashValidationFromType(ValidationTypes.EMAIL)
+        } else if (val === 'url') {
+          newValidation = DomainFactory.createBashValidationFromType(ValidationTypes.URL)
+        } else if (val === 'regex') {
+          newValidation = DomainFactory.createBashValidationFromType(ValidationTypes.CUSTOM_REGEX)
+          newValidation.addArgs('regex', this.regexValue)
+        } else if (val === 'plain-string') {
+          // I don't think we need to do anything with this.
+        }
+
+        if (oldValidation !== undefined) {
+          this.thisScriptInput.removeValidation(oldValidation)
+        }
+
+        if (newValidation !== undefined) {
+          this.thisScriptInput.addValidation(newValidation)
+        }
+      }
+    }
+  },
   methods: { }
 }
 </script>

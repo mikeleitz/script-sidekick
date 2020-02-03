@@ -17,7 +17,7 @@ package com.mikeleitz.sidekick.bash.snippet.validation;
 
 import lombok.Data;
 
-import java.util.Map;
+import java.util.List;
 
 /**
  * @author leitz@mikeleitz.com
@@ -26,5 +26,5 @@ import java.util.Map;
 public class BashValidation {
     private Long id;
     private String name;
-    private Map<String, String> args;
+    private List args;
 }

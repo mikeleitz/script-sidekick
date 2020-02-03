@@ -132,12 +132,12 @@ let BashOption = function (pId = undefined) {
   }
 }
 
-let BashValidation = function (pId = undefined, pName = '', pArgs = []) {
+let BashValidation = function (pId = undefined, pName = '') {
   this.domainObjectType = 'bash-validation'
 
   this.id = pId
   this.name = pName
-  this.args = pArgs // Key value array
+  this.args = [] // Key value array
 
   this.addArgs = function (key, value) {
     if (this.hasArg(key)) {
@@ -203,14 +203,14 @@ export const DomainFactory = {
 
     return bashOption
   },
-  createBashValidation: function (pId = undefined, pName = '', pArgs = []) {
-    let bashValidation = new BashValidation(pId, pName, pArgs)
+  createBashValidation: function (pId = undefined, pName = '') {
+    let bashValidation = new BashValidation(pId, pName)
     this.addCommonMethods(bashValidation)
 
     return bashValidation
   },
-  createBashValidationFromType: function (validationType, pArgs = []) {
-    let bashValidation = new BashValidation(validationType.id, validationType.name, pArgs)
+  createBashValidationFromType: function (validationType) {
+    let bashValidation = new BashValidation(validationType.id, validationType.name)
     this.addCommonMethods(bashValidation)
 
     return bashValidation
