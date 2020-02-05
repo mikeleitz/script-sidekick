@@ -35,6 +35,14 @@
           {{ isValueRequired ? 'Required' : 'Not required' }}
         </b-form-checkbox>
       </b-form-group>
+      <b-form-group no-gutters>
+        <b-form-checkbox name="check-button" v-model="storeState.isRegexValueSelected" :disabled="thisScriptInput.type !== 'other'" switch>
+          {{ storeState.isRegexValueSelected ? 'is validated by a regex' : 'is not validated by a regex' }}
+        </b-form-checkbox>
+      </b-form-group>
+      <b-form-group label="Regex value" label-cols-sm="2">
+        <b-form-input v-model="storeState.regexValue" :disabled="thisScriptInput.type !== 'other' || !storeState.isRegexValueSelected" />
+      </b-form-group>
       <b-form-group label="Defaulted to" label-cols-sm="2">
         <b-form-input v-model="thisScriptInput.defaultValue" :disabled="thisScriptInput.type !== 'other'" />
       </b-form-group>

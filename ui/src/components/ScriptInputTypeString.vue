@@ -39,16 +39,6 @@
           <b-form-radio value="plain-string" v-model="stringSubtype">A plain string</b-form-radio>
           <b-form-radio value="email" v-model="stringSubtype">An email address</b-form-radio>
           <b-form-radio value="url" v-model="stringSubtype">A url</b-form-radio>
-          <b-row no-gutters>
-            <b-col cols="3">
-              <b-form-radio value="regex" v-model="stringSubtype">Specified via RegEx</b-form-radio>
-            </b-col>
-            <b-col cols="4">
-              <b-form-input v-model="regexValue" :disabled="stringSubtype !== 'regex'" />
-            </b-col>
-            <b-col cols="5">
-            </b-col>
-          </b-row>
         </b-form-group>
         <b-form-group label="Defaulted to" label-cols="3">
           <b-row no-gutters>
