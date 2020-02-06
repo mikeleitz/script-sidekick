@@ -21,18 +21,18 @@
     </template>
     <b-form-group
       label-cols-lg="2"
-      label="This value is"
+      label="This value"
       label-size="lg"
       label-class="pt-0"
       class="mb-0">
       <b-form-group>
         <b-form-checkbox v-model="storeState.isNumberSelected" @change="changeTypeSelected($event, 'number')" switch>
-          {{ thisScriptInput.type === 'number' ? 'A number' : 'Not a number' }}
+          {{ thisScriptInput.type === 'number' ? 'is a number' : 'is not a number' }}
         </b-form-checkbox>
       </b-form-group>
       <b-form-group>
         <b-form-checkbox name="check-button" @change="changeIsValueRequired($event)" :disabled="thisScriptInput.type !== 'number'" switch>
-          {{ isValueRequired ? 'Required' : 'Not required' }}
+          {{ isValueRequired ? 'is required' : 'is not required' }}
         </b-form-checkbox>
       </b-form-group>
     </b-form-group>

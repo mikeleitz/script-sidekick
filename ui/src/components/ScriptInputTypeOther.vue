@@ -21,23 +21,23 @@
     </template>
     <b-form-group
       label-cols-lg="2"
-      label="This value is"
+      label="This value"
       label-size="lg"
       label-class="pt-0"
       class="mb-0">
       <b-form-group>
         <b-form-group>
           <b-form-checkbox name="check-button" v-model="storeState.isOtherSelected" @change="changeTypeSelected($event, 'other')" switch>
-            {{ thisScriptInput.type === 'other' ? 'Any other type' : 'Not any other type' }}
+            {{ thisScriptInput.type === 'other' ? 'is some other type' : 'is not some other type' }}
           </b-form-checkbox>
         </b-form-group>
         <b-form-checkbox name="check-button" @change="changeIsValueRequired($event)" :disabled="thisScriptInput.type !== 'other'" switch>
-          {{ isValueRequired ? 'Required' : 'Not required' }}
+          {{ isValueRequired ? 'is required' : 'is not required' }}
         </b-form-checkbox>
       </b-form-group>
       <b-form-group no-gutters>
         <b-form-checkbox name="check-button" v-model="storeState.isRegexValueSelected" :disabled="thisScriptInput.type !== 'other'" switch>
-          {{ storeState.isRegexValueSelected ? 'is validated by a regex' : 'is not validated by a regex' }}
+          {{ storeState.isRegexValueSelected ? 'is validated by this regex' : 'is not validated by a regex' }}
         </b-form-checkbox>
       </b-form-group>
       <b-form-group label="Regex value" label-cols-sm="2">

@@ -21,25 +21,25 @@
       </template>
       <b-form-group
         label-cols-lg="2"
-        label="This value is"
+        label="This value"
         label-size="lg"
         label-class="pt-0"
         class="mb-0">
         <b-form-group>
           <b-form-checkbox name="check-button" v-model="storeState.isStringSelected" @change="changeTypeSelected($event, 'string')" switch>
-            {{ thisScriptInput.type === 'string' ? 'A string' : 'Not a string' }}
+            {{ thisScriptInput.type === 'string' ? 'is a string' : 'is not a string' }}
           </b-form-checkbox>
         </b-form-group>
         <b-form-group>
           <b-form-checkbox name="check-button" @change="changeIsValueRequired($event)" :disabled="thisScriptInput.type !== 'string'" switch>
-            {{ isValueRequired ? 'Required' : 'Not required' }}
+            {{ isValueRequired ? 'is required' : 'is not required' }}
           </b-form-checkbox>
         </b-form-group>
         <b-form-group required="true" :disabled="thisScriptInput.type !== 'string'">
-          <b-form-radio value="plain-string" v-model="stringSubtype">A plain string</b-form-radio>
-          <b-form-radio value="alpha-numeric" v-model="stringSubtype">An alpha-numeric</b-form-radio>
-          <b-form-radio value="email" v-model="stringSubtype">An email address</b-form-radio>
-          <b-form-radio value="url" v-model="stringSubtype">A url</b-form-radio>
+          <b-form-radio value="plain-string" v-model="stringSubtype">has no restrictions</b-form-radio>
+          <b-form-radio value="alpha-numeric" v-model="stringSubtype">is an alpha-numeric</b-form-radio>
+          <b-form-radio value="email" v-model="stringSubtype">is an email address</b-form-radio>
+          <b-form-radio value="url" v-model="stringSubtype">is a url</b-form-radio>
         </b-form-group>
       </b-form-group>
     </b-tab>
