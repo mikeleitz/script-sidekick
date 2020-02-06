@@ -37,6 +37,7 @@
         </b-form-group>
         <b-form-group required="true" :disabled="thisScriptInput.type !== 'string'">
           <b-form-radio value="plain-string" v-model="stringSubtype">A plain string</b-form-radio>
+          <b-form-radio value="alpha-numeric" v-model="stringSubtype">An alpha-numeric</b-form-radio>
           <b-form-radio value="email" v-model="stringSubtype">An email address</b-form-radio>
           <b-form-radio value="url" v-model="stringSubtype">A url</b-form-radio>
         </b-form-group>
@@ -93,6 +94,8 @@ export default {
           oldValidation = DomainFactory.createBashValidationFromType(ValidationTypes.URL)
         } else if (oldVal === 'regex') {
           oldValidation = DomainFactory.createBashValidationFromType(ValidationTypes.CUSTOM_REGEX)
+        } else if (oldVal === 'alpha-numeric') {
+          oldValidation = DomainFactory.createBashValidationFromType(ValidationTypes.ALPHA_NUMERIC)
         } else if (oldVal === 'plain-string') {
           // I don't think we need to do anything with this.
         }
@@ -104,16 +107,24 @@ export default {
         } else if (val === 'regex') {
           newValidation = DomainFactory.createBashValidationFromType(ValidationTypes.CUSTOM_REGEX)
           newValidation.addArgs('regex', this.regexValue)
+        } else if (val === 'alpha-numeric') {
+          newValidation = DomainFactory.createBashValidationFromType(ValidationTypes.ALPHA_NUMERIC)
         } else if (val === 'plain-string') {
           // I don't think we need to do anything with this.
         }
 
         if (oldValidation !== undefined) {
+          console.log('Since the subtype has changed, removing the old validation [' + oldValidation.toJson() + '].')
           this.thisScriptInput.removeValidation(oldValidation)
+        } else {
+          console.log('Not removing the old validation for subtype [' + oldVal + '] since there isn\'t a corresponding validation for it.')
         }
 
         if (newValidation !== undefined) {
+          console.log('Since the subtype has changed, adding the new validation [' + newValidation.toJson() + '].')
           this.thisScriptInput.addValidation(newValidation)
+        } else {
+          console.log('Not adding the new validation for subtype [' + oldVal + '] since there isn\'t a corresponding validation for it.')
         }
       }
     }
