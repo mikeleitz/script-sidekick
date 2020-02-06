@@ -32,6 +32,13 @@
 
     <ScriptInputType :id="thisScriptInput.id" :bashOption="this.bashOption"/>
 
+    <b-form-group label="Defaulted to">
+      <ValidationProvider name="Defaulted to" rules="max:80" v-slot="{ errors }">
+        <b-form-input placeholder="Defaulted to" v-model="thisScriptInput.defaultValue" />
+        <span>{{ errors[0] }}</span>
+      </ValidationProvider>
+    </b-form-group>
+
     <b-form-group label="Help text">
       <ValidationProvider name="Help text" rules="max:80" v-slot="{ errors }">
         <b-form-input placeholder="Help text" v-model="thisScriptInput.helpText" />

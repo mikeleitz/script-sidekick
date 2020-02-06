@@ -43,9 +43,6 @@
       <b-form-group label="Regex value" label-cols-sm="2">
         <b-form-input v-model="storeState.regexValue" :disabled="thisScriptInput.type !== 'other' || !storeState.isRegexValueSelected" />
       </b-form-group>
-      <b-form-group label="Defaulted to" label-cols-sm="2">
-        <b-form-input v-model="thisScriptInput.defaultValue" :disabled="thisScriptInput.type !== 'other'" />
-      </b-form-group>
     </b-form-group>
   </b-tab>
 </div>

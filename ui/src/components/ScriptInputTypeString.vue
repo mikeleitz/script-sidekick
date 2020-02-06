@@ -40,15 +40,6 @@
           <b-form-radio value="email" v-model="stringSubtype">An email address</b-form-radio>
           <b-form-radio value="url" v-model="stringSubtype">A url</b-form-radio>
         </b-form-group>
-        <b-form-group label="Defaulted to" label-cols="3">
-          <b-row no-gutters>
-            <b-col cols="5">
-              <b-form-input v-model="thisScriptInput.defaultValue" :disabled="thisScriptInput.type !== 'string'" />
-            </b-col>
-            <b-col cols="4">
-            </b-col>
-          </b-row>
-        </b-form-group>
       </b-form-group>
     </b-tab>
   </div>

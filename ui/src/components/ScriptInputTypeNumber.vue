@@ -35,9 +35,6 @@
           {{ isValueRequired ? 'Required' : 'Not required' }}
         </b-form-checkbox>
       </b-form-group>
-      <b-form-group label="Defaulted to" label-cols-sm="2">
-        <b-form-input v-model="thisScriptInput.defaultValue" :disabled="thisScriptInput.type !== 'numeric'" />
-      </b-form-group>
     </b-form-group>
   </b-tab>
 </div>
