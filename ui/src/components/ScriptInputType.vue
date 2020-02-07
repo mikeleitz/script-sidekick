@@ -18,7 +18,7 @@
     <b-form-group label="Data type"
                   label-for="input-type-selection">
       <b-card no-body>
-        <b-tabs :card="true" :noFade="false">
+        <b-tabs class="same-height-tab" :card="true" :noFade="true" >
           <ScriptInputTypeString :id="thisScriptInput.id" :bashOption="this.bashOption"/>
           <ScriptInputTypeNumber :id="thisScriptInput.id" :bashOption="this.bashOption" />
           <ScriptInputTypeBoolean :id="thisScriptInput.id" :bashOption="this.bashOption" />
@@ -68,5 +68,8 @@ export default {
 </script>
 
 <style scoped>
-
+  .same-height-tab {
+    height: 350px; /* Adjust 270px to suits your needs */
+    overflow-y: auto;
+  }
 </style>
