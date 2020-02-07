@@ -69,7 +69,7 @@ export default {
 
 <style scoped>
   .same-height-tab {
-    height: 350px; /* Adjust 270px to suits your needs */
+    height: 350px;
     overflow-y: auto;
   }
 </style>
