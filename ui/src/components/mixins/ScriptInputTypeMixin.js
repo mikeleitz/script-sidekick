@@ -33,7 +33,8 @@ export default {
       greaterThanValue: '',
       isLessThan: false,
       isEqualForLessCheck: false,
-      lessThanValue: ''
+      lessThanValue: '',
+      isNumberUnsigned: false
     }
   },
   watch: {

@@ -36,6 +36,11 @@
         </b-form-checkbox>
       </b-form-group>
       <b-form-group>
+        <b-form-checkbox name="check-button" v-model="isNumberUnsigned" :disabled="thisScriptInput.type !== 'number'" switch>
+          {{ isNumberUnsigned ? 'is unsigned' : 'is signed' }}
+        </b-form-checkbox>
+      </b-form-group>
+      <b-form-group>
         <b-row align-h="start" align-v="end">
           <b-col cols="3">
             <b-form-checkbox name="check-button" v-model="isLessThan" :disabled="thisScriptInput.type !== 'number'" switch>
