@@ -27,7 +27,7 @@
               <ScriptInputTypeString :id="thisScriptInput.id" :bashOption="this.bashOption"/>
             </b-card-body>
           </b-tab>
-          <b-tab active>
+          <b-tab>
             <template v-slot:title>
               Number <b-badge variant="info" v-if="totalValidations > 0 && thisScriptInput.type === 'number'">{{ totalValidations }}</b-badge>
             </template>
@@ -35,7 +35,7 @@
               <ScriptInputTypeNumber :id="thisScriptInput.id" :bashOption="this.bashOption" />
             </b-card-body>
           </b-tab>
-          <b-tab active>
+          <b-tab>
             <template v-slot:title>
               Boolean <b-badge variant="info" v-if="totalValidations > 0 && thisScriptInput.type === 'boolean'">{{ totalValidations }}</b-badge>
             </template>
@@ -43,7 +43,7 @@
               <ScriptInputTypeBoolean :id="thisScriptInput.id" :bashOption="this.bashOption" />
             </b-card-body>
           </b-tab>
-          <b-tab active>
+          <b-tab>
             <template v-slot:title>
               Other <b-badge variant="info" v-if="totalValidations > 0 && thisScriptInput.type === 'other'">{{ totalValidations }}</b-badge>
             </template>
@@ -99,7 +99,7 @@ export default {
 
 <style scoped>
   .same-height-tab {
-    height: 350px;
+    height: 360px;
     overflow-y: auto;
   }
 </style>
