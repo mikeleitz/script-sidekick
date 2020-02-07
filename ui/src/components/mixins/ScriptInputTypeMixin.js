@@ -27,7 +27,12 @@ export default {
   data () {
     return {
       thisScriptInput: null,
-      storeState: store.state
+      storeState: store.state,
+      isGreaterThan: false,
+      isEqualForGreaterCheck: false,
+      greaterThanValue: '',
+      isOrEqual: false,
+      isLessThan: false
     }
   },
   watch: {

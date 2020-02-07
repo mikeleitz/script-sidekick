@@ -35,6 +35,27 @@
           {{ isValueRequired ? 'is required' : 'is not required' }}
         </b-form-checkbox>
       </b-form-group>
+      <b-form-group>
+        <b-row align-h="start" align-v="end">
+          <b-col cols="3">
+            <b-form-checkbox name="check-button" v-model="isGreaterThan" :disabled="thisScriptInput.type !== 'number'" switch>
+              {{ isGreaterThan ? 'is greater than' : 'has no lower bound' }}
+            </b-form-checkbox>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col cols="3" offset="3">
+            <b-form-input :placeholder="isEqualForGreaterCheck ? 'Greater than or equal' : 'Greater than'" v-model="greaterThanValue" />
+          </b-col>
+        </b-row>
+        <b-row  align-h="start" align-v="start">
+          <b-col cols="3">
+            <b-form-checkbox name="check-button" v-model="isEqualForGreaterCheck" :disabled="thisScriptInput.type !== 'number'" switch>
+              {{ isEqualForGreaterCheck ? 'and equal' : 'but not equal' }}
+            </b-form-checkbox>
+          </b-col>
+        </b-row>
+      </b-form-group>
     </b-form-group>
   </b-tab>
 </div>
