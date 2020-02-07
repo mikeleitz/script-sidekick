@@ -14,36 +14,29 @@
   -  limitations under the License.
   -->
 <template>
-  <div>
-    <b-tab active>
-      <template v-slot:title>
-        String <b-badge variant="info" v-if="totalValidations > 0 && thisScriptInput.type === 'string'">{{ totalValidations }}</b-badge>
-      </template>
-      <b-form-group
-        label-cols-lg="2"
-        label="This value"
-        label-size="lg"
-        label-class="pt-0"
-        class="mb-0">
-        <b-form-group>
-          <b-form-checkbox name="check-button" v-model="storeState.isStringSelected" @change="changeTypeSelected($event, 'string')" switch>
-            {{ thisScriptInput.type === 'string' ? 'is a string' : 'is not a string' }}
-          </b-form-checkbox>
-        </b-form-group>
-        <b-form-group>
-          <b-form-checkbox name="check-button" @change="changeIsValueRequired($event)" :disabled="thisScriptInput.type !== 'string'" switch>
-            {{ isValueRequired ? 'is required' : 'is not required' }}
-          </b-form-checkbox>
-        </b-form-group>
-        <b-form-group required="true" :disabled="thisScriptInput.type !== 'string'">
-          <b-form-radio value="plain-string" v-model="stringSubtype">has no restrictions</b-form-radio>
-          <b-form-radio value="alpha-numeric" v-model="stringSubtype">is an alpha-numeric</b-form-radio>
-          <b-form-radio value="email" v-model="stringSubtype">is an email address</b-form-radio>
-          <b-form-radio value="url" v-model="stringSubtype">is a url</b-form-radio>
-        </b-form-group>
-      </b-form-group>
-    </b-tab>
-  </div>
+  <b-form-group
+    label-cols-lg="2"
+    label="This value"
+    label-size="lg"
+    label-class="pt-0"
+    class="mb-0">
+    <b-form-group>
+      <b-form-checkbox name="check-button" v-model="storeState.isStringSelected" @change="changeTypeSelected($event, 'string')" switch>
+        {{ thisScriptInput.type === 'string' ? 'is a string' : 'is not a string' }}
+      </b-form-checkbox>
+    </b-form-group>
+    <b-form-group>
+      <b-form-checkbox name="check-button" @change="changeIsValueRequired($event)" :disabled="thisScriptInput.type !== 'string'" switch>
+        {{ isValueRequired ? 'is required' : 'is not required' }}
+      </b-form-checkbox>
+    </b-form-group>
+    <b-form-group required="true" :disabled="thisScriptInput.type !== 'string'">
+      <b-form-radio value="plain-string" v-model="stringSubtype">has no restrictions</b-form-radio>
+      <b-form-radio value="alpha-numeric" v-model="stringSubtype">is an alpha-numeric</b-form-radio>
+      <b-form-radio value="email" v-model="stringSubtype">is an email address</b-form-radio>
+      <b-form-radio value="url" v-model="stringSubtype">is a url</b-form-radio>
+    </b-form-group>
+  </b-form-group>
 </template>
 
 <script>

@@ -19,10 +19,38 @@
                   label-for="input-type-selection">
       <b-card no-body>
         <b-tabs class="same-height-tab" :card="true" :noFade="true" >
-          <ScriptInputTypeString :id="thisScriptInput.id" :bashOption="this.bashOption"/>
-          <ScriptInputTypeNumber :id="thisScriptInput.id" :bashOption="this.bashOption" />
-          <ScriptInputTypeBoolean :id="thisScriptInput.id" :bashOption="this.bashOption" />
-          <ScriptInputTypeOther :id="thisScriptInput.id" :bashOption="this.bashOption" />
+          <b-tab active>
+            <template v-slot:title>
+              String <b-badge variant="info" v-if="totalValidations > 0 && thisScriptInput.type === 'string'">{{ totalValidations }}</b-badge>
+            </template>
+            <b-card-body>
+              <ScriptInputTypeString :id="thisScriptInput.id" :bashOption="this.bashOption"/>
+            </b-card-body>
+          </b-tab>
+          <b-tab active>
+            <template v-slot:title>
+              Number <b-badge variant="info" v-if="totalValidations > 0 && thisScriptInput.type === 'number'">{{ totalValidations }}</b-badge>
+            </template>
+            <b-card-body>
+              <ScriptInputTypeNumber :id="thisScriptInput.id" :bashOption="this.bashOption" />
+            </b-card-body>
+          </b-tab>
+          <b-tab active>
+            <template v-slot:title>
+              Boolean <b-badge variant="info" v-if="totalValidations > 0 && thisScriptInput.type === 'boolean'">{{ totalValidations }}</b-badge>
+            </template>
+            <b-card-body>
+              <ScriptInputTypeBoolean :id="thisScriptInput.id" :bashOption="this.bashOption" />
+            </b-card-body>
+          </b-tab>
+          <b-tab active>
+            <template v-slot:title>
+              Other <b-badge variant="info" v-if="totalValidations > 0 && thisScriptInput.type === 'other'">{{ totalValidations }}</b-badge>
+            </template>
+            <b-card-body>
+              <ScriptInputTypeOther :id="thisScriptInput.id" :bashOption="this.bashOption" />
+            </b-card-body>
+          </b-tab>
         </b-tabs>
       </b-card>
     </b-form-group>
@@ -34,9 +62,11 @@ import ScriptInputTypeNumber from '@/components/ScriptInputTypeNumber.vue'
 import ScriptInputTypeString from '@/components/ScriptInputTypeString.vue'
 import ScriptInputTypeBoolean from '@/components/ScriptInputTypeBoolean.vue'
 import ScriptInputTypeOther from '@/components/ScriptInputTypeOther.vue'
+import ScriptInputTypeMixin from './mixins/ScriptInputTypeMixin.js'
 
 export default {
   name: 'ScriptInputType',
+  mixins: [ScriptInputTypeMixin],
   components: {
     ScriptInputTypeNumber,
     ScriptInputTypeBoolean,

@@ -14,65 +14,58 @@
   -  limitations under the License.
   -->
 <template>
-<div>
-  <b-tab>
-    <template v-slot:title>
-      Number <b-badge variant="info" v-if="totalValidations > 0 && thisScriptInput.type === 'number'">{{ totalValidations }}</b-badge>
-    </template>
-    <b-form-group
-      label-cols-lg="2"
-      label="This value"
-      label-size="lg"
-      label-class="pt-0"
-      class="mb-0">
-      <b-form-group>
-        <b-form-checkbox v-model="storeState.isNumberSelected" @change="changeTypeSelected($event, 'number')" switch>
-          {{ thisScriptInput.type === 'number' ? 'is a number' : 'is not a number' }}
-        </b-form-checkbox>
-      </b-form-group>
-      <b-form-group>
-        <b-form-checkbox name="check-button" @change="changeIsValueRequired($event)" :disabled="thisScriptInput.type !== 'number'" switch>
-          {{ isValueRequired ? 'is required' : 'is not required' }}
-        </b-form-checkbox>
-      </b-form-group>
-      <b-form-group>
-        <b-form-checkbox name="check-button" v-model="isNumberUnsigned" :disabled="thisScriptInput.type !== 'number'" switch>
-          {{ isNumberUnsigned ? 'is unsigned' : 'is signed' }}
-        </b-form-checkbox>
-      </b-form-group>
-      <b-form-group>
-        <b-row align-h="start" align-v="end">
-          <b-col cols="3">
-            <b-form-checkbox name="check-button" v-model="isLessThan" :disabled="thisScriptInput.type !== 'number'" switch>
-              {{ isLessThan ? 'is less than' : 'has no upper bound' }}
-            </b-form-checkbox>
-            <b-form-checkbox name="check-button" v-model="isEqualForLessCheck" :disabled="thisScriptInput.type !== 'number'" switch>
-              {{ isEqualForLessCheck ? 'and equal' : 'but not equal' }}
-            </b-form-checkbox>
-          </b-col>
-          <b-col cols="3">
-            <b-form-input :placeholder="isEqualForLessCheck ? 'Less than or equal' : 'Less than'" v-model="lessThanValue" :disabled="thisScriptInput.type !== 'number' || !isLessThan"/>
-          </b-col>
-        </b-row>
-      </b-form-group>
-      <b-form-group>
-        <b-row align-h="start" align-v="end">
-          <b-col cols="3">
-            <b-form-checkbox name="check-button" v-model="isGreaterThan" :disabled="thisScriptInput.type !== 'number'" switch>
-              {{ isGreaterThan ? 'is greater than' : 'has no lower bound' }}
-            </b-form-checkbox>
-            <b-form-checkbox name="check-button" v-model="isEqualForGreaterCheck" :disabled="thisScriptInput.type !== 'number'" switch>
-              {{ isEqualForGreaterCheck ? 'and equal' : 'but not equal' }}
-            </b-form-checkbox>
-          </b-col>
-          <b-col cols="3">
-            <b-form-input :placeholder="isEqualForGreaterCheck ? 'Greater than or equal' : 'Greater than'" v-model="greaterThanValue" :disabled="thisScriptInput.type !== 'number' || !isGreaterThan" />
-          </b-col>
-        </b-row>
-      </b-form-group>
+  <b-form-group
+    label-cols-lg="2"
+    label="This value"
+    label-size="lg"
+    label-class="pt-0"
+    class="mb-0">
+    <b-form-group>
+      <b-form-checkbox v-model="storeState.isNumberSelected" @change="changeTypeSelected($event, 'number')" switch>
+        {{ thisScriptInput.type === 'number' ? 'is a number' : 'is not a number' }}
+      </b-form-checkbox>
     </b-form-group>
-  </b-tab>
-</div>
+    <b-form-group>
+      <b-form-checkbox name="check-button" @change="changeIsValueRequired($event)" :disabled="thisScriptInput.type !== 'number'" switch>
+        {{ isValueRequired ? 'is required' : 'is not required' }}
+      </b-form-checkbox>
+    </b-form-group>
+    <b-form-group>
+      <b-form-checkbox name="check-button" v-model="isNumberUnsigned" :disabled="thisScriptInput.type !== 'number'" switch>
+        {{ isNumberUnsigned ? 'is unsigned' : 'is signed' }}
+      </b-form-checkbox>
+    </b-form-group>
+    <b-form-group>
+      <b-row align-h="start" align-v="end">
+        <b-col cols="3">
+          <b-form-checkbox name="check-button" v-model="isLessThan" :disabled="thisScriptInput.type !== 'number'" switch>
+            {{ isLessThan ? 'is less than' : 'has no upper bound' }}
+          </b-form-checkbox>
+          <b-form-checkbox name="check-button" v-model="isEqualForLessCheck" :disabled="thisScriptInput.type !== 'number'" switch>
+            {{ isEqualForLessCheck ? 'and equal' : 'but not equal' }}
+          </b-form-checkbox>
+        </b-col>
+        <b-col cols="3">
+          <b-form-input :placeholder="isEqualForLessCheck ? 'Less than or equal' : 'Less than'" v-model="lessThanValue" :disabled="thisScriptInput.type !== 'number' || !isLessThan"/>
+        </b-col>
+      </b-row>
+    </b-form-group>
+    <b-form-group>
+      <b-row align-h="start" align-v="end">
+        <b-col cols="3">
+          <b-form-checkbox name="check-button" v-model="isGreaterThan" :disabled="thisScriptInput.type !== 'number'" switch>
+            {{ isGreaterThan ? 'is greater than' : 'has no lower bound' }}
+          </b-form-checkbox>
+          <b-form-checkbox name="check-button" v-model="isEqualForGreaterCheck" :disabled="thisScriptInput.type !== 'number'" switch>
+            {{ isEqualForGreaterCheck ? 'and equal' : 'but not equal' }}
+          </b-form-checkbox>
+        </b-col>
+        <b-col cols="3">
+          <b-form-input :placeholder="isEqualForGreaterCheck ? 'Greater than or equal' : 'Greater than'" v-model="greaterThanValue" :disabled="thisScriptInput.type !== 'number' || !isGreaterThan" />
+        </b-col>
+      </b-row>
+    </b-form-group>
+  </b-form-group>
 </template>
 
 <script>

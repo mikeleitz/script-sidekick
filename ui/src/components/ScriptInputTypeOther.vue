@@ -14,42 +14,35 @@
   -  limitations under the License.
   -->
 <template>
-<div>
-  <b-tab>
-    <template v-slot:title>
-      Other <b-badge variant="info" v-if="totalValidations > 0 && thisScriptInput.type === 'other'">{{ totalValidations }}</b-badge>
-    </template>
-    <b-form-group
-      label-cols-lg="2"
-      label="This value"
-      label-size="lg"
-      label-class="pt-0"
-      class="mb-0">
+  <b-form-group
+    label-cols-lg="2"
+    label="This value"
+    label-size="lg"
+    label-class="pt-0"
+    class="mb-0">
+    <b-form-group>
       <b-form-group>
-        <b-form-group>
-          <b-form-checkbox name="check-button" v-model="storeState.isOtherSelected" @change="changeTypeSelected($event, 'other')" switch>
-            {{ thisScriptInput.type === 'other' ? 'is some other type' : 'is not some other type' }}
-          </b-form-checkbox>
-        </b-form-group>
-        <b-form-checkbox name="check-button" @change="changeIsValueRequired($event)" :disabled="thisScriptInput.type !== 'other'" switch>
-          {{ isValueRequired ? 'is required' : 'is not required' }}
+        <b-form-checkbox name="check-button" v-model="storeState.isOtherSelected" @change="changeTypeSelected($event, 'other')" switch>
+          {{ thisScriptInput.type === 'other' ? 'is some other type' : 'is not some other type' }}
         </b-form-checkbox>
       </b-form-group>
-      <b-form-group>
-        <b-row align-v="center">
-          <b-col cols="4">
-            <b-form-checkbox name="check-button" v-model="storeState.isRegexValueSelected" :disabled="thisScriptInput.type !== 'other'" switch>
-              {{ storeState.isRegexValueSelected ? 'is validated by regex' : 'is not validated by regex' }}
-            </b-form-checkbox>
-          </b-col>
-          <b-col cols="4">
-            <b-form-input placeholder="Regex value" v-model="storeState.regexValue" :disabled="thisScriptInput.type !== 'other' || !storeState.isRegexValueSelected" />
-          </b-col>
-        </b-row>
-      </b-form-group>
+      <b-form-checkbox name="check-button" @change="changeIsValueRequired($event)" :disabled="thisScriptInput.type !== 'other'" switch>
+        {{ isValueRequired ? 'is required' : 'is not required' }}
+      </b-form-checkbox>
     </b-form-group>
-  </b-tab>
-</div>
+    <b-form-group>
+      <b-row align-v="center">
+        <b-col cols="4">
+          <b-form-checkbox name="check-button" v-model="storeState.isRegexValueSelected" :disabled="thisScriptInput.type !== 'other'" switch>
+            {{ storeState.isRegexValueSelected ? 'is validated by regex' : 'is not validated by regex' }}
+          </b-form-checkbox>
+        </b-col>
+        <b-col cols="4">
+          <b-form-input placeholder="Regex value" v-model="storeState.regexValue" :disabled="thisScriptInput.type !== 'other' || !storeState.isRegexValueSelected" />
+        </b-col>
+      </b-row>
+    </b-form-group>
+  </b-form-group>
 </template>
 
 <script>
