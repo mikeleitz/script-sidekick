@@ -31,8 +31,9 @@ export default {
       isGreaterThan: false,
       isEqualForGreaterCheck: false,
       greaterThanValue: '',
-      isOrEqual: false,
-      isLessThan: false
+      isLessThan: false,
+      isEqualForLessCheck: false,
+      lessThanValue: ''
     }
   },
   watch: {
