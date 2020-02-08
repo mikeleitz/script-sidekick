@@ -23,7 +23,7 @@ import java.util.List;
  * @author leitz@mikeleitz.com
  */
 @Data
-public class BashValidation {
+public class BashValidationSnippet {
     private Long id;
     private String name;
     private List args;

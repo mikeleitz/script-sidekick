@@ -16,7 +16,6 @@
 package com.mikeleitz.sidekick.bash.domain;
 
 import com.mikeleitz.sidekick.base.application.ApplicationInput;
-import com.mikeleitz.sidekick.bash.snippet.validation.BashValidation;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
@@ -24,7 +23,9 @@ import lombok.NonNull;
 import lombok.Setter;
 import lombok.Singular;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author leitz@mikeleitz.com
@@ -55,7 +56,21 @@ public class BashOption implements ApplicationInput {
 
     public Boolean getDecree() {
         // if the validation has required, return true;
-        return false;
+        Optional<BashValidation> requiredValidation = validations.stream().filter(v -> v.getId() == 1L).findFirst();
+
+        if (requiredValidation.isPresent()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void addBashValidation(BashValidation bashValidation) {
+        if (this.validations == null) {
+            this.validations = new ArrayList<>();
+        }
+
+        this.validations.add(bashValidation);
     }
 
     private String createVariableName(BashOption bashOption) {

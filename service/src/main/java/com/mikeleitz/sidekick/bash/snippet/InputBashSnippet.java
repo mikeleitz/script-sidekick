@@ -18,7 +18,6 @@ package com.mikeleitz.sidekick.bash.snippet;
 import com.mikeleitz.sidekick.base.Snippet;
 import com.mikeleitz.sidekick.base.SnippetContext;
 import com.mikeleitz.sidekick.bash.domain.BashOption;
-import com.mikeleitz.sidekick.bash.snippet.validation.BashValidation;
 import com.mikeleitz.sidekick.bash.snippet.validation.BashValidationFactory;
 import io.micrometer.core.instrument.util.StringUtils;
 import lombok.NonNull;
@@ -65,10 +64,14 @@ public class InputBashSnippet extends Snippet {
         List<Snippet> returnValue = new ArrayList<>();
 
         if (CollectionUtils.isNotEmpty(bashOption.getValidations())) {
-            for (BashValidation validationEnum : bashOption.getValidations()) {
+          /*
+          TODO: update after refactor.
+          for (BashValidationSnippet validationEnum : bashOption.getValidations()) {
                 Snippet validationSnippet = bashValidationFactory.createValidationSnippet(validationEnum, context, bashOption);
                 returnValue.add(validationSnippet);
             }
+
+            */
         }
 
         return returnValue;
