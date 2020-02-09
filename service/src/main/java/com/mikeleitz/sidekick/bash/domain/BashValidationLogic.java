@@ -18,11 +18,13 @@ package com.mikeleitz.sidekick.bash.domain;
 
 import lombok.AccessLevel;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @Data
 @SuperBuilder
 @Setter(AccessLevel.NONE)
+@EqualsAndHashCode(callSuper = true)
 public class BashValidationLogic extends BashValidation {
 }
