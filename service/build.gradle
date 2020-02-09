@@ -19,12 +19,13 @@
 // Saving to Nexus here: https://github.com/GoogleContainerTools/jib/issues/539
 
 plugins {
-    id 'org.springframework.boot' version '2.1.7.RELEASE'
-    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
-    id 'org.asciidoctor.convert' version '1.5.8'
     id 'java'
     id 'idea'
     id 'com.google.cloud.tools.jib' version '1.7.0'
+    id "io.freefair.lombok" version "4.1.6"
+    id 'org.springframework.boot' version '2.1.7.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id 'org.asciidoctor.convert' version '1.5.8'
 }
 
 group = 'com.mikeleitz'
@@ -70,13 +71,7 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.9.9'
     implementation 'org.json:json:20190722'
 
-    compileOnly 'org.projectlombok:lombok'
-
-//    compile 'com.xebia:jackson-lombok:1.1'
-
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-
-    annotationProcessor 'org.projectlombok:lombok'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'

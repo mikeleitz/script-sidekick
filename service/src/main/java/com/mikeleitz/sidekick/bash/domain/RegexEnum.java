@@ -1,0 +1,42 @@
+/*
+ *  Copyright (c) 2020, Michael Leitz
+ *  <p/>
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *  <p/>
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *  <p/>
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
+package com.mikeleitz.sidekick.bash.domain;
+
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
+public enum RegexEnum {
+    EMAIL("Email validation", "", "^(?:(?:[\\w`~!#$%^&*\\-=+;:{}'|,?\\/]+(?:(?:\\.(?:\"(?:\\\\?[\\w`~!#$%^&*\\-=+;:{}'|,?\\/\\.()<>\\[\\] @]|\\\\\"|\\\\\\\\)*\"|[\\w`~!#$%^&*\\-=+;:{}'|,?\\/]+))*\\.[\\w`~!#$%^&*\\-=+;:{}'|,?\\/]+)?)|(?:\"(?:\\\\?[\\w`~!#$%^&*\\-=+;:{}'|,?\\/\\.()<>\\[\\] @]|\\\\\"|\\\\\\\\)+\"))@(?:[a-zA-Z\\d\\-]+(?:\\.[a-zA-Z\\d\\-]+)*|\\[\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\])$"),
+    DATE("Date validation dd/mm/yyy", "", "^(?:(?:19[0-9]{2}|200[0-9]|2010)([-/.]?)(?:(?:0?[1-9]|1[0-2])\\1(?:0?[1-9]|1[0-9]|2[0-8])|(?:0?[13-9]|1[0-2])\\1(?:29|30)|(?:0?[13578]|1[02])\\1(?:31))|(?:19(?:0[48]|[2648][048]|[13579][26])|2000|200[48])([-/.]?)0?2\\2(?:29))$"),
+    SIGNED_INTEGER("Signed integer", "", "^-?\\d{1,10}$"),
+    UNSIGNED_INTEGER("Unsigned integer", "", "^\\d{1,10}$"),
+    SIGNED_REAL("Signed real number", "", "^-?\\d{1,10}.?\\d{0,10}$"),
+    UNSIGNED_REAL("Unsigned real number", "", "^\\d{1,10}.?\\d{0,10}$"),
+    BOOLEAN("Boolean", "", "^([01]|true|false|on|off|[y]|[n]|yes|no)$"),
+    TIMESTAMP_ISO("Timestamp in ISO format", "Matches the ISO 8601 timestamp format with a 'T' separating the date from the time and the timezone offset. For example, 2020-02-08T23:16:30+00:00", "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d(\\.\\d+)?(([+-]\\d\\d:\\d\\d)|Z)?$"),
+    TIMESTAMP_ONE_TRUE("Timestamp in the one true format", "Will match the date and time down to either the seconds level of detail or the milliseconds level of detail. For example it matches both 2020-02-08 12:23:60,123 and 2020-02-08 12:23:60", "^\\d{4}-\\d{1,2}-\\d{1,2} \\d{1,2}:\\d{1,2}:\\d{1,2}(?:,\\d{1,3})?$"),
+    URL("URL", "Validates http or https urls.", "^(https?:\\/\\/)?([\\da-z\\.-]+\\.[a-z\\.]{2,6}|[\\d\\.]+)([\\/:?=&#]{1}[\\da-z\\.-]+)*[\\/\\?]?$"),
+    IPV4("URL", "Validates an ipv4 address", "^\\b(?:(?:2(?:[0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])\\.){3}(?:(?:2([0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9]))\\b$"),
+    VALUE_REQUIRED("Value required", "Value must be not null and not empty. Checks to make sure there is at least one non-whitespace anywhere in the input.", "^\\s*\\S+.*$"),
+    ALPHANUMERIC("Alpha-numeric", "Alpha-numeric value. Any letter or number is accepted.", "^[a-zA-Z0-9]+$"),
+    ;
+
+    //language=RegExp
+    private String regexName;
+    private String regexDescription;
+    private String regexValue;
+}
