@@ -13,16 +13,11 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.mikeleitz.sidekick.base;
-
-import com.mikeleitz.sidekick.base.application.ApplicationInput;
-import com.mikeleitz.sidekick.bash.snippet.validation.BashValidationRegexSnippet;
-
-import java.io.IOException;
+package com.mikeleitz.sidekick.bash.snippet.validation;
 
 /**
  * @author leitz@mikeleitz.com
  */
-public abstract class ValidationFactory {
-    public abstract Snippet createValidationSnippet(BashValidationRegexSnippet validationType, SnippetContext snippetContext, ApplicationInput applicationInput) throws IOException;
+public class BashValidationRegexSnippet {
+
 }

@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+function .validateValueWithRegex() {
+  echo "Validating input using a regex."
+
+  valueToTest="$1"
+  regex="$2"
+
+  echo "Using regex: " "$regex"
+  echo "Validating: " "$valueToTest"
+
+  if [[ $valueToTest =~ $regex ]]; then
+    echo "$1 is valid"
+  else
+    echo "$1 is not valid"
+  fi
+
+  exit 0
+}
+
+.validateValueWithRegex "-1024" "^-?[0-9]{1,10}$"

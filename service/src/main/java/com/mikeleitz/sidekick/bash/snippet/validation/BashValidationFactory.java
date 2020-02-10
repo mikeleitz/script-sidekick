@@ -28,7 +28,7 @@ import java.io.IOException;
 public class BashValidationFactory extends ValidationFactory {
 
     @Override
-    public Snippet createValidationSnippet(BashValidationSnippet validationType, SnippetContext snippetContext, ApplicationInput applicationInput) throws IOException {
+    public Snippet createValidationSnippet(BashValidationRegexSnippet validationType, SnippetContext snippetContext, ApplicationInput applicationInput) throws IOException {
         Snippet returnValue = null;
 
         switch (validationType.getName()) {
