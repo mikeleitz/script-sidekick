@@ -29,8 +29,7 @@ import lombok.experimental.SuperBuilder;
 public class BashValidationLogic extends BashValidation {
     public static final String VALIDATION_IMPLEMENTATION_TYPE = "BASH_LOGIC";
 
-    @Override
-    public String getValidationType() {
-        return VALIDATION_IMPLEMENTATION_TYPE;
-    }
+    private ValidationLogicEnum validationLogicEnum;
+    private String templateLocation;
+
 }

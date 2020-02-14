@@ -18,10 +18,14 @@ package com.mikeleitz.sidekick.bash.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NonNull;
+
+import java.util.Arrays;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Getter
-public enum RegexEnum {
+public enum ValidationRegexEnum {
     EMAIL(10, "Email validation", "", "^(?:(?:[\\w`~!#$%^&*\\-=+;:{}'|,?\\/]+(?:(?:\\.(?:\"(?:\\\\?[\\w`~!#$%^&*\\-=+;:{}'|,?\\/\\.()<>\\[\\] @]|\\\\\"|\\\\\\\\)*\"|[\\w`~!#$%^&*\\-=+;:{}'|,?\\/]+))*\\.[\\w`~!#$%^&*\\-=+;:{}'|,?\\/]+)?)|(?:\"(?:\\\\?[\\w`~!#$%^&*\\-=+;:{}'|,?\\/\\.()<>\\[\\] @]|\\\\\"|\\\\\\\\)+\"))@(?:[a-zA-Z\\d\\-]+(?:\\.[a-zA-Z\\d\\-]+)*|\\[\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\])$"),
     DATE(6, "Date validation dd/mm/yyy", "", "^(?:(?:19[0-9]{2}|200[0-9]|2010)([-/.]?)(?:(?:0?[1-9]|1[0-2])\\1(?:0?[1-9]|1[0-9]|2[0-8])|(?:0?[13-9]|1[0-2])\\1(?:29|30)|(?:0?[13578]|1[02])\\1(?:31))|(?:19(?:0[48]|[2648][048]|[13579][26])|2000|200[48])([-/.]?)0?2\\2(?:29))$"),
     SIGNED_INTEGER(1, "Signed integer", "", "^-?\\d{1,10}$"),
@@ -33,13 +37,24 @@ public enum RegexEnum {
     TIMESTAMP_ONE_TRUE(99, "Timestamp in the one true format", "Will match the date and time down to either the seconds level of detail or the milliseconds level of detail. For example it matches both 2020-02-08 12:23:60,123 and 2020-02-08 12:23:60", "^\\d{4}-\\d{1,2}-\\d{1,2} \\d{1,2}:\\d{1,2}:\\d{1,2}(?:,\\d{1,3})?$"),
     URL(9, "URL", "Validates http or https urls.", "^(https?:\\/\\/)?([\\da-z\\.-]+\\.[a-z\\.]{2,6}|[\\d\\.]+)([\\/:?=&#]{1}[\\da-z\\.-]+)*[\\/\\?]?$"),
     IPV4(11, "URL", "Validates an ipv4 address", "^\\b(?:(?:2(?:[0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])\\.){3}(?:(?:2([0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9]))\\b$"),
+    IPV6(12, "Ipv6 address", "Validates an ipv6 address", "^\\b(?:(?:2(?:[0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])\\.){3}(?:(?:2([0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9]))\\b$"),
     VALUE_REQUIRED(20, "Value required", "Value must be not null and not empty. Checks to make sure there is at least one non-whitespace anywhere in the input.", "^\\s*\\S+.*$"),
     ALPHANUMERIC(21, "Alpha-numeric", "Alpha-numeric value. Any letter or number is accepted.", "^[a-zA-Z0-9]+$"),
+    CUSTOM_REGEX (13, "Custom user specified regex", "User specified via arg named 'regex'.", null),
+    STRING (4, "Some string?", "Some misc string value. Not sure we need this.'.", null),
     ;
 
     //language=RegExp
-    private Integer id;
-    private String regexName;
-    private String regexDescription;
+    private @NonNull Integer id;
+    private @NonNull String regexName;
+    private @NonNull String regexDescription;
     private String regexValue;
+
+    public static Optional<ValidationRegexEnum> getById(Integer id) {
+        Optional<ValidationRegexEnum> returnValue = null;
+
+        returnValue = Arrays.stream(ValidationRegexEnum.values()).filter(r -> r.getId() == id).findFirst();
+
+        return returnValue;
+    }
 }

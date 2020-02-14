@@ -19,6 +19,7 @@ package com.mikeleitz.sidekick.bash.domain;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
@@ -29,9 +30,6 @@ import lombok.experimental.SuperBuilder;
 public class BashValidationRegex extends BashValidation {
     public static final String VALIDATION_IMPLEMENTATION_TYPE = "REGEX";
 
-    private RegexEnum bashRegex;
+    private @NonNull ValidationRegexEnum bashRegexEnum;
 
-    @Override
-    public String getValidationType() {
-        return VALIDATION_IMPLEMENTATION_TYPE;
-    }}
+}
