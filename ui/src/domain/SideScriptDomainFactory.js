@@ -26,13 +26,13 @@ These objects will be deserialized to JSON and sent to the relevant service.
 */
 
 export const ValidationTypes = Object.freeze({
-  INTEGER: { id: 1, name: 'Integer' },
+  SIGNED_INTEGER: { id: 1, name: 'Signed integer' },
   BOOLEAN: { id: 2, name: 'Boolean' },
-  REAL: { id: 3, name: 'Real' },
+  SIGNED_REAL: { id: 3, name: 'Signed real' },
   STRING: { id: 4, name: 'String' },
   CURRENCY: { id: 5, name: 'Currency' },
   DATE: { id: 6, name: 'Date' },
-  TIMESTAMP: { id: 7, name: 'Timestamp' },
+  TIMESTAMP_ISO: { id: 7, name: 'Timestamp in ISO format' },
   ENUMERATED: { id: 8, name: 'Enumerated Type' },
   URL: { id: 9, name: 'URL' },
   EMAIL: { id: 10, name: 'Email' },
@@ -40,13 +40,13 @@ export const ValidationTypes = Object.freeze({
   IPV6: { id: 12, name: 'Ipv6' },
   CUSTOM_REGEX: { id: 13, name: 'Regex' },
   GREATER_THAN: { id: 14, name: 'Greater than' },
+  LESS_THAN_EQUAL: { id: 15, name: 'Less than or equal' },
   GREATER_THAN_EQUAL: { id: 16, name: 'Greater than or equal' },
   LESS_THAN: { id: 17, name: 'Less than' },
-  LESS_THAN_EQUAL: { id: 18, name: 'Less than or equal' },
-  SIGNED: { id: 19, name: 'Signed' },
-  UNSIGNED: { id: 20, name: 'Unsigned' },
-  REQUIRED: { id: 21, name: 'Required' },
-  ALPHA_NUMERIC: { id: 22, name: 'Alpha-numeric' }
+  UNSIGNED_READ: { id: 18, name: 'Unsigned real number' },
+  UNSIGNED_INTEGER: { id: 19, name: 'Unsigned integer' },
+  VALUE_REQUIRED: { id: 20, name: 'Required' },
+  ALPHA_NUMERIC: { id: 21, name: 'Alpha-numeric' }
 })
 
 let BashScript = function (pIid = undefined, pScriptName = '', pShellType = 'BASH') {

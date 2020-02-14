@@ -48,7 +48,7 @@ export default {
       return totalVal
     },
     isValueRequired: function () {
-      let requiredValidation = DomainFactory.createBashValidationFromType(ValidationTypes.REQUIRED)
+      let requiredValidation = DomainFactory.createBashValidationFromType(ValidationTypes.VALUE_REQUIRED)
       let valReq = this.thisScriptInput.hasValidation(requiredValidation)
       return valReq
     }
@@ -95,7 +95,7 @@ export default {
       }
     },
     changeIsValueRequired: function (event) {
-      let requiredValidation = DomainFactory.createBashValidationFromType(ValidationTypes.REQUIRED)
+      let requiredValidation = DomainFactory.createBashValidationFromType(ValidationTypes.VALUE_REQUIRED)
 
       if (event) {
         if (!this.thisScriptInput.hasValidation(requiredValidation)) {

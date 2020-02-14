@@ -32,6 +32,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * Since we have different classes for different types of validations, this
+ * class is responsible for taking the json input from the frontend and
+ * creating the appropriate validation domain object.
+ *
+ * These domain objects are then converted into the relevant snippets
+ * to create the actual script.
+ */
 public class BashValidationDeserializer extends StdDeserializer<BashValidation> {
     private static final String ARG_KEY_NAME = "key";
     private static final String ARG_KEY_VALUE = "value";

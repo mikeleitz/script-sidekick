@@ -16,7 +16,9 @@
 
 package com.mikeleitz.sidekick.bash.domain;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public class BashValidationFactory {
@@ -26,13 +28,22 @@ public class BashValidationFactory {
     public BashValidation createBashValidation(Integer id, String name, List args) {
         BashValidation returnValue = null;
 
+        Optional<RegexEnum> regexValidation = Arrays.stream(RegexEnum.values()).filter(r -> r.getId() == id).findFirst();
+
+
         if (BASH_LOGIC_VALIDATIONS.contains(id)) {
             returnValue = BashValidationLogic.builder().id(id).name(name).args(args).build();
-        } else if (BASH_REGEX_VALIDATIONS.contains(id)) {
-            returnValue = BashValidationRegex.builder().id(id).name(name).args(args).build();
+        } else if (regexValidation.isPresent()) {
+            returnValue = BashValidationRegex.builder()
+                    .id(id)
+                    .name(name)
+                    .args(args)
+                    .bashRegex(regexValidation.get())
+                    .build();
         } else {
             throw new IllegalArgumentException(String.format("BashValidation id %s not supported.", id));
         }
+
 
         return returnValue;
     }
