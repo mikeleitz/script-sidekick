@@ -27,5 +27,11 @@ import lombok.experimental.SuperBuilder;
 @Setter(AccessLevel.NONE)
 @EqualsAndHashCode(callSuper = true)
 public class BashValidationRegex extends BashValidation {
+    public static final String VALIDATION_IMPLEMENTATION_TYPE = "REGEX";
+
     private RegexEnum bashRegex;
-}
+
+    @Override
+    public String getValidationType() {
+        return VALIDATION_IMPLEMENTATION_TYPE;
+    }}

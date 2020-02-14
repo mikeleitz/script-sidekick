@@ -22,6 +22,7 @@ import lombok.Data;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.Singular;
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,14 +56,14 @@ public class BashOption implements ApplicationInput {
     }
 
     public Boolean getDecree() {
-        // if the validation has required, return true;
-        Optional<BashValidation> requiredValidation = validations.stream().filter(v -> v.getId() == 1L).findFirst();
+        Boolean returnValue = false;
 
-        if (requiredValidation.isPresent()) {
-            return true;
-        } else {
-            return false;
+        if (CollectionUtils.isNotEmpty(validations)) {
+            Optional<BashValidation> requiredValidation = validations.stream().filter(v -> v.getId() == 1L).findFirst();
+            returnValue = requiredValidation.isPresent();
         }
+
+        return returnValue;
     }
 
     public void addBashValidation(BashValidation bashValidation) {

@@ -65,11 +65,12 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-hateoas'
     implementation 'org.springframework.boot:spring-boot-devtools'
-    implementation 'commons-io:commons-io:2.6'
     implementation 'org.antlr:ST4:4.1'
-    implementation 'org.apache.commons:commons-collections4:4.4'
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.9.9'
     implementation 'org.json:json:20190722'
+    implementation 'commons-io:commons-io:2.6'
+    implementation 'org.apache.commons:commons-collections4:4.4'
+    implementation 'org.apache.commons:commons-lang3:3.9'
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 

@@ -18,7 +18,7 @@ package com.mikeleitz.sidekick.bash.snippet;
 import com.mikeleitz.sidekick.base.Snippet;
 import com.mikeleitz.sidekick.base.SnippetContext;
 import com.mikeleitz.sidekick.bash.domain.BashOption;
-import com.mikeleitz.sidekick.bash.snippet.validation.BashValidationFactory;
+import com.mikeleitz.sidekick.bash.snippet.validation.BashValidationSnippetFactory;
 import io.micrometer.core.instrument.util.StringUtils;
 import lombok.NonNull;
 import org.apache.commons.collections4.CollectionUtils;
@@ -45,7 +45,7 @@ public class InputBashSnippet extends Snippet {
     private Set<BashOption> allInputOptions;
     private List<Snippet> allValidationSnippets = new ArrayList<>();
 
-    private BashValidationFactory bashValidationFactory = new BashValidationFactory();
+    private BashValidationSnippetFactory bashValidationSnippetFactory = new BashValidationSnippetFactory();
 
     public InputBashSnippet(SnippetContext context, @NonNull Set<BashOption> allInputOptions) throws IOException {
         super(TEMPLATE_LOCATION, context);

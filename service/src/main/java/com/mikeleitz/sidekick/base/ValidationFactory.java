@@ -16,7 +16,7 @@
 package com.mikeleitz.sidekick.base;
 
 import com.mikeleitz.sidekick.base.application.ApplicationInput;
-import com.mikeleitz.sidekick.bash.snippet.validation.BashValidationRegexSnippet;
+import com.mikeleitz.sidekick.bash.domain.BashValidation;
 
 import java.io.IOException;
 
@@ -24,5 +24,5 @@ import java.io.IOException;
  * @author leitz@mikeleitz.com
  */
 public abstract class ValidationFactory {
-    public abstract Snippet createValidationSnippet(BashValidationRegexSnippet validationType, SnippetContext snippetContext, ApplicationInput applicationInput) throws IOException;
+    public abstract Snippet createValidationSnippet(BashValidation validationType, SnippetContext snippetContext, ApplicationInput applicationInput) throws IOException;
 }
