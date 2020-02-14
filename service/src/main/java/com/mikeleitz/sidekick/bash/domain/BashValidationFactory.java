@@ -25,7 +25,7 @@ import java.util.Optional;
 
 public class BashValidationFactory {
 
-    public BashValidation createBashValidation(Integer id, String name, List args) {
+    public BashValidation createBashValidation(Integer id, List args) {
         BashValidation returnValue = null;
 
         Optional<ValidationRegexEnum> regexEnumOptional = ValidationRegexEnum.getById(id);

@@ -62,8 +62,10 @@ public class BashValidationDeserializer extends StdDeserializer<BashValidation> 
         JsonNode node = jp.getCodec().readTree(jp);
 
         Integer id = (Integer) ((IntNode) node.get("id")).numberValue();
-        String name = node.get("name").asText();
         List<Pair<String, String>> args = Collections.emptyList();
+
+        // We ignore the name from the JS side and take the name specified on the Java side.
+        String name = node.get("name").asText();
 
         ArrayNode argsArrayNode = (ArrayNode) node.get("args");
         if (argsArrayNode != null && !argsArrayNode.isNull()) {
@@ -75,7 +77,7 @@ public class BashValidationDeserializer extends StdDeserializer<BashValidation> 
                     .collect(Collectors.toList());
         }
 
-        returnValue = bashValidationFactory.createBashValidation(id, name, args);
+        returnValue = bashValidationFactory.createBashValidation(id, args);
 
         return returnValue;
     }
