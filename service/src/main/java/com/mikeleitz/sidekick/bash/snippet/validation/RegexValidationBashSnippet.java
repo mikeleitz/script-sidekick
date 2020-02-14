@@ -18,6 +18,6 @@ package com.mikeleitz.sidekick.bash.snippet.validation;
 /**
  * @author leitz@mikeleitz.com
  */
-public class BashValidationRegexSnippet {
+public class RegexValidationBashSnippet {
 
 }

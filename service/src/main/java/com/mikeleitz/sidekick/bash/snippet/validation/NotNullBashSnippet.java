@@ -24,6 +24,7 @@ import java.io.IOException;
 /**
  * @author leitz@mikeleitz.com
  */
+@Deprecated(since = "BashValidationRegex -> VALUE_REQUIRED")
 public class NotNullBashSnippet extends Snippet {
     private static final String TEMPLATE_LOCATION = "com/mikeleitz/sidekick/bash/bash-validation-notnull-template.stg";
 
