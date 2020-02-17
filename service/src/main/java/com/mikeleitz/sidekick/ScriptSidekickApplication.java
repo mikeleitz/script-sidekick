@@ -17,7 +17,9 @@ package com.mikeleitz.sidekick;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mikeleitz.sidekick.bash.domain.BashValidation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,6 +28,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.io.IOException;
+import java.util.List;
 
 //import com.xebia.jacksonlombok.JacksonLombokAnnotationIntrospector;
 
@@ -45,9 +48,11 @@ public class ScriptSidekickApplication {
         ObjectMapper mapper = new ObjectMapper();
         mapper.findAndRegisterModules(); //Registers all modules on classpath
 
-//        mapper.setAnnotationIntrospector(new JacksonLombokAnnotationIntrospector());
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        JavaType customClassCollection = mapper.getTypeFactory().constructCollectionType(List.class, BashValidation.class);
+
         return mapper;
     }
 

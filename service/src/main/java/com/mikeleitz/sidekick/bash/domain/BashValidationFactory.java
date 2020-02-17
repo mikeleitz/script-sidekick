@@ -25,8 +25,8 @@ import java.util.Optional;
 
 public class BashValidationFactory {
 
-    public BashValidation createBashValidation(Integer id, List args) {
-        BashValidation returnValue = null;
+    public BashValidation createBashValidation(Integer id, List<Pair<String, String>> args) {
+        BashValidation returnValue;
 
         Optional<ValidationRegexEnum> regexEnumOptional = ValidationRegexEnum.getById(id);
         Optional<ValidationLogicEnum> logicEnumOptional = ValidationLogicEnum.getById(id);
@@ -44,7 +44,7 @@ public class BashValidationFactory {
     }
 
     public BashValidationRegex toBashValidation(ValidationRegexEnum regexEnum, List<Pair<String, String>> args) {
-        BashValidationRegex returnValue = null;
+        BashValidationRegex returnValue;
 
         returnValue = BashValidationRegex.builder()
                 .id(regexEnum.getId())
@@ -57,7 +57,7 @@ public class BashValidationFactory {
     }
 
     public BashValidationLogic toBashValidation(ValidationLogicEnum logicEnum, List<Pair<String, String>> args) {
-        BashValidationLogic returnValue = null;
+        BashValidationLogic returnValue;
 
         returnValue = BashValidationLogic.builder()
                 .id(logicEnum.getId())
