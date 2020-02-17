@@ -26,12 +26,12 @@ import java.util.Optional;
 @AllArgsConstructor
 @Getter
 public enum ValidationRegexEnum {
-    EMAIL(10, "Email validation", "", "^(?:(?:[\\w`~!#$%^&*\\-=+;:{}'|,?\\/]+(?:(?:\\.(?:\"(?:\\\\?[\\w`~!#$%^&*\\-=+;:{}'|,?\\/\\.()<>\\[\\] @]|\\\\\"|\\\\\\\\)*\"|[\\w`~!#$%^&*\\-=+;:{}'|,?\\/]+))*\\.[\\w`~!#$%^&*\\-=+;:{}'|,?\\/]+)?)|(?:\"(?:\\\\?[\\w`~!#$%^&*\\-=+;:{}'|,?\\/\\.()<>\\[\\] @]|\\\\\"|\\\\\\\\)+\"))@(?:[a-zA-Z\\d\\-]+(?:\\.[a-zA-Z\\d\\-]+)*|\\[\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\])$"),
+//    EMAIL(10, "Email validation", "", "^(?:(?:[\\w`~!#$%^&*\\-=+;:{}'|,?\\/]+(?:(?:\\.(?:\"(?:\\\\?[\\w`~!#$%^&*\\-=+;:{}'|,?\\/\\.()<>\\[\\] @]|\\\\\"|\\\\\\\\)*\"|[\\w`~!#$%^&*\\-=+;:{}'|,?\\/]+))*\\.[\\w`~!#$%^&*\\-=+;:{}'|,?\\/]+)?)|(?:\"(?:\\\\?[\\w`~!#$%^&*\\-=+;:{}'|,?\\/\\.()<>\\[\\] @]|\\\\\"|\\\\\\\\)+\"))@(?:[a-zA-Z\\d\\-]+(?:\\.[a-zA-Z\\d\\-]+)*|\\[\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\])$"),
     DATE(6, "Date validation dd/mm/yyy", "", "^(?:(?:19[0-9]{2}|200[0-9]|2010)([-/.]?)(?:(?:0?[1-9]|1[0-2])\\1(?:0?[1-9]|1[0-9]|2[0-8])|(?:0?[13-9]|1[0-2])\\1(?:29|30)|(?:0?[13578]|1[02])\\1(?:31))|(?:19(?:0[48]|[2648][048]|[13579][26])|2000|200[48])([-/.]?)0?2\\2(?:29))$"),
-    SIGNED_INTEGER(1, "Signed integer", "", "^-?\\d{1,10}$"),
-    UNSIGNED_INTEGER(19, "Unsigned integer", "", "^\\d{1,10}$"),
-    SIGNED_REAL(3, "Signed real number", "", "^-?\\d{1,10}.?\\d{0,10}$"),
-    UNSIGNED_REAL(18, "Unsigned real number", "", "^\\d{1,10}.?\\d{0,10}$"),
+    SIGNED_INTEGER(1, "Signed integer", "", "^-?[0-9]{1,10}$"),
+    UNSIGNED_INTEGER(19, "Unsigned integer", "", "^[0-9]{1,10}$"),
+    SIGNED_REAL(3, "Signed real number", "", "^-?[0-9]{1,10}.?[0-9]{0,10}$"),
+    UNSIGNED_REAL(18, "Unsigned real number", "", "^[0-9]{1,10}.?[0-9]{0,10}$"),
     BOOLEAN(2, "Boolean", "", "^([01]|true|false|on|off|[y]|[n]|yes|no)$"),
     TIMESTAMP_ISO(7, "Timestamp in ISO format", "Matches the ISO 8601 timestamp format with a 'T' separating the date from the time and the timezone offset. For example, 2020-02-08T23:16:30+00:00", "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d(\\.\\d+)?(([+-]\\d\\d:\\d\\d)|Z)?$"),
     TIMESTAMP_ONE_TRUE(99, "Timestamp in the one true format", "Will match the date and time down to either the seconds level of detail or the milliseconds level of detail. For example it matches both 2020-02-08 12:23:60,123 and 2020-02-08 12:23:60", "^\\d{4}-\\d{1,2}-\\d{1,2} \\d{1,2}:\\d{1,2}:\\d{1,2}(?:,\\d{1,3})?$"),
