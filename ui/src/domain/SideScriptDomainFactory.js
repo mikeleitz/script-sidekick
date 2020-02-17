@@ -114,6 +114,9 @@ let BashOption = function (pId = undefined) {
   this.helpText = ''
   this.validations = [] // BashValidation objects
 
+  // TODO make a switch for this.
+  this.optionHasValue = true
+
   this.addValidation = function (bashValidation) {
     if (this.hasValidation(bashValidation)) {
       console.log('Validation id [' + bashValidation.id + '] already exists for BashOption id [' + this.id + ']. Not adding it.')

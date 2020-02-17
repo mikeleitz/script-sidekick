@@ -22,11 +22,9 @@ import lombok.Data;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.Singular;
-import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author leitz@mikeleitz.com
@@ -35,12 +33,14 @@ import java.util.Optional;
 @Builder
 @Setter(AccessLevel.NONE)
 public class BashOption implements ApplicationInput {
-    public static BashOption VERBOSE = BashOption.builder().shortName('v').longName("verbose").helpText("verbose operation").build();
-    public static BashOption HELP = BashOption.builder().shortName('h').longName("help").helpText("give this help list").build();
+    public static BashOption VERBOSE = BashOption.builder().shortName('v').longName("verbose").optionHasValue(false).helpText("verbose operation").build();
+    public static BashOption HELP = BashOption.builder().shortName('h').longName("help").optionHasValue(false).helpText("give this help list").build();
 
     private Long id;
     private Character shortName;
     @NonNull private String longName;
+
+    @Builder.Default private Boolean optionHasValue = true;
     private String defaultValue;
     @Builder.Default @NonNull private String helpText = "";
     @Singular private List<BashValidation> validations;
@@ -55,15 +55,20 @@ public class BashOption implements ApplicationInput {
         return createVariableSetName(this);
     }
 
-    public Boolean getDecree() {
-        Boolean returnValue = false;
-
-        if (CollectionUtils.isNotEmpty(validations)) {
-            Optional<BashValidation> requiredValidation = validations.stream().filter(v -> v.getId() == 1L).findFirst();
-            returnValue = requiredValidation.isPresent();
-        }
-
-        return returnValue;
+    /**
+     * true if this bash input needs a value to be useful. This doesn't mean the the bash option
+     * is required, it just means the option has a user input associated with it.
+     *
+     * Returns true if for example,
+     *   -f ./my-file.txt
+     *
+     * This return value doesn't specify if the option is required for the script to run however.
+     * That's done via a required validation.
+     *
+     * @return
+     */
+    public Boolean optionHasValue() {
+        return optionHasValue;
     }
 
     public void addBashValidation(BashValidation bashValidation) {

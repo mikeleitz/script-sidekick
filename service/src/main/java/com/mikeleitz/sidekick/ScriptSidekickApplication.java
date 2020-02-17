@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mikeleitz.sidekick.bash.domain.BashOption;
 import com.mikeleitz.sidekick.bash.domain.BashValidation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
@@ -28,6 +29,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 
 //import com.xebia.jacksonlombok.JacksonLombokAnnotationIntrospector;
@@ -51,7 +53,8 @@ public class ScriptSidekickApplication {
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-        JavaType customClassCollection = mapper.getTypeFactory().constructCollectionType(List.class, BashValidation.class);
+        JavaType bashValidationList = mapper.getTypeFactory().constructCollectionType(List.class, BashValidation.class);
+        JavaType bashOptionSet = mapper.getTypeFactory().constructCollectionType(HashSet.class, BashOption.class);
 
         return mapper;
     }

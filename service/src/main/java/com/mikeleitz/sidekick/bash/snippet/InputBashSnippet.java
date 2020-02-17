@@ -21,6 +21,7 @@ import com.mikeleitz.sidekick.bash.domain.BashOption;
 import io.micrometer.core.instrument.util.StringUtils;
 import lombok.NonNull;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.BooleanUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -83,19 +84,17 @@ public class InputBashSnippet extends Snippet {
         if (CollectionUtils.isNotEmpty(allInputOptions)) {
             for (BashOption bashOption : allInputOptions) {
                 if (bashOption.getShortName() != null) {
-                    String shortOptArgsValue = bashOption.getDecree() ?
-                            bashOption.getShortName() + ":" : bashOption.getShortName() + "";
+                    String shortOptArgsValue = BooleanUtils.isTrue(bashOption.optionHasValue()) ? bashOption.getShortName() + ":" : bashOption.getShortName() + "";
                     allShortOpts.add(shortOptArgsValue);
                 }
 
                 if (StringUtils.isNotBlank(bashOption.getLongName())) {
-                    String longOptArgsValue = bashOption.getDecree() ?
-                            bashOption.getLongName() + ":" : bashOption.getLongName() + "";
+                    String longOptArgsValue = BooleanUtils.isTrue(bashOption.optionHasValue()) ? bashOption.getLongName() + ":" : bashOption.getLongName() + "";
                     allLongOpts.add(longOptArgsValue);
 
                     allVariables.add(bashOption.getIsSetVariableName());
 
-                    if (bashOption.getDecree()) {
+                    if (BooleanUtils.isTrue(bashOption.optionHasValue())) {
                         allVariables.add(bashOption.getVariableName());
                     }
                 }
@@ -134,7 +133,7 @@ public class InputBashSnippet extends Snippet {
         returnValue += bashOption.getIsSetVariableName() + "=1";
         returnValue += "\n";
 
-        if (bashOption.getDecree()) {
+        if (bashOption.optionHasValue()) {
             returnValue += bashOption.getVariableName() + "=\"$2\"";
             returnValue += "\n";
             returnValue += "shift 2";
