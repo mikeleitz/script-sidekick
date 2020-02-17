@@ -27,7 +27,7 @@ import java.io.IOException;
  * @author leitz@mikeleitz.com
  */
 public class TrimBashVariableSnippet extends Snippet {
-    private static final String TEMPLATE_LOCATION = "com/mikeleitz/sidekick/bash/bash-validation-trim-template.stg";
+    private static final String TEMPLATE_LOCATION = "com/mikeleitz/sidekick/bash/common/bash-validation-trim-template.stg";
 
     private String variableName;        // The name of the variable.
     private String isVariableSpecified; // Each variable has a sister variable that indicates if it was passed in or not.  If the variable was name there's a second variable called name_option_chosen=1 or 0.
