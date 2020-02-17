@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.mikeleitz.sidekick.bash.snippet.validation;
+package com.mikeleitz.sidekick.bash.snippet.common;
 
 import com.mikeleitz.sidekick.base.Snippet;
 import com.mikeleitz.sidekick.base.SnippetContext;
@@ -22,6 +22,8 @@ import org.stringtemplate.v4.ST;
 import java.io.IOException;
 
 /**
+ * Generic bash function that takes a value and trims off all leading and trailing whitespace.
+ *
  * @author leitz@mikeleitz.com
  */
 public class TrimBashVariableSnippet extends Snippet {
