@@ -13,13 +13,13 @@
 # Use $? right after this function call to get the return value.
 ################################################################################
 function .validateValueWithRegex() {
-  echo "Validating input using a regex."
+  .log 7 'Validating input using a regex.'
 
   valueToTest="$1"
   regex="$2"
 
-  echo "Using regex: " "$regex"
-  echo "Validating: " "$valueToTest"
+  .log 7 'Using regex: ' $regex
+  .log 7 'Validating: ' $valueToTest
 
   if [[ $valueToTest =~ $regex ]]; then
     return 0
@@ -30,10 +30,12 @@ function .validateValueWithRegex() {
   exit 0
 }
 
-VALUE=$1
-VALIDATION_REGEX="^-?[0-9]{1,10}$"
+# TESTING CODE
+#
+# VALUE=$1
+# VALIDATION_REGEX="^-?[0-9]{1,10}$"
 
-.validateValueWithRegex "$VALUE" "$VALIDATION_REGEX"
+# .validateValueWithRegex "$VALUE" "$VALIDATION_REGEX"
 
 # Get the return value, 0 is success anything else is validation failure.
-echo $?
+# echo $?

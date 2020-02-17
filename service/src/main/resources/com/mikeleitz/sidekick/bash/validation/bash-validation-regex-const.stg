@@ -1,0 +1,9 @@
+#################################################################################
+# These are the regex we use for some of the input validations. Not all
+# validations can be done by regex so if you don't see a particular
+# validation it's done via other means.
+#
+################################################################################
+
+<allRegexValidations:{ validation |<validation.left>="<validation.right>"
+}>
