@@ -25,7 +25,8 @@ import com.mikeleitz.sidekick.bash.snippet.LoggingBashSnippet;
 import com.mikeleitz.sidekick.bash.snippet.ProcessingBashSnippet;
 import com.mikeleitz.sidekick.bash.snippet.ShebangBashSnippet;
 import com.mikeleitz.sidekick.bash.snippet.common.RegexValidationBashSnippet;
-import com.mikeleitz.sidekick.bash.snippet.validation.BashValidationRegexConst;
+import com.mikeleitz.sidekick.bash.snippet.validation.BashOptionsValidationSnippet;
+import com.mikeleitz.sidekick.bash.snippet.validation.BashValidationRegexConstSnippet;
 import lombok.SneakyThrows;
 import org.apache.commons.io.FileUtils;
 
@@ -55,7 +56,8 @@ public class BashFile extends ApplicationFile {
         ProcessingBashSnippet processingBashSnippet = new ProcessingBashSnippet(snippetContext);
 
         RegexValidationBashSnippet regexValidationBashSnippet = new RegexValidationBashSnippet(snippetContext);
-        BashValidationRegexConst bashValidationRegexConst = new BashValidationRegexConst(snippetContext);
+        BashValidationRegexConstSnippet bashValidationRegexConstSnippet = new BashValidationRegexConstSnippet(snippetContext);
+        BashOptionsValidationSnippet bashOptionsValidationSnippet = new BashOptionsValidationSnippet(snippetContext);
 
         HelpBashSnippet helpBashSnippet = new HelpBashSnippet(snippetContext,
                 bashScriptConfiguration.getBashOptions(),
@@ -71,8 +73,9 @@ public class BashFile extends ApplicationFile {
 
         functionsAndSupplementList.add(loggingBashSnippet);
         functionsAndSupplementList.add(helpBashSnippet);
-        functionsAndSupplementList.add(bashValidationRegexConst);
+        functionsAndSupplementList.add(bashValidationRegexConstSnippet);
         functionsAndSupplementList.add(regexValidationBashSnippet);
+        functionsAndSupplementList.add(bashOptionsValidationSnippet);
 
         applicationInputList.add(inputBashSnippet);
 

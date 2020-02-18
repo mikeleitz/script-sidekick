@@ -51,28 +51,6 @@ public class InputBashSnippet extends Snippet {
 
         context.addValue("bashOptions", allInputOptions);
         addDomainValuesToSnippetContext(context);
-
-        for (BashOption bashOption : allInputOptions) {
-            List<Snippet> validationSnippets = createValidationSnippets(bashOption);
-            allValidationSnippets.addAll(validationSnippets);
-        }
-    }
-
-    protected List<Snippet> createValidationSnippets(BashOption bashOption) throws IOException {
-        List<Snippet> returnValue = new ArrayList<>();
-
-        if (CollectionUtils.isNotEmpty(bashOption.getValidations())) {
-          /*
-          TODO: update after refactor.
-          for (BashValidationSnippet validationEnum : bashOption.getValidations()) {
-                Snippet validationSnippet = bashValidationFactory.createValidationSnippet(validationEnum, context, bashOption);
-                returnValue.add(validationSnippet);
-            }
-
-            */
-        }
-
-        return returnValue;
     }
 
     protected void addDomainValuesToSnippetContext(SnippetContext context) {

@@ -47,11 +47,11 @@ public class BashValidationDeserializer extends StdDeserializer<BashValidation> 
     private BashValidationFactory bashValidationFactory = new BashValidationFactory();
 
     public BashValidationDeserializer() {
-        this(null);
+        this(BashValidation.class);
     }
 
     public BashValidationDeserializer(Class<?> vc) {
-        super(vc);
+        super(BashValidation.class);
     }
 
     @Override

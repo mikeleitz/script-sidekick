@@ -16,6 +16,7 @@
 package com.mikeleitz.sidekick.base;
 
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -27,6 +28,7 @@ import java.nio.charset.Charset;
 /**
  * @author leitz@mikeleitz.com
  */
+@Slf4j
 public abstract class Snippet {
     @NonNull private Resource templateResource;
     protected String template;
@@ -54,6 +56,8 @@ public abstract class Snippet {
         context.getAllValues().forEach((e,v) -> snippetTemplate.add(e, v));
 
         returnValue = snippetTemplate.render();
+
+        log.debug("Rendered template for [{}]", this.getClass());
 
         return returnValue;
     }

@@ -30,10 +30,10 @@ import java.util.stream.Collectors;
 /**
  * @author leitz@mikeleitz.com
  */
-public class BashValidationRegexConst extends Snippet {
+public class BashValidationRegexConstSnippet extends Snippet {
     private static final String TEMPLATE_LOCATION = "com/mikeleitz/sidekick/bash/validation/bash-validation-regex-const.stg";
 
-    public BashValidationRegexConst(SnippetContext context) throws IOException {
+    public BashValidationRegexConstSnippet(SnippetContext context) throws IOException {
         super(TEMPLATE_LOCATION, context);
 
         context.addValue("allRegexValidations", _getAllRegexValidations());

@@ -15,6 +15,7 @@
  */
 package com.mikeleitz.sidekick.bash.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.mikeleitz.sidekick.base.application.ApplicationInput;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -22,28 +23,31 @@ import lombok.Data;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.Singular;
+import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author leitz@mikeleitz.com
  */
+@Slf4j
 @Data
 @Builder
 @Setter(AccessLevel.NONE)
+@JsonDeserialize(using = BashOptionDeserializer.class)
 public class BashOption implements ApplicationInput {
     public static BashOption VERBOSE = BashOption.builder().shortName('v').longName("verbose").optionHasValue(false).helpText("verbose operation").build();
     public static BashOption HELP = BashOption.builder().shortName('h').longName("help").optionHasValue(false).helpText("give this help list").build();
 
-    private Long id;
+    private Integer id;
     private Character shortName;
     @NonNull private String longName;
 
     @Builder.Default private Boolean optionHasValue = true;
     private String defaultValue;
     @Builder.Default @NonNull private String helpText = "";
-    @Singular private List<BashValidation> validations;
+    @Singular private List<BashValidationRegex> bashValidationRegexes;
+
 
     @Override
     public String getVariableName() {
@@ -69,14 +73,6 @@ public class BashOption implements ApplicationInput {
      */
     public Boolean optionHasValue() {
         return optionHasValue;
-    }
-
-    public void addBashValidation(BashValidation bashValidation) {
-        if (this.validations == null) {
-            this.validations = new ArrayList<>();
-        }
-
-        this.validations.add(bashValidation);
     }
 
     private String createVariableName(BashOption bashOption) {

@@ -1,0 +1,18 @@
+################################################################################
+# This section contains all the input validations. If a script input (option)
+# needs to be non-null/non-empty, the validation will be performed in this
+# validation function.
+#
+# All validation functions return a 0 if the value is valid and any other value
+# if it's invalid.
+#
+# These validation scripts obtain the particular input values from their
+# parsed input. e.g. MY_VALUE_ARG
+################################################################################
+
+
+<bashOptions:{ bashOption |function .validateBashOption_<bashOption.longName>() {
+    <bashOption.bashValidationRegexes:{ bashValidation | <bashValidation.bashRegexEnum> }>
+\}
+
+}>
