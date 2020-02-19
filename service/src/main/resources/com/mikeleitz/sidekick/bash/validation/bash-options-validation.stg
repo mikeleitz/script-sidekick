@@ -9,10 +9,3 @@
 # These validation scripts obtain the particular input values from their
 # parsed input. e.g. MY_VALUE_ARG
 ################################################################################
-
-
-<bashOptions:{ bashOption |function .validateBashOption_<bashOption.longName>() {
-    <bashOption.bashValidationRegexes:{ bashValidation | <bashValidation.bashRegexEnum> }>
-\}
-
-}>
