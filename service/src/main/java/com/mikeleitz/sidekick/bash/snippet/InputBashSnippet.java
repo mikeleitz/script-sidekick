@@ -46,7 +46,8 @@ public class InputBashSnippet extends Snippet {
     private List<Snippet> allValidationSnippets = new ArrayList<>();
 
     public InputBashSnippet(SnippetContext context, @NonNull Set<BashOption> allInputOptions) throws IOException {
-        super(TEMPLATE_LOCATION, context);
+        super(context);
+        setSnippetTemplate(TEMPLATE_LOCATION);
         this.allInputOptions = allInputOptions;
 
         context.addValue("bashOptions", allInputOptions);

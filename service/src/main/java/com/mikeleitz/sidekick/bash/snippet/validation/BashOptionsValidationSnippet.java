@@ -28,6 +28,8 @@ public class BashOptionsValidationSnippet extends Snippet {
     private static final String TEMPLATE_LOCATION = "com/mikeleitz/sidekick/bash/validation/bash-options-validation.stg";
 
     public BashOptionsValidationSnippet(SnippetContext context) throws IOException {
-        super(TEMPLATE_LOCATION, context);
+        super(context);
+        setSnippetTemplate(TEMPLATE_LOCATION);
+
     }
 }

@@ -33,12 +33,19 @@ public abstract class Snippet {
     @NonNull private Resource templateResource;
     protected String template;
     protected SnippetContext context;
+    protected String name;
 
-    public Snippet(String templateLocation, SnippetContext context) throws IOException {
+    public Snippet(SnippetContext context)  {
         this.context = context;
+    }
 
+    public void setSnippetTemplate(String templateLocation) throws IOException {
         templateResource = new ClassPathResource(templateLocation);
         template = FileUtils.readFileToString(templateResource.getFile(), Charset.defaultCharset());
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String getSnippet() {
@@ -50,6 +57,14 @@ public abstract class Snippet {
     }
 
     protected String buildTemplate() {
+        String returnValue = null;
+
+        returnValue = this.buildTemplate(template);
+
+        return returnValue;
+    }
+
+    protected String buildTemplate(String template) {
         String returnValue = null;
 
         ST snippetTemplate = new ST(template);

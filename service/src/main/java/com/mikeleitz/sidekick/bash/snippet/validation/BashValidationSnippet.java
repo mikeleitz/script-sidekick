@@ -16,21 +16,29 @@
 
 package com.mikeleitz.sidekick.bash.snippet.validation;
 
-import com.mikeleitz.sidekick.base.Snippet;
+import com.mikeleitz.sidekick.base.CompositeSnippet;
+import com.mikeleitz.sidekick.base.GenericSnippet;
 import com.mikeleitz.sidekick.base.SnippetContext;
+import com.mikeleitz.sidekick.bash.domain.ValidationEnum;
+import io.micrometer.core.instrument.util.StringUtils;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
- * One instance of this class for each value in {@link com.mikeleitz.sidekick.bash.domain.ValidationEnum}
+ * This class creates all the common validations used in the bash script.
+ * It loops through all the validation enums and creates a super-snippet
+ * of all of the validations.
+ *
  * @author leitz@mikeleitz.com
  */
-public class BashValidationSnippet extends Snippet {
-    private static final String TEMPLATE_LOCATION = "com/mikeleitz/sidekick/bash/validation/bash-validation-regex-const.stg";
-
+public class BashValidationSnippet extends CompositeSnippet {
     public BashValidationSnippet(SnippetContext context) throws IOException {
-        super(TEMPLATE_LOCATION, context);
+        super(context);
 
-//        context.addValue("allRegexValidations", _getAllRegexValidations());
+        Arrays.stream(ValidationEnum.values())
+                .filter(t -> StringUtils
+                .isNotBlank(t.getStringTemplate()))
+                .forEach(t -> this.addSnippet(new GenericSnippet(context, t.getStringTemplate(), t.getValidationName())));
     }
 }

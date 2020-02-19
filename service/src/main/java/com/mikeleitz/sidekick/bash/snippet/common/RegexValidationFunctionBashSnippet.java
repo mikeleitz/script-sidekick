@@ -33,10 +33,12 @@ import java.io.IOException;
  *
  * @author leitz@mikeleitz.com
  */
-public class RegexValidationBashSnippet extends Snippet {
+public class RegexValidationFunctionBashSnippet extends Snippet {
     private static final String TEMPLATE_LOCATION = "com/mikeleitz/sidekick/bash/common/bash-validation-regex-template.stg";
 
-    public RegexValidationBashSnippet(SnippetContext context) throws IOException {
-        super(TEMPLATE_LOCATION, context);
+    public RegexValidationFunctionBashSnippet(SnippetContext context) throws IOException {
+        super(context);
+        setSnippetTemplate(TEMPLATE_LOCATION);
+
     }
 }

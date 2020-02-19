@@ -27,6 +27,7 @@ public class LoggingBashSnippet extends Snippet {
     private static final String TEMPLATE_LOCATION = "com/mikeleitz/sidekick/bash/bash-logging-template.stg";
 
     public LoggingBashSnippet(SnippetContext context) throws IOException {
-        super(TEMPLATE_LOCATION, context);
+        super(context);
+        setSnippetTemplate(TEMPLATE_LOCATION);
     }
 }

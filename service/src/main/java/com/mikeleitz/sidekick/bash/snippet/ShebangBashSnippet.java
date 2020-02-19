@@ -28,7 +28,8 @@ public class ShebangBashSnippet extends Snippet {
     private static final String BASH_TEMPLATE_LOCATION = "com/mikeleitz/sidekick/bash/bash-shebang-template.stg";
 
     public ShebangBashSnippet(SnippetContext context, ShellOptionEnum shellOptionEnum) throws IOException {
-        super(getLocation(shellOptionEnum), context);
+        super(context);
+        setSnippetTemplate(getLocation(shellOptionEnum));
 
         context.addValue("shell", shellOptionEnum);
     }

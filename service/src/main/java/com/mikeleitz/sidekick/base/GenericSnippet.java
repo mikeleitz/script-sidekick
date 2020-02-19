@@ -13,16 +13,29 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
+
 package com.mikeleitz.sidekick.base;
 
-import com.mikeleitz.sidekick.base.application.ApplicationInput;
-import com.mikeleitz.sidekick.bash.domain.BashValidation;
-
-import java.io.IOException;
+import lombok.SneakyThrows;
 
 /**
  * @author leitz@mikeleitz.com
  */
-public abstract class ValidationFactory {
-    public abstract Snippet createValidationSnippet(BashValidation validationType, SnippetContext snippetContext, ApplicationInput applicationInput) throws IOException;
+public class GenericSnippet extends Snippet {
+    public GenericSnippet(SnippetContext context) {
+        super(context);
+    }
+
+    @SneakyThrows
+    public GenericSnippet(SnippetContext context, String template) {
+        super(context);
+        setSnippetTemplate(template);
+    }
+
+    @SneakyThrows
+    public GenericSnippet(SnippetContext context, String template, String name) {
+        super(context);
+        setSnippetTemplate(template);
+        this.name = name;
+    }
 }

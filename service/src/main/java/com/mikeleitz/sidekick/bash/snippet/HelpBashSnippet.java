@@ -49,7 +49,8 @@ public class HelpBashSnippet extends Snippet {
             String scriptName,
             String scriptVersion,
             String scriptPurpose) throws IOException {
-        super(TEMPLATE_LOCATION, context);
+        super(context);
+        setSnippetTemplate(TEMPLATE_LOCATION);
 
         this.allInputOptions = allInputOptions;
         this.author = author;

@@ -49,7 +49,7 @@ import java.util.Optional;
 @AllArgsConstructor
 @Getter
 public enum ValidationEnum {
-    EMAIL(10, "Email validation", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-email-regex.stg"),
+//    EMAIL(10, "Email validation", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-email-regex.stg"),
     DATE(6, "Date validation dd/mm/yyy", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-date-regex.stg"),
     SIGNED_INTEGER(1, "Signed integer", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-integer-signed-regex.stg"),
     UNSIGNED_INTEGER(19, "Unsigned integer", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-integer-unsigned-regex.stg"),

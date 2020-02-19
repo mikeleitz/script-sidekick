@@ -34,7 +34,8 @@ public class TrimBashVariableSnippet extends Snippet {
 
     public TrimBashVariableSnippet(SnippetContext context, String variableName, String isVariableSpecified) throws
             IOException {
-        super(TEMPLATE_LOCATION, context);
+        super(context);
+        setSnippetTemplate(TEMPLATE_LOCATION);
 
         this.variableName = variableName;
         this.isVariableSpecified = isVariableSpecified;
