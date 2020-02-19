@@ -1,1 +1,5 @@
 BOOLEAN="^([01]|true|false|on|off|[y]|[n]|yes|no)$"
+
+function .validateBooleanValue() {
+  .validateValueWithRegex $1 "$2" "$BOOLEAN"
+}

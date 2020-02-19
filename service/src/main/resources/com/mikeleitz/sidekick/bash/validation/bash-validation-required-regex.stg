@@ -1,1 +1,5 @@
 VALUE_REQUIRED="^\\s*\\S+.*$"
+
+function .validateRequiredValue() {
+  .validateValueWithRegex $1 "$2" "$VALUE_REQUIRED"
+}
