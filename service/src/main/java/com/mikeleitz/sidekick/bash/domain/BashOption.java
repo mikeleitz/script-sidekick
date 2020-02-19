@@ -46,7 +46,7 @@ public class BashOption implements ApplicationInput {
     @Builder.Default private Boolean optionHasValue = true;
     private String defaultValue;
     @Builder.Default @NonNull private String helpText = "";
-    @Singular private List<BashValidationRegex> bashValidationRegexes;
+    @Singular private List<BashValidation> bashValidations;
 
 
     @Override

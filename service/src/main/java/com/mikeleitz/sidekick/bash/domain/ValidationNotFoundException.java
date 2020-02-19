@@ -16,20 +16,10 @@
 
 package com.mikeleitz.sidekick.bash.domain;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Setter;
-import lombok.experimental.SuperBuilder;
-
-@Data
-@SuperBuilder
-@Setter(AccessLevel.NONE)
-@EqualsAndHashCode(callSuper = true)
-public class BashValidationLogic extends BashValidation {
-    public static final String VALIDATION_IMPLEMENTATION_TYPE = "BASH_LOGIC";
-
-    private ValidationLogicEnum validationLogicEnum;
-    private String templateLocation;
-
+/**
+ * @author leitz@mikeleitz.com
+ */
+public class ValidationNotFoundException extends Exception {
+    public ValidationNotFoundException(String message) {
+    }
 }

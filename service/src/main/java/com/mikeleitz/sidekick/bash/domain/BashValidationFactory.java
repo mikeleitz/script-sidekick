@@ -16,57 +16,26 @@
 
 package com.mikeleitz.sidekick.bash.domain;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 public class BashValidationFactory {
 
-    public BashValidation createBashValidation(Integer id, List<Pair<String, String>> args) {
-        BashValidation returnValue;
+    public BashValidation createBashValidation(Integer id, List<Pair<String, String>> args) throws ValidationNotFoundException {
+        BashValidation returnValue = null;
 
-        Optional<ValidationRegexEnum> regexEnumOptional = ValidationRegexEnum.getById(id);
-        Optional<ValidationLogicEnum> logicEnumOptional = ValidationLogicEnum.getById(id);
+        Optional<ValidationEnum> validationEnumOptional = ValidationEnum.getById(id);
 
-        if (regexEnumOptional.isPresent()) {
-            returnValue = toBashValidation(regexEnumOptional.get(), args);
-        } else if (logicEnumOptional.isPresent()) {
-            returnValue = toBashValidation(logicEnumOptional.get(), args);
+        if (validationEnumOptional.isPresent()) {
+            ValidationEnum validationEnum = validationEnumOptional.get();
+            returnValue = BashValidation.builder().id(id).name(validationEnum.getValidationName()).args(args).validationEnum(validationEnum).build();
         } else {
-            throw new IllegalArgumentException(String.format("BashValidation id %s not supported.", id));
+            throw new ValidationNotFoundException(String.format("Validation with id [%d] can't be found. Unable to create the requested code.", id));
         }
 
-
         return returnValue;
     }
 
-    public BashValidationRegex toBashValidation(ValidationRegexEnum regexEnum, List<Pair<String, String>> args) {
-        BashValidationRegex returnValue;
-
-        returnValue = BashValidationRegex.builder()
-                .id(regexEnum.getId())
-                .name(regexEnum.getRegexName())
-                .args(CollectionUtils.isNotEmpty(args) ? args : Collections.emptyList())
-                .bashRegexEnum(regexEnum)
-                .build();
-
-        return returnValue;
-    }
-
-    public BashValidationLogic toBashValidation(ValidationLogicEnum logicEnum, List<Pair<String, String>> args) {
-        BashValidationLogic returnValue;
-
-        returnValue = BashValidationLogic.builder()
-                .id(logicEnum.getId())
-                .name(logicEnum.getName())
-                .args(CollectionUtils.isNotEmpty(args) ? args : Collections.emptyList())
-                .templateLocation(logicEnum.getTemplateLocation())
-                .validationLogicEnum(logicEnum)
-                .build();
-
-        return returnValue;
-    }
 }

@@ -21,6 +21,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import com.fasterxml.jackson.databind.exc.InvalidTypeIdException;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.IntNode;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -77,7 +78,12 @@ public class BashValidationDeserializer extends StdDeserializer<BashValidation> 
                     .collect(Collectors.toList());
         }
 
-        returnValue = bashValidationFactory.createBashValidation(id, args);
+        try {
+            returnValue = bashValidationFactory.createBashValidation(id, args);
+        }
+        catch (ValidationNotFoundException e) {
+            throw new InvalidTypeIdException(jp, e.getMessage(), ctxt.getContextualType(), String.format("Validation id: [%d]", id));
+        }
 
         return returnValue;
     }

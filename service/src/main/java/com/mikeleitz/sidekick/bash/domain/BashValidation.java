@@ -31,10 +31,11 @@ import java.util.List;
 @SuperBuilder
 @AllArgsConstructor
 @JsonDeserialize(using = BashValidationDeserializer.class)
-abstract public class BashValidation {
+public class BashValidation {
     private @NonNull Integer id;
     private @NonNull String name;
     private @NonNull List args;
+    private @NonNull ValidationEnum validationEnum;
 
     public Boolean isSameValidationType(BashValidation bashValidation) {
         Boolean returnValue = null;

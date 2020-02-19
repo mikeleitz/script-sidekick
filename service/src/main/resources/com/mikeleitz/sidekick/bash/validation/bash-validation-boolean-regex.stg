@@ -1,0 +1,1 @@
+BOOLEAN="^([01]|true|false|on|off|[y]|[n]|yes|no)$"

@@ -66,7 +66,7 @@ public class BashOptionDeserializer extends StdDeserializer<BashOption> {
             shortNameChar = shortName.charAt(0);
         }
 
-        List<BashValidationRegex> allValidations = new ArrayList<>();
+        List<BashValidation> allValidations = new ArrayList<>();
 
         ObjectMapper mapper = new ObjectMapper();
         ArrayNode validations = (ArrayNode) node.get("validations");
@@ -74,7 +74,7 @@ public class BashOptionDeserializer extends StdDeserializer<BashOption> {
             for (JsonNode validation : validations) {
                 BashValidation val = mapper.readValue(validation.toString(), BashValidation.class);
                 // TODO modify when we support more validations.
-                allValidations.add((BashValidationRegex) val);
+                allValidations.add(val);
             }
         }
         returnValue = BashOption.builder()
@@ -84,7 +84,7 @@ public class BashOptionDeserializer extends StdDeserializer<BashOption> {
                 .defaultValue(defaultValue)
                 .helpText(helpText)
                 .optionHasValue(optionHasValue)
-                .bashValidationRegexes(allValidations)
+                .bashValidations(allValidations)
                 .build();
 
         return returnValue;
