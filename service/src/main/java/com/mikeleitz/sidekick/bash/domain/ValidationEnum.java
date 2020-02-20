@@ -56,7 +56,7 @@ public enum ValidationEnum {
     SIGNED_REAL(3, "Signed real number", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-real-signed-regex.stg", "validateSignedRealValue"),
     UNSIGNED_REAL(18, "Unsigned real number", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-real-unsigned-regex.stg", "validateUnsignedRealValue"),
     BOOLEAN(2, "Boolean", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-boolean-regex.stg", "validateBooleanValue"),
-    TIMESTAMP_ISO(7, "Timestamp in ISO format", "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d(\\.\\d+)?(([+-]\\d\\d:\\d\\d)|Z)?$", "com/mikeleitz/sidekick/bash/validation/bash-validation-timestamp-iso-regex.stg", "validateTimestampIsoValue"),
+    TIMESTAMP_ISO(7, "Timestamp in ISO format", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-timestamp-iso-regex.stg", "validateTimestampIsoValue"),
     TIMESTAMP_ONE_TRUE(99, "Timestamp in the one true format", "Will match the date and time down to either the seconds level of detail or the milliseconds level of detail. For example it matches both 2020-02-08 12:23:60,123 and 2020-02-08 12:23:60", "com/mikeleitz/sidekick/bash/validation/bash-validation-timestamp-one-true-regex.stg", "validateTimestampOneTrueValue"),
     URL(9, "URL", "Validates http or https urls.", "com/mikeleitz/sidekick/bash/validation/bash-validation-url-regex.stg", "validateUrlValue"),
     IPV4(11, "URL", "Validates an ipv4 address", "com/mikeleitz/sidekick/bash/validation/bash-validation-ipv4-regex.stg", "validateIpv4Value"),

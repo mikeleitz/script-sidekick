@@ -1,5 +1,5 @@
-VALUE_REQUIRED="^\\s*\\S+.*$"
+VALUE_REQUIRED_REGEX="^\\s*\\S+.*$"
 
 function .validateRequiredValue() {
-  .validateValueWithRegex $1 "$2" "$VALUE_REQUIRED"
+  .validateValueWithRegex $1 "$2" "$VALUE_REQUIRED_REGEX"
 }
