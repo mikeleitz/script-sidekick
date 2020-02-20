@@ -25,11 +25,14 @@
         {{ thisScriptInput.type === 'boolean' ? 'is a boolean' : 'is not a boolean' }}
       </b-form-checkbox>
     </b-form-group>
-    <b-form-group>
-      <b-form-checkbox name="check-button" v-model="storeState.isValueRequired" @change="changeIsValueRequired($event)" :disabled="thisScriptInput.type !== 'boolean'" switch>
-        {{ storeState.isValueRequired ? 'is required' : 'is not required' }}
-      </b-form-checkbox>
-    </b-form-group>
+    <div v-show="storeState.isBooleanSelected">
+      <!-- All validations. Show only if the user selected this type. -->
+      <b-form-group>
+        <b-form-checkbox name="check-button" v-model="storeState.isValueRequired" @change="changeIsValueRequired($event)" :disabled="thisScriptInput.type !== 'boolean'" switch>
+          {{ storeState.isValueRequired ? 'is required' : 'is not required' }}
+        </b-form-checkbox>
+      </b-form-group>
+    </div>
   </b-form-group>
 </template>
 

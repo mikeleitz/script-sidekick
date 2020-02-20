@@ -73,7 +73,7 @@ export default {
             this.storeState.isBooleanSelected = true
             this.storeState.isStringSelected = false
             this.storeState.isNumberSelected = false
-            this.storeState.isOtherSelected = true
+            this.storeState.isOtherSelected = false
           } else if (selectedType === 'other') {
             this.storeState.isOtherSelected = true
             this.storeState.isNumberSelected = false

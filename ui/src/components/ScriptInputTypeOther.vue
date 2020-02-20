@@ -26,21 +26,24 @@
           {{ thisScriptInput.type === 'other' ? 'is some other type' : 'is not some other type' }}
         </b-form-checkbox>
       </b-form-group>
-      <b-form-checkbox name="check-button" v-model="storeState.isValueRequired" @change="changeIsValueRequired($event)" :disabled="thisScriptInput.type !== 'other'" switch>
-        {{ storeState.isValueRequired ? 'is required' : 'is not required' }}
-      </b-form-checkbox>
-    </b-form-group>
-    <b-form-group>
-      <b-row align-v="center">
-        <b-col cols="4">
-          <b-form-checkbox name="check-button" v-model="storeState.isRegexValueSelected" :disabled="thisScriptInput.type !== 'other'" switch>
-            {{ storeState.isRegexValueSelected ? 'is validated by regex' : 'is not validated by regex' }}
-          </b-form-checkbox>
-        </b-col>
-        <b-col cols="4">
-          <b-form-input placeholder="Regex value" v-model="storeState.regexValue" :disabled="thisScriptInput.type !== 'other' || !storeState.isRegexValueSelected" />
-        </b-col>
-      </b-row>
+      <div v-show="storeState.isOtherSelected">
+        <!-- All validations. Show only if the user selected this type. -->
+        <b-form-checkbox name="check-button" v-model="storeState.isValueRequired" @change="changeIsValueRequired($event)" :disabled="thisScriptInput.type !== 'other'" switch>
+          {{ storeState.isValueRequired ? 'is required' : 'is not required' }}
+        </b-form-checkbox>
+        <b-form-group>
+          <b-row align-v="center">
+            <b-col cols="4">
+              <b-form-checkbox name="check-button" v-model="storeState.isRegexValueSelected" :disabled="thisScriptInput.type !== 'other'" switch>
+                {{ storeState.isRegexValueSelected ? 'is validated by regex' : 'is not validated by regex' }}
+              </b-form-checkbox>
+            </b-col>
+            <b-col cols="4">
+              <b-form-input placeholder="Regex value" v-model="storeState.regexValue" :disabled="thisScriptInput.type !== 'other' || !storeState.isRegexValueSelected"/>
+            </b-col>
+          </b-row>
+        </b-form-group>
+      </div>
     </b-form-group>
   </b-form-group>
 </template>
@@ -51,8 +54,7 @@ import ScriptInputTypeMixin from './mixins/ScriptInputTypeMixin.js'
 export default {
   name: 'ScriptInputTypeOther',
   mixins: [ScriptInputTypeMixin],
-  components: {
-  },
+  components: {},
   props: {
     // Script input id for this type component.
     id: {
@@ -68,8 +70,8 @@ export default {
   created () {
     this.thisScriptInput = this.bashOption
   },
-  watch: { },
-  methods: { }
+  watch: {},
+  methods: {}
 }
 </script>
 
