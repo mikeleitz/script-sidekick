@@ -18,8 +18,13 @@ package com.mikeleitz.sidekick.bash.snippet.validation;
 
 import com.mikeleitz.sidekick.base.Snippet;
 import com.mikeleitz.sidekick.base.SnippetContext;
+import com.mikeleitz.sidekick.bash.domain.BashOption;
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author leitz@mikeleitz.com
@@ -27,9 +32,14 @@ import java.io.IOException;
 public class BashOptionsValidationSnippet extends Snippet {
     private static final String TEMPLATE_LOCATION = "com/mikeleitz/sidekick/bash/validation/bash-options-validation.stg";
 
-    public BashOptionsValidationSnippet(SnippetContext context) throws IOException {
+    public BashOptionsValidationSnippet(Set<BashOption> bashOptions, SnippetContext context) throws IOException {
         super(context);
         setSnippetTemplate(TEMPLATE_LOCATION);
 
+        List<BashOption> optionsWithValidations = bashOptions.stream()
+                .filter(o -> CollectionUtils.isNotEmpty(o.getBashValidations()))
+                .collect(Collectors.toList());
+
+        context.addValue("bashOptionsWithValidations", optionsWithValidations);
     }
 }

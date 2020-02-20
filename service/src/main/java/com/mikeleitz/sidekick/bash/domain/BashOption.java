@@ -36,8 +36,8 @@ import java.util.List;
 @Setter(AccessLevel.NONE)
 @JsonDeserialize(using = BashOptionDeserializer.class)
 public class BashOption implements ApplicationInput {
-    public static BashOption VERBOSE = BashOption.builder().shortName('v').longName("verbose").optionHasValue(false).helpText("verbose operation").build();
-    public static BashOption HELP = BashOption.builder().shortName('h').longName("help").optionHasValue(false).helpText("give this help list").build();
+    public static BashOption VERBOSE = BashOption.builder().shortName('v').longName("verbose").longNameBashFriendly(BashOption.makeVariableNameAcceptableToBash("verbose")).optionHasValue(false).helpText("verbose operation").build();
+    public static BashOption HELP = BashOption.builder().shortName('h').longName("help").longNameBashFriendly(BashOption.makeVariableNameAcceptableToBash("help")).optionHasValue(false).helpText("give this help list").build();
 
     private Integer id;
     private Character shortName;
@@ -47,7 +47,7 @@ public class BashOption implements ApplicationInput {
     private String defaultValue;
     @Builder.Default @NonNull private String helpText = "";
     @Singular private List<BashValidation> bashValidations;
-
+    private String longNameBashFriendly;
 
     @Override
     public String getVariableName() {
@@ -83,7 +83,7 @@ public class BashOption implements ApplicationInput {
         return makeVariableNameAcceptableToBash(bashOption.getLongName()) + "_OPTION_CHOSEN";
     }
 
-    private String makeVariableNameAcceptableToBash(String variableName) {
+    public static String makeVariableNameAcceptableToBash(String variableName) {
         String returnValue = null;
 
         returnValue = variableName.toUpperCase();

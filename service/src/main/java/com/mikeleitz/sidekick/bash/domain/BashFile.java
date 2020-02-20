@@ -58,7 +58,7 @@ public class BashFile extends ApplicationFile {
         RegexValidationFunctionBashSnippet regexValidationFunctionBashSnippet = new RegexValidationFunctionBashSnippet(snippetContext);
         BashValidationSnippet bashValidationSnippet = new BashValidationSnippet(snippetContext);
 
-        BashOptionsValidationSnippet bashOptionsValidationSnippet = new BashOptionsValidationSnippet(snippetContext);
+        BashOptionsValidationSnippet bashOptionsValidationSnippet = new BashOptionsValidationSnippet(bashScriptConfiguration.getBashOptions(), snippetContext);
 
         HelpBashSnippet helpBashSnippet = new HelpBashSnippet(snippetContext,
                 bashScriptConfiguration.getBashOptions(),

@@ -80,6 +80,7 @@ public class BashOptionDeserializer extends StdDeserializer<BashOption> {
         returnValue = BashOption.builder()
                 .id(id)
                 .longName(longName)
+                .longNameBashFriendly(BashOption.makeVariableNameAcceptableToBash(longName))
                 .shortName(shortNameChar)
                 .defaultValue(defaultValue)
                 .helpText(helpText)

@@ -9,3 +9,20 @@
 # These validation scripts obtain the particular input values from their
 # parsed input. e.g. MY_VALUE_ARG
 ################################################################################
+
+
+  <bashOptionsWithValidations:{ option |
+function .<option.longNameBashFriendly>Validate() {
+  local VALUE="$1"
+  <option.longNameBashFriendly>Valid=0
+
+  <option.bashValidations:{ vali |
+  .<vali.validationEnum.functionName> <option.longNameBashFriendly>Valid "$VALUE"
+
+  if [ "$<option.longNameBashFriendly>Valid" -ne "0" ]; then
+    .log 2 "<option.longName> is invalid: value must be <vali.name>";
+    return 22;
+  fi
+  }>
+\}
+  }>
