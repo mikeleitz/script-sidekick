@@ -26,8 +26,8 @@
           {{ thisScriptInput.type === 'other' ? 'is some other type' : 'is not some other type' }}
         </b-form-checkbox>
       </b-form-group>
-      <b-form-checkbox name="check-button" @change="changeIsValueRequired($event)" :disabled="thisScriptInput.type !== 'other'" switch>
-        {{ isValueRequired ? 'is required' : 'is not required' }}
+      <b-form-checkbox name="check-button" v-model="storeState.isValueRequired" @change="changeIsValueRequired($event)" :disabled="thisScriptInput.type !== 'other'" switch>
+        {{ storeState.isValueRequired ? 'is required' : 'is not required' }}
       </b-form-checkbox>
     </b-form-group>
     <b-form-group>

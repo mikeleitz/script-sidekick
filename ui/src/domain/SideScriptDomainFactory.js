@@ -150,6 +150,10 @@ let BashOption = function (pId = undefined) {
     }
   }
 
+  this.removeAllValidations = function () {
+    this.validations.splice(0, this.validations.length)
+  }
+
   this.totalValidations = function () {
     if (this.validations === undefined) {
       return 0

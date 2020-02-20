@@ -46,11 +46,6 @@ export default {
     totalValidations: function () {
       let totalVal = this.thisScriptInput.totalValidations()
       return totalVal
-    },
-    isValueRequired: function () {
-      let requiredValidation = DomainFactory.createBashValidationFromType(ValidationTypes.VALUE_REQUIRED)
-      let valReq = this.thisScriptInput.hasValidation(requiredValidation)
-      return valReq
     }
   },
   methods: {
@@ -85,6 +80,9 @@ export default {
             this.storeState.isStringSelected = false
             this.storeState.isBooleanSelected = false
           }
+
+          this.thisScriptInput.removeAllValidations()
+          this.storeState.isValueRequired = false
         } else {
           // User somehow selected the currently selected type. No changes needed
         }

@@ -27,6 +27,7 @@ export const store = {
     isOtherSelected: false,
     otherRegexValue: '',
     isRegexValueSelected: false,
+    isValueRequired: false,
     scriptForm: {
       scriptName: '',
       shellType: 'BASH',
