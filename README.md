@@ -88,7 +88,9 @@ docker push gcr.io/side-script-dev/sidescript-service:current
 
  1. [Best practices](https://www.tothenew.com/blog/foolproof-your-bash-script-some-best-practices/)
  2. [GKE using static IP and DNS](https://cloud.google.com/kubernetes-engine/docs/tutorials/configuring-domain-name-static-ip)
-
+ 3. [Bash flags for sensible operation](http://redsymbol.net/articles/unofficial-bash-strict-mode/)
+ 4. [Exit codes](https://www.cyberciti.biz/faq/linux-bash-exit-status-set-exit-statusin-bash/)
+ 4. [Returning values from functions](https://www.linuxjournal.com/content/return-values-bash-functions)
 
 # Todo
 
