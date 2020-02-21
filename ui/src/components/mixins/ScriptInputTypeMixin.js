@@ -28,7 +28,7 @@ export default {
     return {
       thisScriptInput: null,
       storeState: store.state,
-      stringSubtype: store.stringSubtype,
+      stringSubtype: '-1',
       isBooleanSelected: store.isBooleanSelected,
       isRegexValueSelected: false,
       regexValue: '',
@@ -263,6 +263,7 @@ export default {
       this.isRegexValueSelected = false
       this.regexValue = ''
       this.regexValueValidation = undefined
+      this.stringSubtype = '-1'
     }
   }
 }

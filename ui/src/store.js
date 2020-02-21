@@ -22,7 +22,6 @@ export const store = {
     verboseCommandId: 0,
     quietCommandId: 0,
     isStringSelected: false,
-    stringSubtype: '',
     isNumberSelected: false,
     isBooleanSelected: false,
     isOtherSelected: false,
