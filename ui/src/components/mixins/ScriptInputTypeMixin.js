@@ -97,6 +97,8 @@ export default {
           this.thisScriptInput.addValidation(validation)
           this.greaterThanValidation = validation
         }
+      } else {
+        this.isEqualForGreaterCheck = false
       }
     },
     isLessThan: function (val, oldVal) {
@@ -118,6 +120,8 @@ export default {
           this.thisScriptInput.addValidation(validation)
           this.lessThanValidation = validation
         }
+      } else {
+        this.isEqualForLessCheck = false
       }
     },
     isNumberReal: function (val, oldVal) {
