@@ -30,6 +30,9 @@ export default {
       storeState: store.state,
       stringSubtype: store.stringSubtype,
       isBooleanSelected: store.isBooleanSelected,
+      isRegexValueSelected: false,
+      regexValue: '',
+      regexValueValidation: undefined,
       isGreaterThan: false,
       isEqualForGreaterCheck: false,
       greaterThanValue: '',
@@ -46,6 +49,23 @@ export default {
     defaultValue: function (val, oldVal) {
       console.log('New default value: [' + val + '].')
     },
+    isRegexValueSelected: function (val, oldVal) {
+      this.regexValueValidation = undefined
+
+      if (val) {
+        let validation = DomainFactory.createBashValidationFromType(ValidationTypes.CUSTOM_REGEX)
+        validation.addArgs('value', this.regexValue)
+
+        this.thisScriptInput.addValidation(validation)
+        this.regexValueValidation = validation
+      }
+    },
+    regexValue: function (val, olVal) {
+      if (typeof this.regexValueValidation !== 'undefined') {
+        this.regexValueValidation.removeArg('value')
+        this.regexValueValidation.addArgs('value', val)
+      }
+    },
     greaterThanValue: function (val, oldVal) {
       if (typeof this.greaterThanValidation !== 'undefined') {
         this.greaterThanValidation.removeArg('value')
@@ -61,6 +81,7 @@ export default {
     isGreaterThan: function (val, oldVal) {
       this.thisScriptInput.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.GREATER_THAN))
       this.thisScriptInput.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.GREATER_THAN_EQUAL))
+      this.greaterThanValidation = undefined
 
       if (val) {
         if (this.isEqualForGreaterCheck) {
@@ -81,6 +102,7 @@ export default {
     isLessThan: function (val, oldVal) {
       this.thisScriptInput.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.LESS_THAN))
       this.thisScriptInput.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.LESS_THAN_EQUAL))
+      this.lessThanValidation = undefined
 
       if (val) {
         if (this.isEqualForGreaterCheck) {
@@ -210,7 +232,7 @@ export default {
 
       console.log('isValueRequired: [' + this.isValueRequired + '].')
     },
-    clearNumberValidations: function() {
+    clearNumberValidations: function () {
       this.thisScriptInput.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_REAL))
       this.thisScriptInput.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_REAL))
       this.thisScriptInput.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_INTEGER))
@@ -238,6 +260,9 @@ export default {
       this.lessThanValue = ''
       this.isNumberReal = false
       this.isNumberUnsigned = false
+      this.isRegexValueSelected = false
+      this.regexValue = ''
+      this.regexValueValidation = undefined
     }
   }
 }

@@ -34,12 +34,12 @@
         <b-form-group>
           <b-row align-v="center">
             <b-col cols="4">
-              <b-form-checkbox name="check-button" v-model="storeState.isRegexValueSelected" :disabled="thisScriptInput.type !== 'other'" switch>
-                {{ storeState.isRegexValueSelected ? 'is validated by regex' : 'is not validated by regex' }}
+              <b-form-checkbox name="check-button" v-model="isRegexValueSelected" :disabled="thisScriptInput.type !== 'other'" switch>
+                {{ isRegexValueSelected ? 'is validated by regex' : 'is not validated by regex' }}
               </b-form-checkbox>
             </b-col>
             <b-col cols="4">
-              <b-form-input placeholder="Regex value" v-model="storeState.regexValue" :disabled="thisScriptInput.type !== 'other' || !storeState.isRegexValueSelected"/>
+              <b-form-input placeholder="Regex value" v-model="regexValue" :disabled="thisScriptInput.type !== 'other' || !isRegexValueSelected"/>
             </b-col>
           </b-row>
         </b-form-group>

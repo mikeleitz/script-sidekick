@@ -26,8 +26,6 @@ export const store = {
     isNumberSelected: false,
     isBooleanSelected: false,
     isOtherSelected: false,
-    otherRegexValue: '',
-    isRegexValueSelected: false,
     isValueRequired: false,
     scriptForm: {
       scriptName: '',
