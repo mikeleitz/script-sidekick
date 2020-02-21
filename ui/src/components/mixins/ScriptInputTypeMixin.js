@@ -49,12 +49,12 @@ export default {
       let newValidation
 
       if (oldVal !== undefined && parseInt(oldVal) !== -1) {
-        previousValidation = DomainFactory.createBashValidationFromId(oldVal)
+        previousValidation = DomainFactory.createBashValidationFromId(parseInt(oldVal))
         this.thisScriptInput.removeValidation(previousValidation)
       }
 
       if (val !== undefined && parseInt(val) !== -1) {
-        newValidation = DomainFactory.createBashValidationFromId(val)
+        newValidation = DomainFactory.createBashValidationFromId(parseInt(val))
         this.thisScriptInput.addValidation(newValidation)
       }
     }
