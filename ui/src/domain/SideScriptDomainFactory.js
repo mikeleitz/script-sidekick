@@ -176,7 +176,7 @@ let BashValidation = function (pId = undefined, pName = '') {
     } else {
       this.args.unshift({ 'key': key, 'value': value })
 
-      console.log('Added arg key [' + key + '] BashValidation id [' + this.id + '] now has total args: [' + this.totalArgs() + '].')
+      console.log('Added arg key [' + key + '] with value [' + value + '] BashValidation id [' + this.id + '] now has total args: [' + this.totalArgs() + '].')
     }
   }
 

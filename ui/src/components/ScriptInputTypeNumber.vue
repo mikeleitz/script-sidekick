@@ -48,7 +48,7 @@
             <b-form-checkbox name="check-button" v-model="isLessThan" :disabled="thisScriptInput.type !== 'number'" switch>
               {{ isLessThan ? 'is less than' : 'has no upper bound' }}
             </b-form-checkbox>
-            <b-form-checkbox name="check-button" v-model="isEqualForLessCheck" :disabled="thisScriptInput.type !== 'number'" switch>
+            <b-form-checkbox name="check-button" v-model="isEqualForLessCheck" :disabled="thisScriptInput.type !== 'number' || !isLessThan" switch>
               {{ isEqualForLessCheck ? 'and equal' : 'but not equal' }}
             </b-form-checkbox>
           </b-col>
@@ -63,7 +63,7 @@
             <b-form-checkbox name="check-button" v-model="isGreaterThan" :disabled="thisScriptInput.type !== 'number'" switch>
               {{ isGreaterThan ? 'is greater than' : 'has no lower bound' }}
             </b-form-checkbox>
-            <b-form-checkbox name="check-button" v-model="isEqualForGreaterCheck" :disabled="thisScriptInput.type !== 'number'" switch>
+            <b-form-checkbox name="check-button" v-model="isEqualForGreaterCheck" :disabled="thisScriptInput.type !== 'number' || !isGreaterThan" switch>
               {{ isEqualForGreaterCheck ? 'and equal' : 'but not equal' }}
             </b-form-checkbox>
           </b-col>

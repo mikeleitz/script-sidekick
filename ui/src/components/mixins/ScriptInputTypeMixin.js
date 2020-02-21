@@ -37,58 +37,102 @@ export default {
       isEqualForLessCheck: false,
       lessThanValue: '',
       isNumberReal: false,
-      isNumberUnsigned: false
+      isNumberUnsigned: false,
+      greaterThanValidation: undefined,
+      lessThanValidation: undefined
     }
   },
   watch: {
     defaultValue: function (val, oldVal) {
       console.log('New default value: [' + val + '].')
     },
+    greaterThanValue: function (val, oldVal) {
+      if (typeof this.greaterThanValidation !== 'undefined') {
+        this.greaterThanValidation.removeArg('value')
+        this.greaterThanValidation.addArgs('value', val)
+      }
+    },
+    lessThanValue: function (val, oldVal) {
+      if (typeof this.lessThanValidation !== 'undefined') {
+        this.lessThanValidation.removeArg('value')
+        this.lessThanValidation.addArgs('value', val)
+      }
+    },
+    isGreaterThan: function (val, oldVal) {
+      this.thisScriptInput.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.GREATER_THAN))
+      this.thisScriptInput.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.GREATER_THAN_EQUAL))
+
+      if (val) {
+        if (this.isEqualForGreaterCheck) {
+          let validation = DomainFactory.createBashValidationFromType(ValidationTypes.GREATER_THAN_EQUAL)
+          validation.addArgs('value', this.greaterThanValue)
+
+          this.thisScriptInput.addValidation(validation)
+          this.greaterThanValidation = validation
+        } else {
+          let validation = DomainFactory.createBashValidationFromType(ValidationTypes.GREATER_THAN)
+          validation.addArgs('value', this.greaterThanValue)
+
+          this.thisScriptInput.addValidation(validation)
+          this.greaterThanValidation = validation
+        }
+      }
+    },
+    isLessThan: function (val, oldVal) {
+      this.thisScriptInput.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.LESS_THAN))
+      this.thisScriptInput.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.LESS_THAN_EQUAL))
+
+      if (val) {
+        if (this.isEqualForGreaterCheck) {
+          let validation = DomainFactory.createBashValidationFromType(ValidationTypes.LESS_THAN_EQUAL)
+          validation.addArgs('value', this.lessThanValue)
+
+          this.thisScriptInput.addValidation(validation)
+          this.lessThanValidation = validation
+        } else {
+          let validation = DomainFactory.createBashValidationFromType(ValidationTypes.LESS_THAN)
+          validation.addArgs('value', this.lessThanValue)
+
+          this.thisScriptInput.addValidation(validation)
+          this.lessThanValidation = validation
+        }
+      }
+    },
     isNumberReal: function (val, oldVal) {
       console.log('New isNumberReal value: [' + val + '].')
 
-      let unsignedRealValidation = DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_REAL)
-      let signedRealValidation = DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_REAL)
-      let unsignedIntegerValidation = DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_INTEGER)
-      let signedIntegerValidation = DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_INTEGER)
+      this.clearNumberValidations()
 
-      this.clearNumberValidations();
-
-      if (this.isNumberUnsigned()) {
+      if (this.isNumberUnsigned) {
         if (val) {
-          this.thisScriptInput.addValidation(unsignedRealValidation)
+          this.thisScriptInput.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_REAL))
         } else {
-          this.thisScriptInput.addValidation(unsignedIntegerValidation)
+          this.thisScriptInput.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_INTEGER))
         }
       } else {
         if (val) {
-          this.thisScriptInput.addValidation(signedRealValidation)
+          this.thisScriptInput.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_REAL))
         } else {
-          this.thisScriptInput.addValidation(signedIntegerValidation)
+          this.thisScriptInput.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_INTEGER))
         }
       }
     },
     isNumberUnsigned: function (val, oldVal) {
       console.log('New isNumberUnsigned value: [' + val + '].')
 
-      let unsignedRealValidation = DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_REAL)
-      let signedRealValidation = DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_REAL)
-      let unsignedIntegerValidation = DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_INTEGER)
-      let signedIntegerValidation = DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_INTEGER)
-
-      this.clearNumberValidations();
+      this.clearNumberValidations()
 
       if (this.isNumberReal) {
         if (val) {
-          this.thisScriptInput.addValidation(unsignedRealValidation)
+          this.thisScriptInput.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_REAL))
         } else {
-          this.thisScriptInput.addValidation(signedRealValidation)
+          this.thisScriptInput.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_REAL))
         }
       } else {
         if (val) {
-          this.thisScriptInput.addValidation(unsignedIntegerValidation)
+          this.thisScriptInput.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_INTEGER))
         } else {
-          this.thisScriptInput.addValidation(signedIntegerValidation)
+          this.thisScriptInput.addValidation(DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_INTEGER))
         }
       }
     },
@@ -125,38 +169,23 @@ export default {
         if (selectedType !== this.thisScriptInput.type) {
           console.log('New type selected. Changing type from [' + this.thisScriptInput.type + '] to [' + selectedType + '].')
 
+          this.resetType()
           this.thisScriptInput.removeAllValidations()
 
           this.thisScriptInput.type = selectedType
           if (selectedType === 'string') {
             this.storeState.isStringSelected = true
-            this.storeState.isNumberSelected = false
-            this.storeState.isBooleanSelected = false
-            this.storeState.isOtherSelected = false
           } else if (selectedType === 'number') {
             this.storeState.isNumberSelected = true
-            let unsignedIntegerValidation = DomainFactory.createBashValidationFromType(ValidationTypes.BOOLEAN)
+            let unsignedIntegerValidation = DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_INTEGER)
             this.thisScriptInput.addValidation(unsignedIntegerValidation)
-
-            this.storeState.isStringSelected = false
-            this.storeState.isBooleanSelected = false
-            this.storeState.isOtherSelected = false
           } else if (selectedType === 'boolean') {
             let booleanValidation = DomainFactory.createBashValidationFromType(ValidationTypes.BOOLEAN)
             this.thisScriptInput.addValidation(booleanValidation)
-
             this.storeState.isBooleanSelected = true
-            this.storeState.isStringSelected = false
-            this.storeState.isNumberSelected = false
-            this.storeState.isOtherSelected = false
           } else if (selectedType === 'other') {
             this.storeState.isOtherSelected = true
-            this.storeState.isNumberSelected = false
-            this.storeState.isStringSelected = false
-            this.storeState.isBooleanSelected = false
           }
-
-          this.storeState.isValueRequired = false
         } else {
           // User somehow selected the currently selected type. No changes needed
         }
@@ -182,16 +211,30 @@ export default {
       console.log('isValueRequired: [' + this.isValueRequired + '].')
     },
     clearNumberValidations: function() {
-      let unsignedRealValidation = DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_REAL)
-      let signedRealValidation = DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_REAL)
-      let unsignedIntegerValidation = DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_INTEGER)
-      let signedIntegerValidation = DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_INTEGER)
+      this.thisScriptInput.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_REAL))
+      this.thisScriptInput.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_REAL))
+      this.thisScriptInput.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_INTEGER))
+      this.thisScriptInput.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_INTEGER))
 
-      this.thisScriptInput.removeValidation(unsignedRealValidation)
-      this.thisScriptInput.removeValidation(signedRealValidation)
-      this.thisScriptInput.removeValidation(unsignedIntegerValidation)
-      this.thisScriptInput.removeValidation(signedIntegerValidation)
+      this.thisScriptInput.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.GREATER_THAN))
+      this.thisScriptInput.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.GREATER_THAN_EQUAL))
+      this.thisScriptInput.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.LESS_THAN))
+      this.thisScriptInput.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.LESS_THAN_EQUAL))
     },
-    resetType: function () { }
+    resetType: function () {
+      this.storeState.isStringSelected = false
+      this.storeState.isNumberSelected = false
+      this.storeState.isBooleanSelected = false
+      this.storeState.isOtherSelected = false
+      this.storeState.isValueRequired = false
+      this.isGreaterThan = false
+      this.isEqualForGreaterCheck = false
+      this.greaterThanValue = ''
+      this.isLessThan = false
+      this.isEqualForLessCheck = false
+      this.lessThanValue = ''
+      this.isNumberReal = false
+      this.isNumberUnsigned = false
+    }
   }
 }
