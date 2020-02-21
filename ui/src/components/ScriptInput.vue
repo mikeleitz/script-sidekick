@@ -30,7 +30,12 @@
       </ValidationProvider>
     </b-form-group>
 
-    <ScriptInputType :id="thisScriptInput.id" :bashOption="this.bashOption"/>
+    <b-form-group label="Help text">
+      <ValidationProvider name="Help text" rules="max:80" v-slot="{ errors }">
+        <b-form-input placeholder="Help text" v-model="thisScriptInput.helpText" />
+        <span>{{ errors[0] }}</span>
+      </ValidationProvider>
+    </b-form-group>
 
     <b-form-group label="Defaulted to">
       <ValidationProvider name="Defaulted to" rules="max:80" v-slot="{ errors }">
@@ -39,12 +44,8 @@
       </ValidationProvider>
     </b-form-group>
 
-    <b-form-group label="Help text">
-      <ValidationProvider name="Help text" rules="max:80" v-slot="{ errors }">
-        <b-form-input placeholder="Help text" v-model="thisScriptInput.helpText" />
-        <span>{{ errors[0] }}</span>
-      </ValidationProvider>
-    </b-form-group>
+    <ScriptInputType :id="thisScriptInput.id" :bashOption="this.bashOption"/>
+
   </div>
 </template>
 
