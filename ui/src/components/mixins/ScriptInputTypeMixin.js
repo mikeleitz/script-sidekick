@@ -29,6 +29,7 @@ export default {
       thisScriptInput: null,
       storeState: store.state,
       stringSubtype: store.stringSubtype,
+      isBooleanSelected: store.isBooleanSelected,
       isGreaterThan: false,
       isEqualForGreaterCheck: false,
       greaterThanValue: '',
@@ -75,6 +76,8 @@ export default {
         if (selectedType !== this.thisScriptInput.type) {
           console.log('New type selected. Changing type from [' + this.thisScriptInput.type + '] to [' + selectedType + '].')
 
+          this.thisScriptInput.removeAllValidations()
+
           this.thisScriptInput.type = selectedType
           if (selectedType === 'string') {
             this.storeState.isStringSelected = true
@@ -87,6 +90,9 @@ export default {
             this.storeState.isBooleanSelected = false
             this.storeState.isOtherSelected = false
           } else if (selectedType === 'boolean') {
+            let booleanValidaton = DomainFactory.createBashValidationFromType(ValidationTypes.BOOLEAN)
+            this.thisScriptInput.addValidation(booleanValidaton)
+
             this.storeState.isBooleanSelected = true
             this.storeState.isStringSelected = false
             this.storeState.isNumberSelected = false
@@ -98,7 +104,6 @@ export default {
             this.storeState.isBooleanSelected = false
           }
 
-          this.thisScriptInput.removeAllValidations()
           this.storeState.isValueRequired = false
         } else {
           // User somehow selected the currently selected type. No changes needed
