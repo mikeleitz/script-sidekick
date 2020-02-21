@@ -245,5 +245,11 @@ export const DomainFactory = {
     this.addCommonMethods(bashValidation)
 
     return bashValidation
+  },
+  createBashValidationFromId: function (validationId) {
+    let bashValidation = new BashValidation(validationId)
+    this.addCommonMethods(bashValidation)
+
+    return bashValidation
   }
 }

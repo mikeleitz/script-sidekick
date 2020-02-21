@@ -33,10 +33,10 @@
         </b-form-checkbox>
       </b-form-group>
       <b-form-group required="true" :disabled="thisScriptInput.type !== 'string'">
-        <b-form-radio value="plain-string" v-model="stringSubtype">has no restrictions</b-form-radio>
-        <b-form-radio value="alpha-numeric" v-model="stringSubtype">is an alpha-numeric</b-form-radio>
-        <b-form-radio value="email" v-model="stringSubtype">is an email address</b-form-radio>
-        <b-form-radio value="url" v-model="stringSubtype">is a url</b-form-radio>
+        <b-form-radio value="-1" v-model="stringSubtype">has no restrictions</b-form-radio>
+        <b-form-radio value="21" v-model="stringSubtype">is an alpha-numeric</b-form-radio>
+        <b-form-radio value="10" v-model="stringSubtype">is an email address</b-form-radio>
+        <b-form-radio value="9" v-model="stringSubtype">is a url</b-form-radio>
       </b-form-group>
     </div>
 
@@ -70,62 +70,12 @@ export default {
   },
   data () {
     return {
-      stringSubtype: 'plain-string',
-      regexValue: ''
     }
   },
   created () {
     this.thisScriptInput = this.bashOption
   },
-  watch: {
-    stringSubtype: function (val, oldVal) {
-      console.log('stringSubtype changed from [' + oldVal + '] to [' + val + '].')
-      if (val !== oldVal) {
-        // Changed. Need to update validations.
-        let oldValidation
-        let newValidation
-
-        if (oldVal === 'email') {
-          oldValidation = DomainFactory.createBashValidationFromType(ValidationTypes.EMAIL)
-        } else if (oldVal === 'url') {
-          oldValidation = DomainFactory.createBashValidationFromType(ValidationTypes.URL)
-        } else if (oldVal === 'regex') {
-          oldValidation = DomainFactory.createBashValidationFromType(ValidationTypes.CUSTOM_REGEX)
-        } else if (oldVal === 'alpha-numeric') {
-          oldValidation = DomainFactory.createBashValidationFromType(ValidationTypes.ALPHA_NUMERIC)
-        } else if (oldVal === 'plain-string') {
-          // I don't think we need to do anything with this.
-        }
-
-        if (val === 'email') {
-          newValidation = DomainFactory.createBashValidationFromType(ValidationTypes.EMAIL)
-        } else if (val === 'url') {
-          newValidation = DomainFactory.createBashValidationFromType(ValidationTypes.URL)
-        } else if (val === 'regex') {
-          newValidation = DomainFactory.createBashValidationFromType(ValidationTypes.CUSTOM_REGEX)
-          newValidation.addArgs('regex', this.regexValue)
-        } else if (val === 'alpha-numeric') {
-          newValidation = DomainFactory.createBashValidationFromType(ValidationTypes.ALPHA_NUMERIC)
-        } else if (val === 'plain-string') {
-          // I don't think we need to do anything with this.
-        }
-
-        if (oldValidation !== undefined) {
-          console.log('Since the subtype has changed, removing the old validation [' + oldValidation.toJson() + '].')
-          this.thisScriptInput.removeValidation(oldValidation)
-        } else {
-          console.log('Not removing the old validation for subtype [' + oldVal + '] since there isn\'t a corresponding validation for it.')
-        }
-
-        if (newValidation !== undefined) {
-          console.log('Since the subtype has changed, adding the new validation [' + newValidation.toJson() + '].')
-          this.thisScriptInput.addValidation(newValidation)
-        } else {
-          console.log('Not adding the new validation for subtype [' + oldVal + '] since there isn\'t a corresponding validation for it.')
-        }
-      }
-    }
-  },
+  watch: { },
   methods: { }
 }
 </script>

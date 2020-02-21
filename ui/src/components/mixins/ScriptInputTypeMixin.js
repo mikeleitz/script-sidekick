@@ -28,6 +28,7 @@ export default {
     return {
       thisScriptInput: null,
       storeState: store.state,
+      stringSubtype: store.stringSubtype,
       isGreaterThan: false,
       isEqualForGreaterCheck: false,
       greaterThanValue: '',
@@ -40,6 +41,22 @@ export default {
   watch: {
     defaultValue: function (val, oldVal) {
       console.log('New default value: [' + val + '].')
+    },
+    stringSubtype: function (val, oldVal) {
+      console.log('New stringSubtype validation id: [' + val + '].')
+
+      let previousValidation
+      let newValidation
+
+      if (oldVal !== undefined && parseInt(oldVal) !== -1) {
+        previousValidation = DomainFactory.createBashValidationFromId(oldVal)
+        this.thisScriptInput.removeValidation(previousValidation)
+      }
+
+      if (val !== undefined && parseInt(val) !== -1) {
+        newValidation = DomainFactory.createBashValidationFromId(val)
+        this.thisScriptInput.addValidation(newValidation)
+      }
     }
   },
   computed: {
