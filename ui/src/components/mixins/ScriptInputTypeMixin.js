@@ -220,6 +220,9 @@ export default {
       this.thisScriptInput.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.GREATER_THAN_EQUAL))
       this.thisScriptInput.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.LESS_THAN))
       this.thisScriptInput.removeValidation(DomainFactory.createBashValidationFromType(ValidationTypes.LESS_THAN_EQUAL))
+
+      this.greaterThanValidation = undefined
+      this.lessThanValidation = undefined
     },
     resetType: function () {
       this.storeState.isStringSelected = false
