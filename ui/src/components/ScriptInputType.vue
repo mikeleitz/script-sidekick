@@ -99,7 +99,7 @@ export default {
 
 <style scoped>
   .same-height-tab {
-    height: 410px;
+    height: 415px;
     overflow-y: auto;
   }
 </style>
