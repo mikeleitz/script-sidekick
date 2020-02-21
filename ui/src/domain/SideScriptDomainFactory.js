@@ -43,7 +43,7 @@ export const ValidationTypes = Object.freeze({
   LESS_THAN_EQUAL: { id: 15, name: 'Less than or equal' },
   GREATER_THAN_EQUAL: { id: 16, name: 'Greater than or equal' },
   LESS_THAN: { id: 17, name: 'Less than' },
-  UNSIGNED_READ: { id: 18, name: 'Unsigned real number' },
+  UNSIGNED_REAL: { id: 18, name: 'Unsigned real number' },
   UNSIGNED_INTEGER: { id: 19, name: 'Unsigned integer' },
   VALUE_REQUIRED: { id: 20, name: 'Required' },
   ALPHA_NUMERIC: { id: 21, name: 'Alpha-numeric' }

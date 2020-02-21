@@ -36,12 +36,61 @@ export default {
       isLessThan: false,
       isEqualForLessCheck: false,
       lessThanValue: '',
+      isNumberReal: false,
       isNumberUnsigned: false
     }
   },
   watch: {
     defaultValue: function (val, oldVal) {
       console.log('New default value: [' + val + '].')
+    },
+    isNumberReal: function (val, oldVal) {
+      console.log('New isNumberReal value: [' + val + '].')
+
+      let unsignedRealValidation = DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_REAL)
+      let signedRealValidation = DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_REAL)
+      let unsignedIntegerValidation = DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_INTEGER)
+      let signedIntegerValidation = DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_INTEGER)
+
+      this.clearNumberValidations();
+
+      if (this.isNumberUnsigned()) {
+        if (val) {
+          this.thisScriptInput.addValidation(unsignedRealValidation)
+        } else {
+          this.thisScriptInput.addValidation(unsignedIntegerValidation)
+        }
+      } else {
+        if (val) {
+          this.thisScriptInput.addValidation(signedRealValidation)
+        } else {
+          this.thisScriptInput.addValidation(signedIntegerValidation)
+        }
+      }
+    },
+    isNumberUnsigned: function (val, oldVal) {
+      console.log('New isNumberUnsigned value: [' + val + '].')
+
+      let unsignedRealValidation = DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_REAL)
+      let signedRealValidation = DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_REAL)
+      let unsignedIntegerValidation = DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_INTEGER)
+      let signedIntegerValidation = DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_INTEGER)
+
+      this.clearNumberValidations();
+
+      if (this.isNumberReal) {
+        if (val) {
+          this.thisScriptInput.addValidation(unsignedRealValidation)
+        } else {
+          this.thisScriptInput.addValidation(signedRealValidation)
+        }
+      } else {
+        if (val) {
+          this.thisScriptInput.addValidation(unsignedIntegerValidation)
+        } else {
+          this.thisScriptInput.addValidation(signedIntegerValidation)
+        }
+      }
     },
     stringSubtype: function (val, oldVal) {
       console.log('New stringSubtype validation id: [' + val + '].')
@@ -86,12 +135,15 @@ export default {
             this.storeState.isOtherSelected = false
           } else if (selectedType === 'number') {
             this.storeState.isNumberSelected = true
+            let unsignedIntegerValidation = DomainFactory.createBashValidationFromType(ValidationTypes.BOOLEAN)
+            this.thisScriptInput.addValidation(unsignedIntegerValidation)
+
             this.storeState.isStringSelected = false
             this.storeState.isBooleanSelected = false
             this.storeState.isOtherSelected = false
           } else if (selectedType === 'boolean') {
-            let booleanValidaton = DomainFactory.createBashValidationFromType(ValidationTypes.BOOLEAN)
-            this.thisScriptInput.addValidation(booleanValidaton)
+            let booleanValidation = DomainFactory.createBashValidationFromType(ValidationTypes.BOOLEAN)
+            this.thisScriptInput.addValidation(booleanValidation)
 
             this.storeState.isBooleanSelected = true
             this.storeState.isStringSelected = false
@@ -128,6 +180,17 @@ export default {
       }
 
       console.log('isValueRequired: [' + this.isValueRequired + '].')
+    },
+    clearNumberValidations: function() {
+      let unsignedRealValidation = DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_REAL)
+      let signedRealValidation = DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_REAL)
+      let unsignedIntegerValidation = DomainFactory.createBashValidationFromType(ValidationTypes.UNSIGNED_INTEGER)
+      let signedIntegerValidation = DomainFactory.createBashValidationFromType(ValidationTypes.SIGNED_INTEGER)
+
+      this.thisScriptInput.removeValidation(unsignedRealValidation)
+      this.thisScriptInput.removeValidation(signedRealValidation)
+      this.thisScriptInput.removeValidation(unsignedIntegerValidation)
+      this.thisScriptInput.removeValidation(signedIntegerValidation)
     },
     resetType: function () { }
   }
