@@ -34,5 +34,5 @@ function .validateValueWithRegex() {
     regex_result=1
   fi
 
-  eval $__resultvar="'$regex_result'"
+  eval "$__resultvar"="'$regex_result'"
 }
