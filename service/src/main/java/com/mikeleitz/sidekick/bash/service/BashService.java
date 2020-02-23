@@ -22,5 +22,11 @@ import com.mikeleitz.sidekick.bash.domain.BashScriptConfiguration;
  * @author leitz@mikeleitz.com
  */
 public interface BashService {
-    String createBashScriptContents(BashScriptConfiguration bashScriptConfiguration);
+    String createDelegateBashScriptContents(BashScriptConfiguration bashScriptConfiguration);
+
+    String createReadmeContents(BashScriptConfiguration bashScriptConfiguration);
+
+    String createInstallerContents(BashScriptConfiguration bashScriptConfiguration);
+
+    String createUserBashScriptContents(BashScriptConfiguration bashScriptConfiguration);
 }

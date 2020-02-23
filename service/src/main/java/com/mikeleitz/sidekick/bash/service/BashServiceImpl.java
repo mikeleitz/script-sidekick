@@ -31,7 +31,7 @@ public class BashServiceImpl implements BashService {
 
     @Override
     @SneakyThrows
-    public String createBashScriptContents(BashScriptConfiguration bashScriptConfiguration) {
+    public String createDelegateBashScriptContents(BashScriptConfiguration bashScriptConfiguration) {
         String returnValue = null;
 
         log.debug("Started creating bash script [{}].", bashScriptConfiguration.getScriptName());
@@ -42,5 +42,20 @@ public class BashServiceImpl implements BashService {
         log.debug("Completed creating bash script [{}].  It has content length [{}].", bashScriptConfiguration.getScriptName(), returnValue.length());
 
         return returnValue;
+    }
+
+    @Override
+    public String createReadmeContents(BashScriptConfiguration bashScriptConfiguration) {
+        return "Readme contents";
+    }
+
+    @Override
+    public String createInstallerContents(BashScriptConfiguration bashScriptConfiguration) {
+        return "Installer contents";
+    }
+
+    @Override
+    public String createUserBashScriptContents(BashScriptConfiguration bashScriptConfiguration) {
+        return "user's bash script contents";
     }
 }
