@@ -106,12 +106,14 @@ public class CreateScriptUiController {
                 .body(out -> {
                     var zipOutputStream = new ZipOutputStream(out);
 
-                    // create a list to add files to be zipped
+                    // create the root-directory
+                    zipOutputStream.putNextEntry(new ZipEntry("base-dir/"));
+                    zipOutputStream.closeEntry();
 
                     // package files
                     for (Path path : paths) {
                         //new zip entry and copying inputstream with file to zipOutputStream, after all closing streams
-                        zipOutputStream.putNextEntry(new ZipEntry(path.getFileName().toString()));
+                        zipOutputStream.putNextEntry(new ZipEntry("base-dir/" + path.getFileName().toString()));
 
                         InputStream pathInputStream = Files.newInputStream(path);
                         IOUtils.copy(pathInputStream, zipOutputStream);
