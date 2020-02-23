@@ -36,10 +36,11 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.FileSystem;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -92,38 +93,38 @@ public class CreateScriptUiController {
         Path readmeContentsPath = createPathForContent(fileSystem, "readme-contents.md", readmeContents);
 
         String userBashScriptContents = bashService.createUserBashScriptContents(configuration);
-        Path userBashScriptContentsPath = createPathForContent(fileSystem, "user-script-contents.md", userBashScriptContents);
+        Path userBashScriptContentsPath = createPathForContent(fileSystem, "user-script-contents.md",
+                userBashScriptContents);
 
-        ArrayList<Path> paths = new ArrayList<>(4);
-        paths.add(scriptContentsPath);
-        paths.add(installerContentsPath);
-        paths.add(readmeContentsPath);
-        paths.add(userBashScriptContentsPath);
+        List<Path> paths = List
+                .of(scriptContentsPath, installerContentsPath, readmeContentsPath, userBashScriptContentsPath);
 
         return ResponseEntity
                 .ok()
-                .header("Content-Disposition", "attachment; filename=\"test.zip\"")
+                .header("Content-Disposition", String.format("attachment; filename=\"%s.zip\"", configuration.getScriptName()))
                 .body(out -> {
-                    var zipOutputStream = new ZipOutputStream(out);
-
-                    // create the root-directory
-                    zipOutputStream.putNextEntry(new ZipEntry("base-dir/"));
-                    zipOutputStream.closeEntry();
-
-                    // package files
-                    for (Path path : paths) {
-                        //new zip entry and copying inputstream with file to zipOutputStream, after all closing streams
-                        zipOutputStream.putNextEntry(new ZipEntry("base-dir/" + path.getFileName().toString()));
-
-                        InputStream pathInputStream = Files.newInputStream(path);
-                        IOUtils.copy(pathInputStream, zipOutputStream);
-
-                        pathInputStream.close();
-                        zipOutputStream.closeEntry();
-                    }
-
-                    zipOutputStream.close();
+                    createScriptReturnStream(out, configuration.getScriptName(), paths);
                 });
+    }
+
+    private void createScriptReturnStream(OutputStream response, String scriptName, List<Path> paths)
+            throws IOException {
+        try (ZipOutputStream zipOutputStream = new ZipOutputStream(response)) {
+            // create the root-directory
+            zipOutputStream.putNextEntry(new ZipEntry(scriptName + "/"));
+            zipOutputStream.closeEntry();
+
+            // package files
+            for (Path path : paths) {
+                //new zip entry and copying inputstream with file to zipOutputStream, after all closing streams
+                zipOutputStream.putNextEntry(new ZipEntry(scriptName + "/" + path.getFileName().toString()));
+
+                try (InputStream pathInputStream = Files.newInputStream(path);) {
+                    IOUtils.copy(pathInputStream, zipOutputStream);
+                    zipOutputStream.closeEntry();
+                }
+            }
+        }
     }
 
     private Path createPathForContent(FileSystem fileSystem, String fileName, String contents) throws IOException {
