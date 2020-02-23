@@ -116,4 +116,6 @@ Use kubernetes ingress for https.
 
 Find out why GKE doesn't want to run two instances of both pods on the node pair.  There's always some un-described resource issue.
 
+# Link to github projects this application uses
 
+ * [shUnit2](https://github.com/kward/shunit2)
