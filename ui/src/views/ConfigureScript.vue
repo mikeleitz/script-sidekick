@@ -174,7 +174,7 @@ export default {
         const url = window.URL.createObjectURL(new Blob([response.data]))
         const link = document.createElement('a')
         link.href = url
-        link.setAttribute('download', this.scriptInProgress.scriptName + '.sh')
+        link.setAttribute('download', this.scriptInProgress.scriptName + '.zip')
         document.body.appendChild(link)
         link.click()
       }).catch(e => { this.errors.push(e) })

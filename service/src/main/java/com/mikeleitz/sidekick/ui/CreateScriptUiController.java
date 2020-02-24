@@ -93,11 +93,9 @@ public class CreateScriptUiController {
         Path readmeContentsPath = createPathForContent(fileSystem, "readme-contents.md", readmeContents);
 
         String userBashScriptContents = bashService.createUserBashScriptContents(configuration);
-        Path userBashScriptContentsPath = createPathForContent(fileSystem, "user-script-contents.md",
-                userBashScriptContents);
+        Path userBashScriptContentsPath = createPathForContent(fileSystem, "user-script-contents.md", userBashScriptContents);
 
-        List<Path> paths = List
-                .of(scriptContentsPath, installerContentsPath, readmeContentsPath, userBashScriptContentsPath);
+        List<Path> paths = List.of(scriptContentsPath, installerContentsPath, readmeContentsPath, userBashScriptContentsPath);
 
         return ResponseEntity
                 .ok()
@@ -110,13 +108,10 @@ public class CreateScriptUiController {
     private void createScriptReturnStream(OutputStream response, String scriptName, List<Path> paths)
             throws IOException {
         try (ZipOutputStream zipOutputStream = new ZipOutputStream(response)) {
-            // create the root-directory
             zipOutputStream.putNextEntry(new ZipEntry(scriptName + "/"));
             zipOutputStream.closeEntry();
 
-            // package files
             for (Path path : paths) {
-                //new zip entry and copying inputstream with file to zipOutputStream, after all closing streams
                 zipOutputStream.putNextEntry(new ZipEntry(scriptName + "/" + path.getFileName().toString()));
 
                 try (InputStream pathInputStream = Files.newInputStream(path);) {
@@ -131,6 +126,7 @@ public class CreateScriptUiController {
         Path returnValue = null;
 
         returnValue = fileSystem.getPath(fileName);
+
         log.debug("Creating path for file name [{}]", returnValue.getFileName());
 
         Files.createFile(returnValue);
