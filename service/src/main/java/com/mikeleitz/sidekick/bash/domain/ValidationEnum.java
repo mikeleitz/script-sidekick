@@ -69,7 +69,7 @@ public enum ValidationEnum {
     LESS_THAN_EQUAL(17, "Less than or equal", "", "", ""),
     CURRENCY(5, "Currency", "", "", ""),
     ENUMERATED(8, "Enumerated type", "", "", ""),
-    CUSTOM_REGEX(13, "Custom regex", "This is a regex value supplied by the user.", "", ""),
+    CUSTOM_REGEX(13, "Custom regex", "This is a regex value supplied by the user.", "com/mikeleitz/sidekick/bash/validation/bash-validation-custom-regex.stg", ""),
     ;
 
     private @NonNull Integer id;

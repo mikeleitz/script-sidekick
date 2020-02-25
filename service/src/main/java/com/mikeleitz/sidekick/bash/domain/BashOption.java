@@ -24,8 +24,10 @@ import lombok.NonNull;
 import lombok.Setter;
 import lombok.Singular;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author leitz@mikeleitz.com
@@ -73,6 +75,28 @@ public class BashOption implements ApplicationInput {
      */
     public Boolean optionHasValue() {
         return optionHasValue;
+    }
+
+    public Boolean optionUsesValidation(ValidationEnum validationEnum) {
+        Boolean returnValue = false;
+
+        returnValue = getValidation(validationEnum).isPresent();
+
+        return returnValue;
+    }
+
+    public Optional<BashValidation> getValidation(ValidationEnum validationEnum) {
+        Optional<BashValidation> returnValue = Optional.empty();
+
+        if (CollectionUtils.isNotEmpty(this.getBashValidations())) {
+            Optional<BashValidation> foundValidationOption = this.getBashValidations().stream()
+                    .filter(v -> v.getValidationEnum() == validationEnum)
+                    .findFirst();
+
+            returnValue = foundValidationOption;
+        }
+
+        return returnValue;
     }
 
     private String createVariableName(BashOption bashOption) {

@@ -19,11 +19,19 @@ package com.mikeleitz.sidekick.bash.snippet.validation;
 import com.mikeleitz.sidekick.base.CompositeSnippet;
 import com.mikeleitz.sidekick.base.GenericSnippet;
 import com.mikeleitz.sidekick.base.SnippetContext;
+import com.mikeleitz.sidekick.bash.domain.BashOption;
 import com.mikeleitz.sidekick.bash.domain.ValidationEnum;
-import io.micrometer.core.instrument.util.StringUtils;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * This class creates all the common validations used in the bash script.
@@ -32,13 +40,49 @@ import java.util.Arrays;
  *
  * @author leitz@mikeleitz.com
  */
+@Slf4j
 public class BashValidationSnippet extends CompositeSnippet {
     public BashValidationSnippet(SnippetContext context) throws IOException {
         super(context);
 
         Arrays.stream(ValidationEnum.values())
-                .filter(t -> StringUtils
-                .isNotBlank(t.getStringTemplate()))
+                .filter(t -> StringUtils.isNotBlank(t.getStringTemplate()))
+                .filter(t -> t != ValidationEnum.CUSTOM_REGEX)
                 .forEach(t -> this.addSnippet(new GenericSnippet(context, t.getStringTemplate(), t.getValidationName())));
+
+        Set<BashOption> allBashOptions = (Set<BashOption>) context.getAllValues().get("bashOptions");
+
+        if (CollectionUtils.isNotEmpty(allBashOptions)) {
+            List<BashOption> bashOptionsWithCustomRegex = allBashOptions.stream()
+                    .filter(o -> o.optionUsesValidation(ValidationEnum.CUSTOM_REGEX))
+                    .collect(Collectors.toList());
+
+            GenericSnippet customRegexenSnippet = createCustomBashRegexenSnippet(context, bashOptionsWithCustomRegex);
+            this.addSnippet(customRegexenSnippet);
+        }
+
+        log.info("Have a total of [{}] validation snippets.", this.totalSnippets());
+    }
+
+    private GenericSnippet createCustomBashRegexenSnippet(SnippetContext context, List<BashOption> allCustomRegexenSpecified) {
+        GenericSnippet returnValue;
+
+        List<CustomRegex> allCustomRegex = allCustomRegexenSpecified.stream()
+                .filter(o -> o.optionUsesValidation(ValidationEnum.CUSTOM_REGEX))
+                .filter(o -> o.getValidation(ValidationEnum.CUSTOM_REGEX).get().getPairForKey("value").isPresent())
+                .map(o -> new CustomRegex(o.getLongNameBashFriendly(), o.getValidation(ValidationEnum.CUSTOM_REGEX).get().getPairForKey("value").get().getRight()))
+                .collect(Collectors.toList());
+
+        context.addValue("bashCustomRegexValidations", allCustomRegex);
+        returnValue = new GenericSnippet(context, ValidationEnum.CUSTOM_REGEX.getStringTemplate(), ValidationEnum.CUSTOM_REGEX.name());
+
+        return returnValue;
+    }
+
+    @Data
+    @AllArgsConstructor
+    public class CustomRegex {
+        private String optionName;
+        private String regex;
     }
 }

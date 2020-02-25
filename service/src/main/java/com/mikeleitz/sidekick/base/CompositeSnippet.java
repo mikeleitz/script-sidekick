@@ -17,6 +17,7 @@
 package com.mikeleitz.sidekick.base;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,6 +43,10 @@ public class CompositeSnippet extends Snippet {
 
     public void addSnippet(Snippet snippet) {
         snippets.add(snippet);
+    }
+
+    public Integer totalSnippets() {
+        return CollectionUtils.size(this.snippets);
     }
 
     @Override

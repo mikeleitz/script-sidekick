@@ -21,8 +21,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.experimental.SuperBuilder;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The regex values are mostly taken from the community driven: https://regexr.com
@@ -34,8 +38,20 @@ import java.util.List;
 public class BashValidation {
     private @NonNull Integer id;
     private @NonNull String name;
-    private @NonNull List args;
+    private @NonNull List<Pair<String, String>> args;
     private @NonNull ValidationEnum validationEnum;
+
+    public Optional<Pair<String, String>> getPairForKey(String key) {
+        Optional<Pair<String, String>> returnValue = Optional.empty();
+
+        if (CollectionUtils.isNotEmpty(args)) {
+            returnValue = args.stream()
+                    .filter(a -> StringUtils.equalsIgnoreCase(a.getKey(), key))
+                    .findFirst();
+        }
+
+        return returnValue;
+    }
 
     public Boolean isSameValidationType(BashValidation bashValidation) {
         Boolean returnValue = null;
