@@ -19,6 +19,7 @@ package com.mikeleitz.sidekick.bash.domain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.experimental.Accessors;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -49,30 +50,32 @@ import java.util.Optional;
 @AllArgsConstructor
 @Getter
 public enum ValidationEnum {
-    EMAIL(10, "Email validation", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-email-regex.stg", "validateEmailValue"),
-    DATE(6, "Date validation dd/mm/yyy", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-date-regex.stg", "validateDateValue"),
-    SIGNED_INTEGER(1, "Signed integer", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-integer-signed-regex.stg", "validateSignedIntegerValue"),
-    UNSIGNED_INTEGER(19, "Unsigned integer", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-integer-unsigned-regex.stg", "validateUnsignedIntegerValue"),
-//    SIGNED_REAL(3, "Signed real number", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-real-signed-regex.stg", "validateSignedRealValue"),
-//    UNSIGNED_REAL(18, "Unsigned real number", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-real-unsigned-regex.stg", "validateUnsignedRealValue"),
-    BOOLEAN(2, "Boolean", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-boolean-regex.stg", "validateBooleanValue"),
-    TIMESTAMP_ISO(7, "Timestamp in ISO format", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-timestamp-iso-regex.stg", "validateTimestampIsoValue"),
-//    TIMESTAMP_ONE_TRUE(99, "Timestamp in the one true format", "Will match the date and time down to either the seconds level of detail or the milliseconds level of detail. For example it matches both 2020-02-08 12:23:60,123 and 2020-02-08 12:23:60", "com/mikeleitz/sidekick/bash/validation/bash-validation-timestamp-one-true-regex.stg", "validateTimestampOneTrueValue"),
-    URL(9, "URL", "Validates http or https urls.", "com/mikeleitz/sidekick/bash/validation/bash-validation-url-regex.stg", "validateUrlValue"),
-    IPV4(11, "URL", "Validates an ipv4 address", "com/mikeleitz/sidekick/bash/validation/bash-validation-ipv4-regex.stg", "validateIpv4Value"),
-//    IPV6(12, "Ipv6 address", "Validates an ipv6 address", "com/mikeleitz/sidekick/bash/validation/bash-validation-ipv6-regex.stg", "validateIpv6Value"),
-    VALUE_REQUIRED(20, "Value required", "Value must be not null and not empty. Checks to make sure there is at least one non-whitespace anywhere in the input.", "com/mikeleitz/sidekick/bash/validation/bash-validation-required-regex.stg", "validateRequiredValue"),
-    ALPHANUMERIC(21, "Alpha-numeric", "Alpha-numeric value. Any letter or number is accepted.", "com/mikeleitz/sidekick/bash/validation/bash-validation-alphanumeric-regex.stg", "validateAlphanumericValue"),
-    GREATER_THAN(14, "Greater than", "", "", ""),
-    GREATER_THAN_EQUAL(15, "Greater than or equal", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-integer-range-logic.stg", ""),
-    LESS_THAN(16, "Less than", "", "", ""),
-    LESS_THAN_EQUAL(17, "Less than or equal", "", "", ""),
-    CURRENCY(5, "Currency", "", "", ""),
-    ENUMERATED(8, "Enumerated type", "", "", ""),
-    CUSTOM_REGEX(13, "Custom regex", "This is a regex value supplied by the user.", "com/mikeleitz/sidekick/bash/validation/bash-validation-custom-regex.stg", ""),
+    EMAIL(10, true, "Email validation", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-email-regex.stg", "validateEmailValue"),
+    DATE(6, true, "Date validation dd/mm/yyy", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-date-regex.stg", "validateDateValue"),
+    SIGNED_INTEGER(1, true, "Signed integer", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-integer-signed-regex.stg", "validateSignedIntegerValue"),
+    UNSIGNED_INTEGER(19, true, "Unsigned integer", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-integer-unsigned-regex.stg", "validateUnsignedIntegerValue"),
+    BOOLEAN(2, true, "Boolean", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-boolean-regex.stg", "validateBooleanValue"),
+    TIMESTAMP_ISO(7, true, "Timestamp in ISO format", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-timestamp-iso-regex.stg", "validateTimestampIsoValue"),
+    URL(9, true, "URL", "Validates http or https urls.", "com/mikeleitz/sidekick/bash/validation/bash-validation-url-regex.stg", "validateUrlValue"),
+    IPV4(11, true, "URL", "Validates an ipv4 address", "com/mikeleitz/sidekick/bash/validation/bash-validation-ipv4-regex.stg", "validateIpv4Value"),
+    VALUE_REQUIRED(20, true, "Value required", "Value must be not null and not empty. Checks to make sure there is at least one non-whitespace anywhere in the input.", "com/mikeleitz/sidekick/bash/validation/bash-validation-required-regex.stg", "validateRequiredValue"),
+    ALPHANUMERIC(21, true, "Alpha-numeric", "Alpha-numeric value. Any letter or number is accepted.", "com/mikeleitz/sidekick/bash/validation/bash-validation-alphanumeric-regex.stg", "validateAlphanumericValue"),
+    GREATER_THAN(14, false, "Greater than", "", "", ""),
+    GREATER_THAN_EQUAL(15, false, "Greater than or equal", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-integer-range-logic.stg", ""),
+    LESS_THAN(16, false, "Less than", "", "", ""),
+    LESS_THAN_EQUAL(17, false, "Less than or equal", "", "", ""),
+    CUSTOM_REGEX(13, true, "Custom regex", "This is a regex value supplied by the user.", "com/mikeleitz/sidekick/bash/validation/bash-validation-custom-regex.stg", ""),
+    // TODO Phase 2
+    //    IPV6(12, "Ipv6 address", "Validates an ipv6 address", "com/mikeleitz/sidekick/bash/validation/bash-validation-ipv6-regex.stg", "validateIpv6Value"),
+    //    SIGNED_REAL(3, "Signed real` number", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-real-signed-regex.stg", "validateSignedRealValue"),
+    //    UNSIGNED_REAL(18, "Unsigned real number", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-real-unsigned-regex.stg", "validateUnsignedRealValue"),
+    //    TIMESTAMP_ONE_TRUE(99, "Timestamp in the one true format", "Will match the date and time down to either the seconds level of detail or the milliseconds level of detail. For example it matches both 2020-02-08 12:23:60,123 and 2020-02-08 12:23:60", "com/mikeleitz/sidekick/bash/validation/bash-validation-timestamp-one-true-regex.stg", "validateTimestampOneTrueValue"),
+    //    CURRENCY(5, "Currency", "", "", ""),
+    //    ENUMERATED(8, "Enumerated type", "", "", ""),
     ;
 
     private @NonNull Integer id;
+    private @NonNull @Accessors(fluent = true) Boolean isRegexType;
     private @NonNull String validationName;
     private @NonNull String validationDescription;
     private @NonNull String stringTemplate;
