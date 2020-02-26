@@ -64,7 +64,7 @@ public enum ValidationEnum {
     VALUE_REQUIRED(20, "Value required", "Value must be not null and not empty. Checks to make sure there is at least one non-whitespace anywhere in the input.", "com/mikeleitz/sidekick/bash/validation/bash-validation-required-regex.stg", "validateRequiredValue"),
     ALPHANUMERIC(21, "Alpha-numeric", "Alpha-numeric value. Any letter or number is accepted.", "com/mikeleitz/sidekick/bash/validation/bash-validation-alphanumeric-regex.stg", "validateAlphanumericValue"),
     GREATER_THAN(14, "Greater than", "", "", ""),
-    GREATER_THAN_EQUAL(15, "Greater than or equal", "", "", ""),
+    GREATER_THAN_EQUAL(15, "Greater than or equal", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-integer-range-logic.stg", ""),
     LESS_THAN(16, "Less than", "", "", ""),
     LESS_THAN_EQUAL(17, "Less than or equal", "", "", ""),
     CURRENCY(5, "Currency", "", "", ""),
