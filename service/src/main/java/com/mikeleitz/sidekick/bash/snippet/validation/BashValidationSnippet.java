@@ -28,6 +28,7 @@ import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -84,64 +85,62 @@ public class BashValidationSnippet extends CompositeSnippet {
         log.info("Have a total of [{}] validation snippets.", this.totalSnippets());
     }
 
+    /**
+     * See if this option has any of the range options. It can contain at most
+     * one of [GREATER_THAN, GREATER_THAN_EQUAL] and also at most one of [LESS_THAN, LESS_THAN_EQUAL].
+     *
+     * @param bashOption
+     * @return
+     */
     protected NumberRangeValidationData createNumberRangeValidation(BashOption bashOption) {
-        // See if this option has any of the range options. It can contain at most
-        // one of [GREATER_THAN, GREATER_THAN_EQUAL] and also at most one of [LESS_THAN, LESS_THAN_EQUAL].
 
+        NumberRangeValidationData numberRangeValidationData = new NumberRangeValidationData();
+        numberRangeValidationData.setOptionName(bashOption.getLongNameBashFriendly());
+
+        // See if this option has either the greater than or the greater than equal validation.
         Optional<BashValidation> lowerBoundOption = bashOption.getValidation(ValidationEnum.GREATER_THAN);
         if (lowerBoundOption.isEmpty()) {
             lowerBoundOption = bashOption.getValidation(ValidationEnum.GREATER_THAN_EQUAL);
         }
 
-        BashValidation lowerBoundValidation = null;
-        Boolean lowerBoundValidationEquals = false;
-        Number lowerBoundNumber = null;
         if (lowerBoundOption.isPresent()) {
-            lowerBoundValidation = lowerBoundOption.get();
+            // We have one of the lower bound validations.
+            BashValidation lowerBoundValidation = lowerBoundOption.get();
             if (lowerBoundValidation.getValidationEnum() == ValidationEnum.GREATER_THAN_EQUAL) {
-                lowerBoundValidationEquals = true;
+                numberRangeValidationData.isLowerBoundInclusive(true);
             }
 
-            if (lowerBoundValidation.getPairForKey("value").isPresent()) {
-                lowerBoundNumber = Integer
-                        .parseInt(lowerBoundValidation.getPairForKey("value").get().getValue());
-            }
-            else {
-                throw new IllegalArgumentException(String.format("Missing required value for validation %s.",
-                        lowerBoundValidation.getValidationEnum().name()));
+            Pair<String, String> value = lowerBoundValidation.getPairForKey("value").orElseThrow(IllegalArgumentException::new);
+            if (value != null) {
+                numberRangeValidationData.setLowerBound(Integer.parseInt(value.getValue()));
+            } else {
+                throw new IllegalArgumentException(String.format("Missing required value for validation %s.", lowerBoundValidation.getValidationEnum().name()));
             }
         }
 
+        // See if we have an upper limit specified.
         Optional<BashValidation> upperBoundOption = bashOption.getValidation(ValidationEnum.LESS_THAN);
         if (upperBoundOption.isEmpty()) {
             upperBoundOption = bashOption.getValidation(ValidationEnum.LESS_THAN_EQUAL);
         }
 
-        BashValidation upperBoundValidation = null;
-        Boolean upperBoundValidationEquals = false;
-        Number upperBoundNumber = null;
         if (upperBoundOption.isPresent()) {
-            upperBoundValidation = upperBoundOption.get();
+            // We have an upper bound.
+            BashValidation upperBoundValidation = upperBoundOption.get();
             if (upperBoundValidation.getValidationEnum() == ValidationEnum.GREATER_THAN_EQUAL) {
-                upperBoundValidationEquals = true;
+                numberRangeValidationData.isUpperBoundInclusive(true);
             }
 
-            if (upperBoundValidation.getPairForKey("value").isPresent()) {
-                upperBoundNumber = Integer
-                        .parseInt(upperBoundValidation.getPairForKey("value").get().getValue());
-            }
-            else {
-                throw new IllegalArgumentException(String.format("Missing required value for validation %s.",
-                        upperBoundValidation.getValidationEnum().name()));
+            Pair<String, String> value = upperBoundValidation.getPairForKey("value").orElseThrow(IllegalArgumentException::new);
+
+            if (value != null) {
+                numberRangeValidationData.setUpperBound(Integer.parseInt(value.getValue()));
+            } else {
+                throw new IllegalArgumentException(String.format("Missing required value for validation %s.", upperBoundValidation.getValidationEnum().name()));
             }
         }
 
-        NumberRangeValidationData numberRangeValidationData = new NumberRangeValidationData(
-                bashOption.getLongNameBashFriendly(),
-                lowerBoundNumber,
-                lowerBoundValidationEquals,
-                upperBoundNumber,
-                upperBoundValidationEquals);
+
 
         // The command to execute is
         //  resul=0
@@ -184,7 +183,6 @@ public class BashValidationSnippet extends CompositeSnippet {
     }
 
     @Data
-    @AllArgsConstructor
     public class NumberRangeValidationData {
         private String optionName;
         private Number lowerBound;

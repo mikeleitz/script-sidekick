@@ -58,7 +58,8 @@ public class BashValidation {
 
         if (this.getId().equals(bashValidation.getId())) {
             returnValue = true;
-        } else {
+        }
+        else {
             returnValue = false;
         }
 
