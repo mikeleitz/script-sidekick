@@ -20,20 +20,16 @@ import com.mikeleitz.sidekick.base.CompositeSnippet;
 import com.mikeleitz.sidekick.base.GenericSnippet;
 import com.mikeleitz.sidekick.base.SnippetContext;
 import com.mikeleitz.sidekick.bash.domain.BashOption;
-import com.mikeleitz.sidekick.bash.domain.BashValidation;
 import com.mikeleitz.sidekick.bash.domain.ValidationEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -48,16 +44,17 @@ public class BashValidationSnippet extends CompositeSnippet {
     public BashValidationSnippet(SnippetContext context) throws IOException {
         super(context);
 
-        // Handle generic regex validations. These are most of our framework's validations.
+        // Handle generic validations. These are most of our framework's validations and doesn't require anything
+        // special from this snippet to render.
         Arrays.stream(ValidationEnum.values())
                 .filter(t -> StringUtils.isNotBlank(t.getStringTemplate()))
-                .filter(t -> t.isRegexType())
+                .filter(t -> !t.requiresSpecialTemplateHandling())
                 .forEach(t -> this
                         .addSnippet(new GenericSnippet(context, t.getStringTemplate(), t.getValidationName())));
 
-        Set<BashOption> allBashOptions = (Set<BashOption>) context.getAllValues().get("bashOptions");
-
         // Handle the custom regex validation. It has special handling.
+
+        Set<BashOption> allBashOptions = (Set<BashOption>) context.getAllValues().get("bashOptions");
         if (CollectionUtils.isNotEmpty(allBashOptions)) {
             List<BashOption> bashOptionsWithCustomRegex = allBashOptions.stream()
                     .filter(o -> o.optionUsesValidation(ValidationEnum.CUSTOM_REGEX))
@@ -67,90 +64,7 @@ public class BashValidationSnippet extends CompositeSnippet {
             this.addSnippet(customRegexenSnippet);
         }
 
-        // Handle number range.
-        List<ValidationEnum> integerRangeComparisons = List
-                .of(ValidationEnum.GREATER_THAN, ValidationEnum.GREATER_THAN_EQUAL, ValidationEnum.LESS_THAN,
-                        ValidationEnum.LESS_THAN_EQUAL);
-
-        if (CollectionUtils.isNotEmpty(allBashOptions)) {
-            for (BashOption bashOption : allBashOptions) {
-                NumberRangeValidationData numberRangeValidationData = createNumberRangeValidation(bashOption);
-            }
-
-            // TODO handle range validations: GREATER_THAN, GREATER_THAN_EQUAL, LESS_THAN, and LESS_THAN_EQUAL.
-            // GenericSnippet customRegexenSnippet = createCustomBashRegexenSnippet(context, bashOptionsWithCustomRegex);
-            // this.addSnippet(customRegexenSnippet);
-        }
-
         log.info("Have a total of [{}] validation snippets.", this.totalSnippets());
-    }
-
-    /**
-     * See if this option has any of the range options. It can contain at most
-     * one of [GREATER_THAN, GREATER_THAN_EQUAL] and also at most one of [LESS_THAN, LESS_THAN_EQUAL].
-     *
-     * @param bashOption
-     * @return
-     */
-    protected NumberRangeValidationData createNumberRangeValidation(BashOption bashOption) {
-        NumberRangeValidationData returnValue;
-
-        // See if this option has either the greater than or the greater than equal validation.
-        Optional<BashValidation> lowerBoundOption = bashOption.getValidation(ValidationEnum.GREATER_THAN);
-        if (lowerBoundOption.isEmpty()) {
-            lowerBoundOption = bashOption.getValidation(ValidationEnum.GREATER_THAN_EQUAL);
-        }
-
-        // See if we have an upper limit specified.
-        Optional<BashValidation> upperBoundOption = bashOption.getValidation(ValidationEnum.LESS_THAN);
-        if (upperBoundOption.isEmpty()) {
-            upperBoundOption = bashOption.getValidation(ValidationEnum.LESS_THAN_EQUAL);
-        }
-
-        if (upperBoundOption.isPresent() || lowerBoundOption.isPresent()) {
-            returnValue = new NumberRangeValidationData();
-            returnValue.setOptionName(bashOption.getLongNameBashFriendly());
-
-            if (lowerBoundOption.isPresent()) {
-                // We have one of the lower bound validations.
-
-                returnValue.isLowerBoundInclusive(false);
-                BashValidation lowerBoundValidation = lowerBoundOption.get();
-                if (lowerBoundValidation.getValidationEnum() == ValidationEnum.GREATER_THAN_EQUAL) {
-                    returnValue.isLowerBoundInclusive(true);
-                }
-
-                Pair<String, String> value = lowerBoundValidation.getPairForKey("value").orElseThrow(IllegalArgumentException::new);
-                if (value != null) {
-                    returnValue.setLowerBound(Integer.parseInt(value.getValue()));
-                } else {
-                    throw new IllegalArgumentException(String.format("Missing required value for validation %s.", lowerBoundValidation.getValidationEnum().name()));
-                }
-            }
-
-            if (upperBoundOption.isPresent()) {
-                returnValue.isUpperBoundInclusive(false);
-
-                // We have an upper bound.
-                BashValidation upperBoundValidation = upperBoundOption.get();
-                if (upperBoundValidation.getValidationEnum() == ValidationEnum.LESS_THAN_EQUAL) {
-                    returnValue.isUpperBoundInclusive(true);
-                }
-
-                Pair<String, String> value = upperBoundValidation.getPairForKey("value").orElseThrow(IllegalArgumentException::new);
-
-                if (value != null) {
-                    returnValue.setUpperBound(Integer.parseInt(value.getValue()));
-                } else {
-                    throw new IllegalArgumentException(String.format("Missing required value for validation %s.", upperBoundValidation.getValidationEnum().name()));
-                }
-            }
-        } else {
-            // No range validations found, return null.
-            returnValue = null;
-        }
-
-        return returnValue;
     }
 
     protected GenericSnippet createCustomBashRegexenSnippet(SnippetContext context,
@@ -176,16 +90,5 @@ public class BashValidationSnippet extends CompositeSnippet {
     public class CustomRegex {
         private String optionName;
         private String regex;
-    }
-
-    @Data
-    public class NumberRangeValidationData {
-        private String optionName;
-        private Number lowerBound;
-        private @Accessors(fluent = true)
-        Boolean isLowerBoundInclusive;
-        private Number upperBound;
-        private @Accessors(fluent = true)
-        Boolean isUpperBoundInclusive;
     }
 }

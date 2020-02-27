@@ -75,7 +75,7 @@ public enum ValidationEnum {
     ;
 
     private @NonNull Integer id;
-    private @NonNull @Accessors(fluent = true) Boolean isRegexType;
+    private @NonNull @Accessors(fluent = true) Boolean requiresSpecialTemplateHandling;
     private @NonNull String validationName;
     private @NonNull String validationDescription;
     private @NonNull String stringTemplate;
