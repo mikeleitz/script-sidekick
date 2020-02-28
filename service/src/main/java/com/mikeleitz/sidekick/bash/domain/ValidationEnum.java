@@ -50,21 +50,21 @@ import java.util.Optional;
 @AllArgsConstructor
 @Getter
 public enum ValidationEnum {
-    EMAIL(10, true, "Email validation", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-email-regex.stg", "validateEmailValue"),
-    DATE(6, true, "Date validation dd/mm/yyy", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-date-regex.stg", "validateDateValue"),
-    SIGNED_INTEGER(1, true, "Signed integer", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-integer-signed-regex.stg", "validateSignedIntegerValue"),
-    UNSIGNED_INTEGER(19, true, "Unsigned integer", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-integer-unsigned-regex.stg", "validateUnsignedIntegerValue"),
-    BOOLEAN(2, true, "Boolean", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-boolean-regex.stg", "validateBooleanValue"),
-    TIMESTAMP_ISO(7, true, "Timestamp in ISO format", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-timestamp-iso-regex.stg", "validateTimestampIsoValue"),
-    URL(9, true, "URL", "Validates http or https urls.", "com/mikeleitz/sidekick/bash/validation/bash-validation-url-regex.stg", "validateUrlValue"),
-    IPV4(11, true, "URL", "Validates an ipv4 address", "com/mikeleitz/sidekick/bash/validation/bash-validation-ipv4-regex.stg", "validateIpv4Value"),
-    VALUE_REQUIRED(20, true, "Value required", "Value must be not null and not empty. Checks to make sure there is at least one non-whitespace anywhere in the input.", "com/mikeleitz/sidekick/bash/validation/bash-validation-required-regex.stg", "validateRequiredValue"),
-    ALPHANUMERIC(21, true, "Alpha-numeric", "Alpha-numeric value. Any letter or number is accepted.", "com/mikeleitz/sidekick/bash/validation/bash-validation-alphanumeric-regex.stg", "validateAlphanumericValue"),
-    GREATER_THAN(14, false, "Greater than", "Tests if an integer is greater than a specified value.", "com/mikeleitz/sidekick/bash/validation/bash-validation-integer-greater-than-logic.stg", ".validateGreaterLessThan"),
-    GREATER_THAN_EQUAL(15, false, "Greater than or equal", "Tests if an integer is greater than or equal a specified value.", "com/mikeleitz/sidekick/bash/validation/bash-validation-integer-greater-than-equal-logic.stg", ".validateIntegerGreaterThanEqual"),
-    LESS_THAN(16, false, "Less than", "Tests if an integer is less than a specified value.", "com/mikeleitz/sidekick/bash/validation/bash-validation-integer-less-than-logic.stg", ".validateIntegerLessThan"),
-    LESS_THAN_EQUAL(17, false, "Less than or equal", "Tests if an integer is less than or equal a specified value.", "com/mikeleitz/sidekick/bash/validation/bash-validation-integer-less-than-equal-logic.stg", ".validateIntegerLessThanEqual"),
-    CUSTOM_REGEX(13, true, "Custom regex", "This is a regex value supplied by the user.", "com/mikeleitz/sidekick/bash/validation/bash-validation-custom-regex.stg", ""),
+    EMAIL(10, 13,true, "Email validation", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-email-regex.stg", "validateEmailValue"),
+    DATE(6, 12,true, "Date validation dd/mm/yyy", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-date-regex.stg", "validateDateValue"),
+    SIGNED_INTEGER(1, 2, true, "Signed integer", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-integer-signed-regex.stg", "validateSignedIntegerValue"),
+    UNSIGNED_INTEGER(19, 3, true, "Unsigned integer", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-integer-unsigned-regex.stg", "validateUnsignedIntegerValue"),
+    BOOLEAN(2, 4, true, "Boolean", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-boolean-regex.stg", "validateBooleanValue"),
+    TIMESTAMP_ISO(7, 14,true, "Timestamp in ISO format", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-timestamp-iso-regex.stg", "validateTimestampIsoValue"),
+    URL(9, 11,true, "URL", "Validates http or https urls.", "com/mikeleitz/sidekick/bash/validation/bash-validation-url-regex.stg", "validateUrlValue"),
+    IPV4(11, 10,true, "URL", "Validates an ipv4 address", "com/mikeleitz/sidekick/bash/validation/bash-validation-ipv4-regex.stg", "validateIpv4Value"),
+    VALUE_REQUIRED(20, 1, true, "Value required", "Value must be not null and not empty. Checks to make sure there is at least one non-whitespace anywhere in the input.", "com/mikeleitz/sidekick/bash/validation/bash-validation-required-regex.stg", "validateRequiredValue"),
+    ALPHANUMERIC(21, 5, true, "Alpha-numeric", "Alpha-numeric value. Any letter or number is accepted.", "com/mikeleitz/sidekick/bash/validation/bash-validation-alphanumeric-regex.stg", "validateAlphanumericValue"),
+    GREATER_THAN(14, 9,false, "Greater than", "Tests if an integer is greater than a specified value.", "com/mikeleitz/sidekick/bash/validation/bash-validation-integer-greater-than-logic.stg", ".validateGreaterLessThan"),
+    GREATER_THAN_EQUAL(15, 8,false, "Greater than or equal", "Tests if an integer is greater than or equal a specified value.", "com/mikeleitz/sidekick/bash/validation/bash-validation-integer-greater-than-equal-logic.stg", ".validateIntegerGreaterThanEqual"),
+    LESS_THAN(16, 7, false, "Less than", "Tests if an integer is less than a specified value.", "com/mikeleitz/sidekick/bash/validation/bash-validation-integer-less-than-logic.stg", ".validateIntegerLessThan"),
+    LESS_THAN_EQUAL(17, 6, false, "Less than or equal", "Tests if an integer is less than or equal a specified value.", "com/mikeleitz/sidekick/bash/validation/bash-validation-integer-less-than-equal-logic.stg", ".validateIntegerLessThanEqual"),
+    CUSTOM_REGEX(13, 15,true, "Custom regex", "This is a regex value supplied by the user.", "com/mikeleitz/sidekick/bash/validation/bash-validation-custom-regex.stg", ""),
     // TODO Phase 2
     //    IPV6(12, "Ipv6 address", "Validates an ipv6 address", "com/mikeleitz/sidekick/bash/validation/bash-validation-ipv6-regex.stg", "validateIpv6Value"),
     //    SIGNED_REAL(3, "Signed real` number", "", "com/mikeleitz/sidekick/bash/validation/bash-validation-real-signed-regex.stg", "validateSignedRealValue"),
@@ -75,6 +75,8 @@ public enum ValidationEnum {
     ;
 
     private @NonNull Integer id;
+    // This is the order the validations will be performed in. The lower the number the earlier the validation will be done.
+    private @NonNull Integer order;
     private @NonNull @Accessors(fluent = true) Boolean requiresSpecialTemplateHandling;
     private @NonNull String validationName;
     private @NonNull String validationDescription;

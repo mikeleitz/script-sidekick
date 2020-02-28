@@ -29,6 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -76,7 +77,10 @@ public class BashOptionDeserializer extends StdDeserializer<BashOption> {
                 // TODO modify when we support more validations.
                 allValidations.add(val);
             }
+
+            allValidations.sort(Comparator.comparing(v -> v.getValidationEnum().getOrder()));
         }
+
         returnValue = BashOption.builder()
                 .id(id)
                 .longName(longName)
