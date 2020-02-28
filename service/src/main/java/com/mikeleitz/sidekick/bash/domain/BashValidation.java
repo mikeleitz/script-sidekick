@@ -38,6 +38,9 @@ import java.util.Optional;
 public class BashValidation {
     private @NonNull Integer id;
     private @NonNull String name;
+    // This is a single value for validations that accept a user defined value.
+    // It currently supports one value.
+    private String value;
     private @NonNull List<Pair<String, String>> args;
     private @NonNull ValidationEnum validationEnum;
 

@@ -24,12 +24,14 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.exc.InvalidTypeIdException;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.IntNode;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -44,6 +46,7 @@ import java.util.stream.IntStream;
 public class BashValidationDeserializer extends StdDeserializer<BashValidation> {
     private static final String ARG_KEY_NAME = "key";
     private static final String ARG_KEY_VALUE = "value";
+    private static final String SPECIFIED_VALUE = "value";
 
     private BashValidationFactory bashValidationFactory = new BashValidationFactory();
 
@@ -67,6 +70,7 @@ public class BashValidationDeserializer extends StdDeserializer<BashValidation> 
 
         // We ignore the name from the JS side and take the name specified on the Java side.
         String name = node.get("name").asText();
+        String value = "";
 
         ArrayNode argsArrayNode = (ArrayNode) node.get("args");
         if (argsArrayNode != null && !argsArrayNode.isNull()) {
@@ -76,10 +80,19 @@ public class BashValidationDeserializer extends StdDeserializer<BashValidation> 
                     .map(n -> new ImmutablePair<>(n.get(ARG_KEY_NAME).asText(),
                             n.get(ARG_KEY_VALUE).asText()))
                     .collect(Collectors.toList());
+
+            Optional<Pair<String, String>> valueOption = args.stream()
+                    .filter(p -> StringUtils.equalsIgnoreCase(SPECIFIED_VALUE, p.getKey()))
+                    .findFirst();
+
+            if (valueOption.isPresent()) {
+                value = valueOption.get().getValue();
+            }
         }
 
         try {
             returnValue = bashValidationFactory.createBashValidation(id, args);
+            returnValue.setValue(value);
         }
         catch (ValidationNotFoundException e) {
             throw new InvalidTypeIdException(jp, e.getMessage(), ctxt.getContextualType(), String.format("Validation id: [%d]", id));
