@@ -21,17 +21,17 @@
 plugins {
     id 'java'
     id 'idea'
-    id 'com.google.cloud.tools.jib' version '1.7.0'
-    id "io.freefair.lombok" version "4.1.6"
-    id 'org.springframework.boot' version '2.1.7.RELEASE'
-    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
-    id 'org.asciidoctor.convert' version '1.5.8'
+    id 'com.google.cloud.tools.jib' version '2.5.0'
+    id "io.freefair.lombok" version "5.1.1"
+    id 'org.springframework.boot' version '2.3.3.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id 'org.asciidoctor.convert' version '2.4.0'
     id 'jacoco'
 }
 
 group = 'com.mikeleitz'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = '14'
 
 configurations {
     developmentOnly
@@ -50,7 +50,7 @@ jib {
     }
     from {
         // image = 'gcr.io/distroless/java:11-debug' // Use debug image so it includes shell access.
-        image = 'gcr.io/distroless/java:11'
+        image = 'gcr.io/distroless/java:14'
     }
 }
 
