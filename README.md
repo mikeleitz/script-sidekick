@@ -1,4 +1,4 @@
-# script-sidekick
+# lickety-sidekick
 
 Project to help create bash scripts.  Generates the relevant boilerplate and helps you keep your scripts sane.
 

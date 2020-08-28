@@ -37,7 +37,7 @@
           </b-tab>
           <b-tab>
             <template v-slot:title>
-              Boolean <b-badge variant="info" v-if="totalValidations > 0 && thisScriptInput.type === 'boolean'">{{ totalValidations }}</b-badge>
+              Switch <b-badge variant="info" v-if="totalValidations > 0 && thisScriptInput.type === 'boolean'">{{ totalValidations }}</b-badge>
             </template>
             <b-card-body>
               <ScriptInputTypeBoolean :id="thisScriptInput.id" :bashOption="this.bashOption" />

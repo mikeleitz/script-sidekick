@@ -1,4 +1,4 @@
-name: script-sidekick CI build
+name: lickety-sidekick CI build
 
 on: [push]
 

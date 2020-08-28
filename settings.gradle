@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-rootProject.name = 'script-sidekick'
+rootProject.name = 'lickety-script'
 
 include 'service'
 include 'ui'
