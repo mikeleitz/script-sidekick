@@ -15,6 +15,9 @@
  */
 package com.mikeleitz.sidekick;
 
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
@@ -28,10 +31,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.io.IOException;
-import java.util.HashSet;
-import java.util.List;
-
 //import com.xebia.jacksonlombok.JacksonLombokAnnotationIntrospector;
 
 /**
@@ -39,10 +38,10 @@ import java.util.List;
  */
 @SpringBootApplication
 @Slf4j
-public class ScriptSidekickApplication {
+public class LicketyScriptApplication {
 
     public static void main(String[] args) throws IOException {
-        SpringApplication.run(ScriptSidekickApplication.class, args);
+        SpringApplication.run(LicketyScriptApplication.class, args);
     }
 
     @Bean
