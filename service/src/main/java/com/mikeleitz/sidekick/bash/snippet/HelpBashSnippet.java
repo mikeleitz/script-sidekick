@@ -31,7 +31,7 @@ import java.util.Set;
  * @author leitz@mikeleitz.com
  */
 public class HelpBashSnippet extends Snippet {
-    private static final String TEMPLATE_LOCATION = "com/mikeleitz/sidekick/bash/bash-help-template.stg";
+    private static final String TEMPLATE_LOCATION = "com/mikeleitz/sidekick/bash/lickety-script/bash-help-template.stg";
 
     private Set<BashOption> allInputOptions;
     private String year;

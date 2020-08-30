@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
  * @author leitz@mikeleitz.com
  */
 public class BashOptionsValidationSnippet extends Snippet {
-    private static final String TEMPLATE_LOCATION = "com/mikeleitz/sidekick/bash/validation/bash-options-validation.stg";
+    private static final String TEMPLATE_LOCATION = "com/mikeleitz/sidekick/bash/lickety-script/validation/bash-options-validation.stg";
 
     public BashOptionsValidationSnippet(Set<BashOption> bashOptions, SnippetContext context) throws IOException {
         super(context);

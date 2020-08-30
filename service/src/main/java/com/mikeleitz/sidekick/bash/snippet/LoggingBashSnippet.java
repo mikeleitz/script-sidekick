@@ -24,7 +24,7 @@ import java.io.IOException;
  * @author leitz@mikeleitz.com
  */
 public class LoggingBashSnippet extends Snippet {
-    private static final String TEMPLATE_LOCATION = "com/mikeleitz/sidekick/bash/bash-logging-template.stg";
+    private static final String TEMPLATE_LOCATION = "com/mikeleitz/sidekick/bash/lickety-script/bash-logging-template.stg";
 
     public LoggingBashSnippet(SnippetContext context) throws IOException {
         super(context);

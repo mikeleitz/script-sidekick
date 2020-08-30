@@ -25,7 +25,7 @@ import java.io.IOException;
  * @author leitz@mikeleitz.com
  */
 public class ShebangBashSnippet extends Snippet {
-    private static final String BASH_TEMPLATE_LOCATION = "com/mikeleitz/sidekick/bash/bash-shebang-template.stg";
+    private static final String BASH_TEMPLATE_LOCATION = "com/mikeleitz/sidekick/bash/lickety-script/bash-shebang-template.stg";
 
     public ShebangBashSnippet(SnippetContext context, ShellOptionEnum shellOptionEnum) throws IOException {
         super(context);

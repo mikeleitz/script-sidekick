@@ -24,7 +24,7 @@ import java.io.IOException;
  * @author leitz@mikeleitz.com
  */
 public class ProcessingBashSnippet extends Snippet {
-    private static final String TEMPLATE_LOCATION = "com/mikeleitz/sidekick/bash/bash-processing-template.stg";
+    private static final String TEMPLATE_LOCATION = "com/mikeleitz/sidekick/bash/lickety-script/bash-processing-template.stg";
 
     public ProcessingBashSnippet(SnippetContext context) throws IOException {
         super(context);
