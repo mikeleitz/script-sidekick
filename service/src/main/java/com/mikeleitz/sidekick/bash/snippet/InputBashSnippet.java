@@ -15,6 +15,10 @@
  */
 package com.mikeleitz.sidekick.bash.snippet;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import com.mikeleitz.sidekick.base.Snippet;
 import com.mikeleitz.sidekick.base.SnippetContext;
 import com.mikeleitz.sidekick.bash.domain.BashOption;
@@ -22,11 +26,6 @@ import io.micrometer.core.instrument.util.StringUtils;
 import lombok.NonNull;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 /**
  * @author leitz@mikeleitz.com
@@ -74,9 +73,9 @@ public class InputBashSnippet extends Snippet {
                     allVariables.add(bashOption.getIsSetVariableName());
 
                     // TODO Call appropriate validation functions for this input.
-//                    if (BooleanUtils.isTrue(bashOption.optionHasValue())) {
-//                        allVariables.add(bashOption.getVariableName());
-//                    }
+                    if (BooleanUtils.isTrue(bashOption.optionHasValue())) {
+                        allVariables.add(bashOption.getVariableName());
+                    }
                 }
 
                 String switchStatement;
@@ -116,11 +115,11 @@ public class InputBashSnippet extends Snippet {
         if (bashOption.optionHasValue()) {
             returnValue += bashOption.getVariableName() + "=\"$2\"";
             returnValue += "\n";
-            returnValue += "shift 2";
+            returnValue += "shift";
             returnValue += "\n";
         }
         else {
-            returnValue += "shift";
+            returnValue += "";
             returnValue += "\n";
         }
 
