@@ -72,7 +72,6 @@ public class InputBashSnippet extends Snippet {
 
                     allVariables.add(bashOption.getIsSetVariableName());
 
-                    // TODO Call appropriate validation functions for this input.
                     if (BooleanUtils.isTrue(bashOption.optionHasValue())) {
                         allVariables.add(bashOption.getVariableName());
                     }

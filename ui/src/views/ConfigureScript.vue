@@ -105,6 +105,7 @@ import { DomainFactory } from '../domain/SideScriptDomainFactory.js'
 
 import { ValidationObserver, ValidationProvider, extend } from 'vee-validate'
 import { required } from 'vee-validate/dist/rules'
+import {ValidationTypes} from "@/domain/SideScriptDomainFactory";
 
 extend('required', {
   ...required,
@@ -184,7 +185,7 @@ export default {
         this.verboseCommandId = store.getNextScriptId()
 
         let verboseOption = DomainFactory.createBashOption(this.verboseCommandId, 'verbose', 'v', 'Maximum script logging.')
-
+        verboseOption.addValidation(ValidationTypes.BOOLEAN)
         this.scriptInProgress.addOption(verboseOption)
         this.isVerboseCommandPushed = true
       } else {
@@ -199,6 +200,7 @@ export default {
         this.quietCommandId = store.getNextScriptId()
 
         let quietOption = DomainFactory.createBashOption(this.quietCommandId, 'quiet', 'q', 'Quiet mode.  No output.')
+        quietOption.addValidation(ValidationTypes.BOOLEAN)
 
         this.scriptInProgress.addOption(quietOption)
 

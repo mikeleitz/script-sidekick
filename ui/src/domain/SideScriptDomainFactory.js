@@ -114,7 +114,6 @@ let BashOption = function (pId = undefined) {
   this.helpText = ''
   this.validations = [] // BashValidation objects
 
-  // TODO make a switch for this.
   this.optionHasValue = true
 
   this.addValidation = function (bashValidation) {
@@ -122,8 +121,10 @@ let BashOption = function (pId = undefined) {
       console.log('Validation id [' + bashValidation.id + '] already exists for BashOption id [' + this.id + ']. Not adding it.')
     } else {
       this.validations.unshift(bashValidation)
-
-      console.log('Added validation id [' + bashValidation.id + '] BashOption id [' + this.id + '] now has total validations: [' + this.totalValidations() + '].')
+      if (bashValidation.name === 'Boolean') {
+        this.optionHasValue = false
+      }
+      console.log('Added validation id [' + bashValidation.id + '] BashOption id [' + this.id + '] now has total validations: [' + this.totalValidations() + '].');
     }
   }
 
@@ -147,11 +148,16 @@ let BashOption = function (pId = undefined) {
     if (this.hasValidation(bashValidation)) {
       let validationIndex = this.getValidationIndex(bashValidation)
       this.validations.splice(validationIndex, 1)
+
+      if (bashValidation.name === 'Boolean') {
+        this.optionHasValue = true
+      }
     }
   }
 
   this.removeAllValidations = function () {
     this.validations.splice(0, this.validations.length)
+    this.optionHasValue = true
   }
 
   this.totalValidations = function () {
