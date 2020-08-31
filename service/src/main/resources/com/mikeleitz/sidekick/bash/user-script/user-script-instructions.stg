@@ -9,7 +9,9 @@
 # By the time the script execution makes it here, all inputs are considered
 # validated and you can process accordingly.
 #
-# These variables are available to you.
+# These variables are available to you. The variables that end in _ARG are
+# the values supplied by the user. They all pass the appropriate
+# valadations specified in the tool.
 #
 # <allOptionsAndType:{ option |<option>
 # }>

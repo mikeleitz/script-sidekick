@@ -31,7 +31,7 @@ import org.apache.commons.lang3.BooleanUtils;
  * @author leitz@mikeleitz.com
  */
 public class InputBashSnippet extends Snippet {
-    private static final String TEMPLATE_LOCATION = "com/mikeleitz/sidekick/bash/lickety-script/bash-enhanced-getopts-input-template.stg";
+    private static final String TEMPLATE_LOCATION = "com/mikeleitz/sidekick/bash/lickety-script/bash-input-template.stg";
     private static final String VERBOSE_SWITCH_STATEMENT = "  -v | --verbose)\n"
             + "    __VERBOSE=7 # Verbose indicates logging at debug.\n"
             + "    shift\n"
