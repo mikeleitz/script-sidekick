@@ -26,6 +26,10 @@ public class UserScript extends ApplicationFile {
         ShebangBashSnippet shebangBashSnippet = new ShebangBashSnippet(snippetContext, shellOptionEnum);
         preambleList.add(shebangBashSnippet);
 
+        String scriptName = bashScriptConfiguration.getScriptName();
+        String extension = bashScriptConfiguration.getShellType().getExtension();
+        snippetContext.addValue("scriptFile", scriptName + extension);
+
         List<String> optionsAndType = createOptionsAndType(bashScriptConfiguration);
 
         UserScriptInstructions userScriptInstructions = new UserScriptInstructions(snippetContext, optionsAndType);

@@ -16,6 +16,15 @@
 
 package com.mikeleitz.sidekick.ui;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.FileSystem;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 import com.github.marschall.memoryfilesystem.MemoryFileSystemBuilder;
 import com.mikeleitz.sidekick.bash.domain.BashOption;
 import com.mikeleitz.sidekick.bash.domain.BashScriptConfiguration;
@@ -33,16 +42,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.FileSystem;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
 /**
  * @author leitz@mikeleitz.com
@@ -79,21 +78,24 @@ public class CreateScriptUiController {
             throws IOException {
         log.info("Received create script request for data [{}].", configuration);
 
+        String userBashFileName = configuration.getScriptName();
+        String extension = configuration.getShellType().getExtension();
+
         configuration.addScriptInput(BashOption.HELP);
 
         FileSystem fileSystem = MemoryFileSystemBuilder.newLinux().build();
 
         String scriptContents = bashService.createDelegateBashScriptContents(configuration);
-        Path scriptContentsPath = createPathForContent(fileSystem, "script-contents.sh", scriptContents);
+        Path scriptContentsPath = createPathForContent(fileSystem, "lickety-" + userBashFileName + extension, scriptContents);
 
         String installerContents = bashService.createInstallerContents(configuration);
-        Path installerContentsPath = createPathForContent(fileSystem, "installer-contents.sh", installerContents);
+        Path installerContentsPath = createPathForContent(fileSystem, userBashFileName + "-installer.sh", installerContents);
 
         String readmeContents = bashService.createReadmeContents(configuration);
-        Path readmeContentsPath = createPathForContent(fileSystem, "readme-contents.md", readmeContents);
+        Path readmeContentsPath = createPathForContent(fileSystem, userBashFileName + ".md", readmeContents);
 
         String userBashScriptContents = bashService.createUserBashScriptContents(configuration);
-        Path userBashScriptContentsPath = createPathForContent(fileSystem, "user-script-contents.md", userBashScriptContents);
+        Path userBashScriptContentsPath = createPathForContent(fileSystem, userBashFileName + extension, userBashScriptContents);
 
         List<Path> paths = List.of(scriptContentsPath, installerContentsPath, readmeContentsPath, userBashScriptContentsPath);
 

@@ -15,4 +15,13 @@
 #
 # <allOptionsAndType:{ option |<option>
 # }>
-################################################################################
+#
+# To run your script, execute
+# <scriptFile>
+##############################################################################AQ##
+
+./lickety-<scriptFile> "$@"
+
+# Your code goes below
+
+echo 'hello!'
