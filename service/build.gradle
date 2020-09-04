@@ -22,7 +22,7 @@ plugins {
     id 'java'
     id 'idea'
     id 'jacoco'
-    id "io.freefair.lombok" version "5.1.1"
+    id 'io.freefair.lombok' version '5.1.1'
     id 'org.asciidoctor.jvm.convert' version '3.2.0'
     id 'com.google.cloud.tools.jib' version '2.5.0'
     id 'org.springframework.boot' version '2.3.3.RELEASE'
@@ -49,7 +49,6 @@ jib {
         credHelper = 'osxkeychain'
     }
     from {
-        // image = 'gcr.io/distroless/java:11-debug' // Use debug image so it includes shell access.
         image = 'gcr.io/distroless/java:14'
     }
 }
@@ -60,7 +59,7 @@ repositories {
 }
 
 ext {
-    set('snippetsDir', file("build/generated-snippets"))
+    set('snippetsDir', file('build/generated-snippets'))
 }
 
 dependencies {
@@ -94,7 +93,7 @@ idea {
 }
 
 jacoco {
-    toolVersion = "0.8.5"
+    toolVersion = '0.8.5'
     reportsDir = file("$buildDir/customJacocoReportDir")
 }
 
