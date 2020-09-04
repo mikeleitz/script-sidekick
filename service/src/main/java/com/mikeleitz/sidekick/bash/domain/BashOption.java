@@ -15,6 +15,8 @@
  */
 package com.mikeleitz.sidekick.bash.domain;
 
+import java.util.List;
+import java.util.Optional;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.mikeleitz.sidekick.base.application.ApplicationInput;
 import lombok.AccessLevel;
@@ -25,9 +27,6 @@ import lombok.Setter;
 import lombok.Singular;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
-
-import java.util.List;
-import java.util.Optional;
 
 /**
  * @author leitz@mikeleitz.com
@@ -109,6 +108,10 @@ public class BashOption implements ApplicationInput {
 
     public static String makeVariableNameAcceptableToBash(String variableName) {
         String returnValue = null;
+
+        if (Character.isDigit(variableName.charAt(0))) {
+            variableName = "_" + variableName;
+        }
 
         returnValue = variableName.toUpperCase();
 
