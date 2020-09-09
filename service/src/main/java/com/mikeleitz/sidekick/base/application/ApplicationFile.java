@@ -16,18 +16,18 @@
 
 package com.mikeleitz.sidekick.base.application;
 
-import com.mikeleitz.sidekick.base.Snippet;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import com.mikeleitz.sidekick.base.Snippet;
 
 /**
  * @author leitz@mikeleitz.com
  */
 public abstract class ApplicationFile {
     protected String fileName;
+    protected String fileRole;
 
     protected List<Snippet> preambleList = new ArrayList<>();
     protected List<Snippet> functionsAndSupplementList = new ArrayList<>();

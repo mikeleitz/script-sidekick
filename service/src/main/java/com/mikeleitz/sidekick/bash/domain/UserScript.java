@@ -9,6 +9,7 @@ import com.mikeleitz.sidekick.base.Snippet;
 import com.mikeleitz.sidekick.base.SnippetContext;
 import com.mikeleitz.sidekick.base.application.ApplicationFile;
 import com.mikeleitz.sidekick.bash.snippet.ShebangBashSnippet;
+import com.mikeleitz.sidekick.bash.snippet.userscript.UserScriptBody;
 import com.mikeleitz.sidekick.bash.snippet.userscript.UserScriptInstructions;
 import lombok.SneakyThrows;
 import org.apache.commons.io.FileUtils;
@@ -17,12 +18,14 @@ import org.apache.commons.io.FileUtils;
  * @author leitz@mikeleitz.com
  */
 public class UserScript extends ApplicationFile {
-    ShellOptionEnum shellOptionEnum = ShellOptionEnum.BASH;
+    protected ShellOptionEnum shellOptionEnum = ShellOptionEnum.BASH;
     protected SnippetContext snippetContext = new SnippetContext();
     protected BashScript bashScriptConfiguration;
 
     @SneakyThrows
     public UserScript(BashScriptConfiguration bashScriptConfiguration) {
+        this.fileRole = "user script";
+
         ShebangBashSnippet shebangBashSnippet = new ShebangBashSnippet(snippetContext, shellOptionEnum);
         preambleList.add(shebangBashSnippet);
 
@@ -34,6 +37,9 @@ public class UserScript extends ApplicationFile {
 
         UserScriptInstructions userScriptInstructions = new UserScriptInstructions(snippetContext, optionsAndType);
         preambleList.add(userScriptInstructions);
+
+        UserScriptBody userScriptBody = new UserScriptBody(snippetContext, optionsAndType);
+        processingList.add(userScriptBody);
     }
 
     @Override
@@ -42,6 +48,11 @@ public class UserScript extends ApplicationFile {
 
         StringBuilder fileContents = new StringBuilder();
         for (Snippet snippet : preambleList) {
+            fileContents.append(snippet.getSnippet());
+            fileContents.append("\n");
+        }
+
+       for (Snippet snippet : processingList) {
             fileContents.append(snippet.getSnippet());
             fileContents.append("\n");
         }

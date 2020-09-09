@@ -16,6 +16,9 @@
 
 package com.mikeleitz.sidekick.bash.domain;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
 import com.mikeleitz.sidekick.base.Snippet;
 import com.mikeleitz.sidekick.base.SnippetContext;
 import com.mikeleitz.sidekick.base.application.ApplicationFile;
@@ -30,10 +33,6 @@ import com.mikeleitz.sidekick.bash.snippet.validation.BashValidationSnippet;
 import lombok.SneakyThrows;
 import org.apache.commons.io.FileUtils;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.Charset;
-
 /**
  * @author leitz@mikeleitz.com
  */
@@ -43,6 +42,7 @@ public class BashFile extends ApplicationFile {
 
     @SneakyThrows
     public BashFile(BashScriptConfiguration bashScriptConfiguration) {
+        this.fileRole = "lickety-script";
         this.bashScriptConfiguration = bashScriptConfiguration;
 
         populateSnippets();

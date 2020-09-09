@@ -19,19 +19,3 @@
 # To run your script, execute
 # <scriptFile>
 ################################################################################
-
-DIR="${BASH_SOURCE%/*}"
-if [[ ! -d "$DIR" ]]; then DIR="$PWD"; fi
-. "$DIR/lickety-<scriptFile>"
-
-
-# ./lickety-<scriptFile> "$@"
-
-# Your code goes below. All your input is validated by the time it gets here.
-# All variables are listed above.
-
-# Uncomment to print out the variables
-#
-# <allOptionsAndType:{ option |
-echo "$<option>"
-# }>
