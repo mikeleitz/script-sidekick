@@ -1,0 +1,24 @@
+# Create directory if it doesn't exist
+mkdir -p $HOME/.lickety-script
+
+if [ ! -d "$HOME/.lickety-script" ]
+then
+    echo "Error: Directory $HOME/.lickety-script does not exist."
+    exit 1
+fi
+
+mkdir -p $HOME/.lickety-script/scripts
+
+if [ ! -d "$HOME/.lickety-script/scripts" ]
+then
+    echo "Error: Directory $HOME/.lickety-script/scripts does not exist."
+    exit 1
+fi
+
+mkdir -p $HOME/.lickety-script/bin
+
+if [ ! -d "$HOME/.lickety-script/bin" ]
+then
+    echo "Error: Directory $HOME/.lickety-script/bin does not exist."
+    exit 1
+fi

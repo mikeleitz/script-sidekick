@@ -1,6 +1,6 @@
 ###############################################################################
 # This script is responsible for installing your script into your home
-# directory # Lickety-Script establishes a hidden directories in $HOME.
+# directory. Lickety-Script establishes a hidden directories in $HOME.
 # .lickety-script/              : The root directory
 # .lickety-script/scripts/      : Each script has its own subdirectory with
 #                                 all its files in it.
