@@ -42,7 +42,7 @@ public class BashFile extends ApplicationFile {
 
     @SneakyThrows
     public BashFile(BashScriptConfiguration bashScriptConfiguration) {
-        this.fileRole = "lickety-script framework";
+        this.fileRole = "lickety-script file";
         this.bashScriptConfiguration = bashScriptConfiguration;
 
         this.fileName = "lickety-" + bashScriptConfiguration.getScriptName() + bashScriptConfiguration.getShellType().extension;

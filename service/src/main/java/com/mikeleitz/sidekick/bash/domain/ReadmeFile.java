@@ -17,7 +17,7 @@ public class ReadmeFile extends ApplicationFile {
   protected SnippetContext snippetContext = new SnippetContext();
 
   public ReadmeFile(BashScriptConfiguration bashScriptConfiguration) {
-    this.fileRole = "readme file";
+    this.fileRole = "readme markdown";
     this.fileName = bashScriptConfiguration.getScriptName() + ".md";
 
     ReadmeSnippet readmeSnippet = new ReadmeSnippet(snippetContext);

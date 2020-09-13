@@ -10,7 +10,7 @@
 #                       user input and do validations. Once that completes,
 #                       the user script will take control with all variables
 #                       validated.
-# This manifestFile   - Lists all files included in the zip bundle.
+# This manifest file  - Lists all files included in the zip bundle.
 # readme markdown     - A markdown file with all options and documentation.
 # installer script    - The script you run to install all relevant files
 #                       to the appropriate ~/.lickety-script directory.
