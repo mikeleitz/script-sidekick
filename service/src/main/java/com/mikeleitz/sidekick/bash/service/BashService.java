@@ -16,6 +16,8 @@
 
 package com.mikeleitz.sidekick.bash.service;
 
+import java.util.List;
+import com.mikeleitz.sidekick.base.application.ApplicationFile;
 import com.mikeleitz.sidekick.bash.domain.BashScriptConfiguration;
 
 /**
@@ -29,4 +31,6 @@ public interface BashService {
     String createInstallerContents(BashScriptConfiguration bashScriptConfiguration);
 
     String createUserBashScriptContents(BashScriptConfiguration bashScriptConfiguration);
+
+    String createManifestContents(BashScriptConfiguration bashScriptConfiguration, List<ApplicationFile> applicationFiles);
 }

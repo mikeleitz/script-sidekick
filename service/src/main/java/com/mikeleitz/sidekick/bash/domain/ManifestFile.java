@@ -7,21 +7,29 @@ import java.util.List;
 import com.mikeleitz.sidekick.base.Snippet;
 import com.mikeleitz.sidekick.base.SnippetContext;
 import com.mikeleitz.sidekick.base.application.ApplicationFile;
+import com.mikeleitz.sidekick.bash.snippet.manifest.ManifestBody;
+import com.mikeleitz.sidekick.bash.snippet.manifest.ManifestInstructions;
 import org.apache.commons.io.FileUtils;
 
 /**
  * @author leitz@mikeleitz.com
  */
-public class Manifest extends ApplicationFile {
+public class ManifestFile extends ApplicationFile {
     protected ShellOptionEnum shellOptionEnum = ShellOptionEnum.BASH;
 
     protected SnippetContext snippetContext = new SnippetContext();
     protected List<ApplicationFile> allApplicationFiles;
 
-    public Manifest(BashScriptConfiguration bashScriptConfiguration, List<ApplicationFile> allApplicationFiles) {
+    public ManifestFile(BashScriptConfiguration bashScriptConfiguration, List<ApplicationFile> allApplicationFiles) {
         this.fileRole = "manifest file";
 
         this.allApplicationFiles = allApplicationFiles;
+
+        ManifestInstructions manifestInstructions = new ManifestInstructions(snippetContext);
+        preambleList.add(manifestInstructions);
+
+        ManifestBody manifestBody = new ManifestBody(snippetContext);
+        processingList.add(manifestBody);
     }
 
     @Override

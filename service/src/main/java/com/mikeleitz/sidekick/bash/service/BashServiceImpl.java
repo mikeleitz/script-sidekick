@@ -16,9 +16,13 @@
 
 package com.mikeleitz.sidekick.bash.service;
 
+import java.util.List;
 import com.mikeleitz.sidekick.base.application.ApplicationFile;
 import com.mikeleitz.sidekick.bash.domain.BashFile;
 import com.mikeleitz.sidekick.bash.domain.BashScriptConfiguration;
+import com.mikeleitz.sidekick.bash.domain.InstallerScript;
+import com.mikeleitz.sidekick.bash.domain.ManifestFile;
+import com.mikeleitz.sidekick.bash.domain.ReadmeFile;
 import com.mikeleitz.sidekick.bash.domain.UserScript;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -48,12 +52,30 @@ public class BashServiceImpl implements BashService {
 
     @Override
     public String createReadmeContents(BashScriptConfiguration bashScriptConfiguration) {
-        return "Readme contents";
+        String returnValue;
+
+        log.debug("Started creating readme [{}].", bashScriptConfiguration.getScriptName());
+
+        ApplicationFile bashFile = new ReadmeFile(bashScriptConfiguration);
+        returnValue = bashFile.getFileContents();
+
+        log.debug("Completed creating readme [{}].  It has content length [{}].", bashScriptConfiguration.getScriptName(), returnValue.length());
+
+        return returnValue;
     }
 
     @Override
     public String createInstallerContents(BashScriptConfiguration bashScriptConfiguration) {
-        return "Installer contents";
+        String returnValue;
+
+        log.debug("Started creating installer script for [{}].", bashScriptConfiguration.getScriptName());
+
+        ApplicationFile installerScript = new InstallerScript(bashScriptConfiguration);
+        returnValue = installerScript.getFileContents();
+
+        log.debug("Completed creating installer script for [{}].  It has content length [{}].", bashScriptConfiguration.getScriptName(), returnValue.length());
+
+        return returnValue;
     }
 
     @Override
@@ -66,6 +88,20 @@ public class BashServiceImpl implements BashService {
         returnValue = bashFile.getFileContents();
 
         log.debug("Completed creating user script for [{}].  It has content length [{}].", bashScriptConfiguration.getScriptName(), returnValue.length());
+
+        return returnValue;
+    }
+
+    @Override
+    public String createManifestContents(BashScriptConfiguration bashScriptConfiguration, List<ApplicationFile> applicationFiles) {
+        String returnValue;
+
+        log.debug("Started creating manifestFile file for [{}].", bashScriptConfiguration.getScriptName());
+
+        ManifestFile manifestFile = new ManifestFile(bashScriptConfiguration, applicationFiles);
+        returnValue = manifestFile.getFileContents();
+
+        log.debug("Completed creating manifestFile file for [{}].  It has content length [{}].", bashScriptConfiguration.getScriptName(), returnValue.length());
 
         return returnValue;
     }

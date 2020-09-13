@@ -22,3 +22,17 @@ then
     echo "Error: Directory $HOME/.lickety-script/bin does not exist."
     exit 1
 fi
+
+mkdir -p $HOME/.lickety-script/<scriptName>
+
+if [ ! -d "$HOME/.lickety-script/<scriptName>" ]
+then
+    echo "Error: Directory $HOME/.lickety-script/<scriptName> does not exist."
+    exit 1
+fi
+
+mv ./<scriptName>.md $HOME/.lickety-script/<scriptName>/<scriptName>.md
+mv ./<scriptName>.md $HOME/.lickety-script/<scriptName>/<scriptName>.sh
+mv ./<scriptName>.md $HOME/.lickety-script/<scriptName>/lickety-<scriptName>.sh
+
+ln -s $HOME/.lickety-script/<scriptName>/<scriptName>.sh $HOME/.lickety-script/bin
