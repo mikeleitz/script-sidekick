@@ -24,7 +24,7 @@ public class ManifestFile extends ApplicationFile {
 
     public ManifestFile(BashScriptConfiguration bashScriptConfiguration, List<ApplicationFile> allApplicationFiles) {
         this.fileRole = "manifest file";
-        this.fileName = "manifest-" + bashScriptConfiguration.getScriptName();
+        this.fileName = "manifest";
 
         this.allApplicationFiles = allApplicationFiles;
 
@@ -36,7 +36,7 @@ public class ManifestFile extends ApplicationFile {
 
         List<ImmutablePair> nameAndRoleList = allApplicationFiles.stream().map(f -> new ImmutablePair(f.getFileName(), f.getFileRole())).collect(Collectors.toList());
         nameAndRoleList.add(new ImmutablePair(this.getFileName(), this.getFileRole()));
-        
+
         snippetContext.addValue("nameAndRoleList", nameAndRoleList);
     }
 

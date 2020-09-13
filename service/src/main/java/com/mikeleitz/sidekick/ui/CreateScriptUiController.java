@@ -87,19 +87,19 @@ public class CreateScriptUiController {
         FileSystem fileSystem = MemoryFileSystemBuilder.newLinux().build();
 
         ApplicationFile bashScriptFile = bashService.createDelegateBashScriptContents(configuration);
-        Path bashScriptFilePath = createPathForContent(fileSystem, "lickety-" + userBashFileName + extension, bashScriptFile.getFileContents());
+        Path bashScriptFilePath = createPathForContent(fileSystem, bashScriptFile.getFileName(), bashScriptFile.getFileContents());
 
         ApplicationFile installerScriptFile = bashService.createInstallerContents(configuration);
-        Path installerScriptFilePath = createPathForContent(fileSystem, userBashFileName + "-installer.sh", installerScriptFile.getFileContents());
+        Path installerScriptFilePath = createPathForContent(fileSystem, installerScriptFile.getFileName(), installerScriptFile.getFileContents());
 
         ApplicationFile readmeFile = bashService.createReadmeContents(configuration);
-        Path readmeFilePath = createPathForContent(fileSystem, userBashFileName + ".md", readmeFile.getFileContents());
+        Path readmeFilePath = createPathForContent(fileSystem, readmeFile.getFileName(), readmeFile.getFileContents());
 
         ApplicationFile userBashScriptFile = bashService.createUserBashScriptContents(configuration);
-        Path userBashScriptFilePath = createPathForContent(fileSystem, userBashFileName + extension, userBashScriptFile.getFileContents());
+        Path userBashScriptFilePath = createPathForContent(fileSystem, userBashScriptFile.getFileName(), userBashScriptFile.getFileContents());
 
         ApplicationFile manifestFile = bashService.createManifestContents(configuration, List.of(bashScriptFile, installerScriptFile, readmeFile, userBashScriptFile));
-        Path manifestFilePath = createPathForContent(fileSystem, "manifest-" + userBashFileName, manifestFile.getFileContents());
+        Path manifestFilePath = createPathForContent(fileSystem, manifestFile.getFileName(), manifestFile.getFileContents());
 
         List<Path> paths = List.of(bashScriptFilePath, installerScriptFilePath, readmeFilePath, userBashScriptFilePath, manifestFilePath);
 

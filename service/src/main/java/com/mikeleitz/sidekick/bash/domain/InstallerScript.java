@@ -23,7 +23,7 @@ public class InstallerScript extends ApplicationFile {
     @SneakyThrows
     public InstallerScript(BashScriptConfiguration bashScriptConfiguration) {
         this.fileRole = "installer script";
-        this.fileName = "installer-" + bashScriptConfiguration.getScriptName() + bashScriptConfiguration.getShellType().extension;
+        this.fileName = "installer" + bashScriptConfiguration.getShellType().extension;
 
         snippetContext.addValue("scriptName", bashScriptConfiguration.getScriptName());
 
