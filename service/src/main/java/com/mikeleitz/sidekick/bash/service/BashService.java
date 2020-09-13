@@ -24,13 +24,13 @@ import com.mikeleitz.sidekick.bash.domain.BashScriptConfiguration;
  * @author leitz@mikeleitz.com
  */
 public interface BashService {
-    String createDelegateBashScriptContents(BashScriptConfiguration bashScriptConfiguration);
+    ApplicationFile createDelegateBashScriptContents(BashScriptConfiguration bashScriptConfiguration);
 
-    String createReadmeContents(BashScriptConfiguration bashScriptConfiguration);
+    ApplicationFile createReadmeContents(BashScriptConfiguration bashScriptConfiguration);
 
-    String createInstallerContents(BashScriptConfiguration bashScriptConfiguration);
+    ApplicationFile createInstallerContents(BashScriptConfiguration bashScriptConfiguration);
 
-    String createUserBashScriptContents(BashScriptConfiguration bashScriptConfiguration);
+    ApplicationFile createUserBashScriptContents(BashScriptConfiguration bashScriptConfiguration);
 
-    String createManifestContents(BashScriptConfiguration bashScriptConfiguration, List<ApplicationFile> applicationFiles);
+    ApplicationFile createManifestContents(BashScriptConfiguration bashScriptConfiguration, List<ApplicationFile> applicationFiles);
 }

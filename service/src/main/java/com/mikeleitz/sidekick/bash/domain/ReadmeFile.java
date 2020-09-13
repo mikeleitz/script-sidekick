@@ -18,6 +18,7 @@ public class ReadmeFile extends ApplicationFile {
 
   public ReadmeFile(BashScriptConfiguration bashScriptConfiguration) {
     this.fileRole = "readme file";
+    this.fileName = bashScriptConfiguration.getScriptName() + ".md";
 
     ReadmeSnippet readmeSnippet = new ReadmeSnippet(snippetContext);
     preambleList.add(readmeSnippet);

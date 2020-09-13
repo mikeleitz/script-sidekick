@@ -36,6 +36,14 @@ public abstract class ApplicationFile {
 
     protected String relativePath;  // relative to the repo's root.
 
+    public String getFileName() {
+        return fileName;
+    }
+
+    public String getFileRole() {
+        return fileRole;
+    }
+
     /**
      *
      * @return the raw file contents

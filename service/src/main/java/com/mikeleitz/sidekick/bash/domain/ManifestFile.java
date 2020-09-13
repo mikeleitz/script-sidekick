@@ -4,12 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.List;
+import java.util.stream.Collectors;
 import com.mikeleitz.sidekick.base.Snippet;
 import com.mikeleitz.sidekick.base.SnippetContext;
 import com.mikeleitz.sidekick.base.application.ApplicationFile;
 import com.mikeleitz.sidekick.bash.snippet.manifest.ManifestBody;
 import com.mikeleitz.sidekick.bash.snippet.manifest.ManifestInstructions;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 
 /**
  * @author leitz@mikeleitz.com
@@ -22,6 +24,7 @@ public class ManifestFile extends ApplicationFile {
 
     public ManifestFile(BashScriptConfiguration bashScriptConfiguration, List<ApplicationFile> allApplicationFiles) {
         this.fileRole = "manifest file";
+        this.fileName = "manifest-" + bashScriptConfiguration.getScriptName();
 
         this.allApplicationFiles = allApplicationFiles;
 
@@ -30,6 +33,11 @@ public class ManifestFile extends ApplicationFile {
 
         ManifestBody manifestBody = new ManifestBody(snippetContext);
         processingList.add(manifestBody);
+
+        List<ImmutablePair> nameAndRoleList = allApplicationFiles.stream().map(f -> new ImmutablePair(f.getFileName(), f.getFileRole())).collect(Collectors.toList());
+        nameAndRoleList.add(new ImmutablePair(this.getFileName(), this.getFileRole()));
+        
+        snippetContext.addValue("nameAndRoleList", nameAndRoleList);
     }
 
     @Override

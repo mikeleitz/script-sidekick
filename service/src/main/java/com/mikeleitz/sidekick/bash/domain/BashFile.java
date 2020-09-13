@@ -42,8 +42,10 @@ public class BashFile extends ApplicationFile {
 
     @SneakyThrows
     public BashFile(BashScriptConfiguration bashScriptConfiguration) {
-        this.fileRole = "lickety-script";
+        this.fileRole = "lickety-script framework";
         this.bashScriptConfiguration = bashScriptConfiguration;
+
+        this.fileName = "lickety-" + bashScriptConfiguration.getScriptName() + bashScriptConfiguration.getShellType().extension;
 
         populateSnippets();
     }
@@ -68,7 +70,6 @@ public class BashFile extends ApplicationFile {
                 bashScriptConfiguration.getVersion(),
                 bashScriptConfiguration.getPurpose());
 
-        fileName = bashScriptConfiguration.getScriptName();
 
         preambleList.add(shebangBashSnippet);
 
@@ -120,7 +121,7 @@ public class BashFile extends ApplicationFile {
 
     @Override
     public File toFile(String fullPath) throws IOException {
-        File returnValue = new File(fullPath + fileName + bashScriptConfiguration.getShellType().extension);
+        File returnValue = new File(fullPath + this.fileName);
 
         FileUtils.writeStringToFile(returnValue, getFileContents(), Charset.defaultCharset());
 

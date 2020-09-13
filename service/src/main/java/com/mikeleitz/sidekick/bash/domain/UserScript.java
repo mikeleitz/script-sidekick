@@ -25,6 +25,7 @@ public class UserScript extends ApplicationFile {
     @SneakyThrows
     public UserScript(BashScriptConfiguration bashScriptConfiguration) {
         this.fileRole = "user script";
+        this.fileName = bashScriptConfiguration.getScriptName() + bashScriptConfiguration.getShellType().extension;
 
         ShebangBashSnippet shebangBashSnippet = new ShebangBashSnippet(snippetContext, shellOptionEnum);
         preambleList.add(shebangBashSnippet);

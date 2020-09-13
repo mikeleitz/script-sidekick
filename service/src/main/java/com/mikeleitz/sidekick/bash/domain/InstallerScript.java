@@ -23,6 +23,7 @@ public class InstallerScript extends ApplicationFile {
     @SneakyThrows
     public InstallerScript(BashScriptConfiguration bashScriptConfiguration) {
         this.fileRole = "installer script";
+        this.fileName = "installer-" + bashScriptConfiguration.getScriptName() + bashScriptConfiguration.getShellType().extension;
 
         snippetContext.addValue("scriptName", bashScriptConfiguration.getScriptName());
 
@@ -63,7 +64,7 @@ public class InstallerScript extends ApplicationFile {
 
     @Override
     public File toFile(String fullPath) throws IOException {
-        File returnValue = new File(fullPath + fileName + shellOptionEnum.extension);
+        File returnValue = new File(fullPath + this.fileName);
 
         FileUtils.writeStringToFile(returnValue, getFileContents(), Charset.defaultCharset());
 

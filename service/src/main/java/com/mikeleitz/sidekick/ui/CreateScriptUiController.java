@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import com.github.marschall.memoryfilesystem.MemoryFileSystemBuilder;
+import com.mikeleitz.sidekick.base.application.ApplicationFile;
 import com.mikeleitz.sidekick.bash.domain.BashOption;
 import com.mikeleitz.sidekick.bash.domain.BashScriptConfiguration;
 import com.mikeleitz.sidekick.bash.service.BashService;
@@ -85,19 +86,22 @@ public class CreateScriptUiController {
 
         FileSystem fileSystem = MemoryFileSystemBuilder.newLinux().build();
 
-        String scriptContents = bashService.createDelegateBashScriptContents(configuration);
-        Path scriptContentsPath = createPathForContent(fileSystem, "lickety-" + userBashFileName + extension, scriptContents);
+        ApplicationFile bashScriptFile = bashService.createDelegateBashScriptContents(configuration);
+        Path bashScriptFilePath = createPathForContent(fileSystem, "lickety-" + userBashFileName + extension, bashScriptFile.getFileContents());
 
-        String installerContents = bashService.createInstallerContents(configuration);
-        Path installerContentsPath = createPathForContent(fileSystem, userBashFileName + "-installer.sh", installerContents);
+        ApplicationFile installerScriptFile = bashService.createInstallerContents(configuration);
+        Path installerScriptFilePath = createPathForContent(fileSystem, userBashFileName + "-installer.sh", installerScriptFile.getFileContents());
 
-        String readmeContents = bashService.createReadmeContents(configuration);
-        Path readmeContentsPath = createPathForContent(fileSystem, userBashFileName + ".md", readmeContents);
+        ApplicationFile readmeFile = bashService.createReadmeContents(configuration);
+        Path readmeFilePath = createPathForContent(fileSystem, userBashFileName + ".md", readmeFile.getFileContents());
 
-        String userBashScriptContents = bashService.createUserBashScriptContents(configuration);
-        Path userBashScriptContentsPath = createPathForContent(fileSystem, userBashFileName + extension, userBashScriptContents);
+        ApplicationFile userBashScriptFile = bashService.createUserBashScriptContents(configuration);
+        Path userBashScriptFilePath = createPathForContent(fileSystem, userBashFileName + extension, userBashScriptFile.getFileContents());
 
-        List<Path> paths = List.of(scriptContentsPath, installerContentsPath, readmeContentsPath, userBashScriptContentsPath);
+        ApplicationFile manifestFile = bashService.createManifestContents(configuration, List.of(bashScriptFile, installerScriptFile, readmeFile, userBashScriptFile));
+        Path manifestFilePath = createPathForContent(fileSystem, "manifest-" + userBashFileName, manifestFile.getFileContents());
+
+        List<Path> paths = List.of(bashScriptFilePath, installerScriptFilePath, readmeFilePath, userBashScriptFilePath, manifestFilePath);
 
         return ResponseEntity
                 .ok()

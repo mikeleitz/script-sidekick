@@ -37,71 +37,66 @@ public class BashServiceImpl implements BashService {
 
     @Override
     @SneakyThrows
-    public String createDelegateBashScriptContents(BashScriptConfiguration bashScriptConfiguration) {
-        String returnValue = null;
+    public ApplicationFile createDelegateBashScriptContents(BashScriptConfiguration bashScriptConfiguration) {
+        ApplicationFile returnValue = null;
 
         log.debug("Started creating bash script [{}].", bashScriptConfiguration.getScriptName());
 
-        BashFile bashFile = new BashFile(bashScriptConfiguration);
-        returnValue = bashFile.getFileContents();
+        returnValue = new BashFile(bashScriptConfiguration);
 
-        log.debug("Completed creating bash script [{}].  It has content length [{}].", bashScriptConfiguration.getScriptName(), returnValue.length());
+        log.debug("Completed creating bash script [{}].  It has content length [{}].", bashScriptConfiguration.getScriptName(), returnValue.getFileContents().length());
 
         return returnValue;
     }
 
     @Override
-    public String createReadmeContents(BashScriptConfiguration bashScriptConfiguration) {
-        String returnValue;
+    public ApplicationFile createReadmeContents(BashScriptConfiguration bashScriptConfiguration) {
+        ApplicationFile returnValue;
 
         log.debug("Started creating readme [{}].", bashScriptConfiguration.getScriptName());
 
-        ApplicationFile bashFile = new ReadmeFile(bashScriptConfiguration);
-        returnValue = bashFile.getFileContents();
+        returnValue = new ReadmeFile(bashScriptConfiguration);
 
-        log.debug("Completed creating readme [{}].  It has content length [{}].", bashScriptConfiguration.getScriptName(), returnValue.length());
+        log.debug("Completed creating readme [{}].  It has content length [{}].", bashScriptConfiguration.getScriptName(), returnValue.getFileContents().length());
 
         return returnValue;
     }
 
     @Override
-    public String createInstallerContents(BashScriptConfiguration bashScriptConfiguration) {
-        String returnValue;
+    public ApplicationFile createInstallerContents(BashScriptConfiguration bashScriptConfiguration) {
+        ApplicationFile returnValue;
 
         log.debug("Started creating installer script for [{}].", bashScriptConfiguration.getScriptName());
 
-        ApplicationFile installerScript = new InstallerScript(bashScriptConfiguration);
-        returnValue = installerScript.getFileContents();
+        returnValue = new InstallerScript(bashScriptConfiguration);
 
-        log.debug("Completed creating installer script for [{}].  It has content length [{}].", bashScriptConfiguration.getScriptName(), returnValue.length());
+        log.debug("Completed creating installer script for [{}].  It has content length [{}].", bashScriptConfiguration.getScriptName(), returnValue.getFileContents().length());
 
         return returnValue;
     }
 
     @Override
-    public String createUserBashScriptContents(BashScriptConfiguration bashScriptConfiguration) {
-        String returnValue;
+    public ApplicationFile createUserBashScriptContents(BashScriptConfiguration bashScriptConfiguration) {
+        ApplicationFile returnValue;
 
         log.debug("Started creating user script for [{}].", bashScriptConfiguration.getScriptName());
 
-        ApplicationFile bashFile = new UserScript(bashScriptConfiguration);
-        returnValue = bashFile.getFileContents();
+        returnValue = new UserScript(bashScriptConfiguration);
 
-        log.debug("Completed creating user script for [{}].  It has content length [{}].", bashScriptConfiguration.getScriptName(), returnValue.length());
+        log.debug("Completed creating user script for [{}].  It has content length [{}].", bashScriptConfiguration.getScriptName(), returnValue.getFileContents().length());
 
         return returnValue;
     }
 
     @Override
-    public String createManifestContents(BashScriptConfiguration bashScriptConfiguration, List<ApplicationFile> applicationFiles) {
-        String returnValue;
+    public ApplicationFile createManifestContents(BashScriptConfiguration bashScriptConfiguration, List<ApplicationFile> applicationFiles) {
+        ApplicationFile returnValue;
 
         log.debug("Started creating manifestFile file for [{}].", bashScriptConfiguration.getScriptName());
 
-        ManifestFile manifestFile = new ManifestFile(bashScriptConfiguration, applicationFiles);
-        returnValue = manifestFile.getFileContents();
+        returnValue = new ManifestFile(bashScriptConfiguration, applicationFiles);
 
-        log.debug("Completed creating manifestFile file for [{}].  It has content length [{}].", bashScriptConfiguration.getScriptName(), returnValue.length());
+        log.debug("Completed creating manifestFile file for [{}].  It has content length [{}].", bashScriptConfiguration.getScriptName(), returnValue.getFileContents().length());
 
         return returnValue;
     }
