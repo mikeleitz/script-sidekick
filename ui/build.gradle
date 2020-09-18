@@ -48,7 +48,7 @@ dependencies {
 }
 
 docker {
-    name 'mikeleitz/sidescript-ui'
+    name 'mikeleitz/lickety-script-ui'
 
 //    files 'build.gradle'
     copySpec.with {

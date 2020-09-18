@@ -31,7 +31,7 @@ plugins {
 
 group = 'com.mikeleitz'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '14'
+sourceCompatibility = '11'
 
 configurations {
     developmentOnly
@@ -45,11 +45,11 @@ configurations {
 
 jib {
     to {
-        image = 'mikeleitz/sidescript-service'
+        image = 'mikeleitz/lickety-script-service'
         credHelper = 'osxkeychain'
     }
     from {
-        image = 'gcr.io/distroless/java:14'
+        image = 'gcr.io/distroless/java:11'
     }
 }
 

@@ -25,13 +25,13 @@ The service takes a json payload and uses [StringTemplate](https://www.stringtem
 Start the Spring boot application using Docker
 
 ```bash
-docker run  -p 8080:8080 --rm -t mikeleitz/sidescript-service
+docker run  -p 8080:8080 --rm -t mikeleitz/lickety-script-service
 ```
 
 ## UI : VueJs
 
 ```bash
-docker run -p 8081:80 --rm -t mikeleitz/sidescript-ui
+docker run -p 8081:80 --rm -t mikeleitz/lickety-script-ui
 ```
 
 ## Access via Browser
@@ -68,11 +68,11 @@ Currently the build uses two separate mechanisms to create the deliverable (Dock
 You must tag before pushing.
 
 ```bash
-docker tag mikeleitz/sidescript-ui gcr.io/side-script-dev/sidescript-ui:current
-docker tag mikeleitz/sidescript-service gcr.io/side-script-dev/sidescript-service:current
+docker tag mikeleitz/lickety-script-ui gcr.io/side-script-dev/lickety-script-ui:current
+docker tag mikeleitz/lickety-script-service gcr.io/side-script-dev/lickety-script-service:current
 
-docker push gcr.io/side-script-dev/sidescript-ui:current
-docker push gcr.io/side-script-dev/sidescript-service:current
+docker push gcr.io/side-script-dev/lickety-script-ui:current
+docker push gcr.io/side-script-dev/lickety-script-service:current
 ```
 
 # Next features
