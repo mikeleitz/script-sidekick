@@ -2,41 +2,41 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: side-script-ui #  Service name, not related to app or routing.
+  name: lickety-script-ui #  Service name, not related to app or routing.
   namespace: "default"
   labels:
-    app: side-script # Used only for searching; not for routing.
+    app: lickety-script # Used only for searching; not for routing.
 spec:
   type: LoadBalancer
   ports:
-    - name: side-script-ui-port
+    - name: lickety-script-ui-port
       port: 80
       protocol: "TCP"
       targetPort: 80
   selector:
-    app: side-script-ui   # Must match the pod name below.  See field below: template.metadata.labels.app.
+    app: lickety-script-ui   # Must match the pod name below.  See field below: template.metadata.labels.app.
   loadBalancerIP: 34.66.176.194
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: side-script-gke-cl-dply-ui-dev
+  name: lickety-script-gke-cl-dply-ui-dev
   labels:
-    app: side-script
+    app: lickety-script
   namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: side-script-ui
+      app: lickety-script-ui
   template:
     metadata:
       labels:
-        app: side-script-ui
+        app: lickety-script-ui
     spec:
       containers:
-        - name: sidescript-ui
-          image: gcr.io/side-script-dev/sidescript-ui:current
+        - name: lickety-script
+          image: gcr.io/side-script-dev/lickety-script-ui:current
           imagePullPolicy: Always
           resources:
             requests:
@@ -47,41 +47,41 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: side-script-engine #  Service name, this is the DNS to route to the service.  So all REST calls must include this to route correctly..
+  name: lickety-script-engine #  Service name, this is the DNS to route to the service.  So all REST calls must include this to route correctly..
   namespace: "default"
   labels:
-    app: side-script # Used only for searching; not for routing.
+    app: lickety-script # Used only for searching; not for routing.
 spec:
   type: LoadBalancer
   ports:
-    - name: side-script-engine-port
+    - name: lickety-script-engine-port
       port: 8080
       protocol: "TCP"
       targetPort: 8080
   selector:
-    app: side-script-engine # Must match the pod name below.  See field below: template.metadata.labels.app.
+    app: lickety-script-engine # Must match the pod name below.  See field below: template.metadata.labels.app.
   loadBalancerIP: 35.224.69.191
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: side-script-gke-cl-dply-engine-dev # Deployment  name; not related to app or routing.
+  name: lickety-script-gke-cl-dply-engine-dev # Deployment  name; not related to app or routing.
   labels:
-    app: side-script # Used only for searching; not for deploying.
+    app: lickety-script # Used only for searching; not for deploying.
   namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: side-script-engine # How the deployment matches up to pod. See field below: template.metadata.labels.app.
+      app: lickety-script-engine # How the deployment matches up to pod. See field below: template.metadata.labels.app.
   template:
     metadata:
       labels:
-        app: side-script-engine
+        app: lickety-script-engine
     spec:
       containers:
-        - name: sidescript-engine-current
-          image: gcr.io/side-script-dev/sidescript-service:current
+        - name: lickety-script-engine-current
+          image: gcr.io/side-script-dev/lickety-script-service:current
           imagePullPolicy: Always
           resources:
             requests:
