@@ -21,7 +21,7 @@
     label-class="pt-0"
     class="mb-0">
     <b-form-group>
-      <b-form-checkbox name="check-button" v-model="storeState.isBooleanSelected" @change="changeTypeSelected($event, 'boolean')" switch>
+      <b-form-checkbox name="check-button" v-model="isBooleanSelected" @change="changeTypeSelected($event, 'boolean')" switch>
         {{ thisScriptInput.type === 'boolean' ? 'is a switch' : 'is not a switch' }}
       </b-form-checkbox>
     </b-form-group>

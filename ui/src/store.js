@@ -21,11 +21,6 @@ export const store = {
     nextTempId: -1,
     verboseCommandId: 0,
     quietCommandId: 0,
-    isStringSelected: false,
-    isNumberSelected: false,
-    isBooleanSelected: false,
-    isOtherSelected: false,
-    isValueRequired: false,
     scriptForm: {
       scriptName: '',
       shellType: 'BASH',

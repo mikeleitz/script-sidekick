@@ -28,8 +28,12 @@ export default {
     return {
       thisScriptInput: null,
       storeState: store.state,
+      isStringSelected: false,
+      isNumberSelected: false,
+      isBooleanSelected: false,
+      isOtherSelected: false,
+      isValueRequired: false,
       stringSubtype: '-1',
-      isBooleanSelected: store.isBooleanSelected,
       isRegexValueSelected: false,
       regexValue: '',
       regexValueValidation: undefined,

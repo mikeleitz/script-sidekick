@@ -21,15 +21,15 @@
     label-class="pt-0"
     class="mb-0">
     <b-form-group>
-      <b-form-checkbox v-model="storeState.isNumberSelected" @change="changeTypeSelected($event, 'number')" switch>
+      <b-form-checkbox v-model="isNumberSelected" @change="changeTypeSelected($event, 'number')" switch>
         {{ thisScriptInput.type === 'number' ? 'is a number' : 'is not a number' }}
       </b-form-checkbox>
     </b-form-group>
-    <div v-show="storeState.isNumberSelected">
+    <div v-show="isNumberSelected">
       <!-- All validations. Show only if the user selected this type. -->
       <b-form-group>
-        <b-form-checkbox name="check-button" v-model="storeState.isValueRequired" @change="changeIsValueRequired($event)" :disabled="thisScriptInput.type !== 'number'" switch>
-          {{ storeState.isValueRequired ? 'is required' : 'is not required' }}
+        <b-form-checkbox name="check-button" v-model="isValueRequired" @change="changeIsValueRequired($event)" :disabled="thisScriptInput.type !== 'number'" switch>
+          {{ isValueRequired ? 'is required' : 'is not required' }}
         </b-form-checkbox>
       </b-form-group>
       <b-form-group>
