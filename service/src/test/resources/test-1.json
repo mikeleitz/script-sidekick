@@ -1,0 +1,185 @@
+{
+  "domainObjectType": "bash-script",
+  "id": -1,
+  "scriptName": "test-script",
+  "shellType": "BASH",
+  "bashOptions": [
+    {
+      "domainObjectType": "bash-option",
+      "id": -10,
+      "longName": "capital",
+      "shortName": "c",
+      "type": "other",
+      "defaultValue": "",
+      "helpText": "Must start with a capital letter",
+      "validations": [
+        {
+          "domainObjectType": "bash-validation",
+          "id": 13,
+          "name": "Regex",
+          "args": [
+            {
+              "key": "value",
+              "value": "[A-Z].*"
+            }
+          ]
+        }
+      ],
+      "optionHasValue": true
+    },
+    {
+      "domainObjectType": "bash-option",
+      "id": -9,
+      "longName": "switch",
+      "shortName": "s",
+      "type": "boolean",
+      "defaultValue": "",
+      "helpText": "This is a boolean true or false",
+      "validations": [
+        {
+          "domainObjectType": "bash-validation",
+          "id": 2,
+          "name": "Boolean",
+          "args": []
+        }
+      ],
+      "optionHasValue": false
+    },
+    {
+      "domainObjectType": "bash-option",
+      "id": -8,
+      "longName": "between",
+      "shortName": "b",
+      "type": "number",
+      "defaultValue": "",
+      "helpText": "Floating point number between -10 and 10 ",
+      "validations": [
+        {
+          "domainObjectType": "bash-validation",
+          "id": 14,
+          "name": "Greater than",
+          "args": [
+            {
+              "key": "value",
+              "value": "-10"
+            }
+          ]
+        },
+        {
+          "domainObjectType": "bash-validation",
+          "id": 17,
+          "name": "Less than",
+          "args": [
+            {
+              "key": "value",
+              "value": "10"
+            }
+          ]
+        },
+        {
+          "domainObjectType": "bash-validation",
+          "id": 3,
+          "name": "Signed real",
+          "args": []
+        }
+      ],
+      "optionHasValue": true
+    },
+    {
+      "domainObjectType": "bash-option",
+      "id": -7,
+      "longName": "int",
+      "shortName": "i",
+      "type": "number",
+      "defaultValue": "",
+      "helpText": "This is a signed integer",
+      "validations": [
+        {
+          "domainObjectType": "bash-validation",
+          "id": 19,
+          "name": "Unsigned integer",
+          "args": []
+        }
+      ],
+      "optionHasValue": true
+    },
+    {
+      "domainObjectType": "bash-option",
+      "id": -6,
+      "longName": "float",
+      "shortName": "f",
+      "type": "number",
+      "defaultValue": "",
+      "helpText": "This is a signed floating point",
+      "validations": [
+        {
+          "domainObjectType": "bash-validation",
+          "id": 3,
+          "name": "Signed real",
+          "args": []
+        }
+      ],
+      "optionHasValue": true
+    },
+    {
+      "domainObjectType": "bash-option",
+      "id": -5,
+      "longName": "url",
+      "shortName": "u",
+      "type": "string",
+      "defaultValue": "",
+      "helpText": "This is a url value",
+      "validations": [
+        {
+          "domainObjectType": "bash-validation",
+          "id": 9,
+          "name": "",
+          "args": []
+        }
+      ],
+      "optionHasValue": true
+    },
+    {
+      "domainObjectType": "bash-option",
+      "id": -4,
+      "longName": "email",
+      "shortName": "e",
+      "type": "string",
+      "defaultValue": "",
+      "helpText": "This is a email address and isn't required",
+      "validations": [
+        {
+          "domainObjectType": "bash-validation",
+          "id": 10,
+          "name": "",
+          "args": []
+        }
+      ],
+      "optionHasValue": true
+    },
+    {
+      "domainObjectType": "bash-option",
+      "id": -3,
+      "longName": "alphanumeric",
+      "shortName": "a",
+      "type": "string",
+      "defaultValue": "",
+      "helpText": "This field is required and an alphanumeric value",
+      "validations": [
+        {
+          "domainObjectType": "bash-validation",
+          "id": 21,
+          "name": "",
+          "args": []
+        },
+        {
+          "domainObjectType": "bash-validation",
+          "id": 20,
+          "name": "Required",
+          "args": []
+        }
+      ],
+      "optionHasValue": true
+    }
+  ]
+}
