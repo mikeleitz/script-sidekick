@@ -33,9 +33,12 @@
         </b-form-checkbox>
       </b-form-group>
       <b-form-group>
-        <b-form-checkbox name="check-button" v-model="isNumberReal" :disabled="thisScriptInput.type !== 'number'" switch>
-          {{ isNumberReal ? 'is real' : 'is an integer' }}
+        <b-form-checkbox name="check-button" v-model="isNumberReal" :disabled="true" switch>
+          is an integer
         </b-form-checkbox>
+<!--        <b-form-checkbox name="check-button" v-model="isNumberReal" :disabled="thisScriptInput.type !== 'number'" switch>-->
+<!--          {{ isNumberReal ? 'is real' : 'is an integer' }}-->
+<!--        </b-form-checkbox>-->
       </b-form-group>
       <b-form-group>
         <b-form-checkbox name="check-button" v-model="isNumberUnsigned" :disabled="thisScriptInput.type !== 'number'" switch>

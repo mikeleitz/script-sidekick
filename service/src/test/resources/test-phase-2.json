@@ -47,6 +47,46 @@
     },
     {
       "domainObjectType": "bash-option",
+      "id": -8,
+      "longName": "between",
+      "shortName": "b",
+      "type": "number",
+      "defaultValue": "",
+      "helpText": "Floating point number between -10 and 10 ",
+      "validations": [
+        {
+          "domainObjectType": "bash-validation",
+          "id": 14,
+          "name": "Greater than",
+          "args": [
+            {
+              "key": "value",
+              "value": "-10"
+            }
+          ]
+        },
+        {
+          "domainObjectType": "bash-validation",
+          "id": 17,
+          "name": "Less than",
+          "args": [
+            {
+              "key": "value",
+              "value": "10"
+            }
+          ]
+        },
+        {
+          "domainObjectType": "bash-validation",
+          "id": 3,
+          "name": "Signed real",
+          "args": []
+        }
+      ],
+      "optionHasValue": true
+    },
+    {
+      "domainObjectType": "bash-option",
       "id": -7,
       "longName": "int",
       "shortName": "i",
@@ -58,6 +98,24 @@
           "domainObjectType": "bash-validation",
           "id": 19,
           "name": "Unsigned integer",
+          "args": []
+        }
+      ],
+      "optionHasValue": true
+    },
+    {
+      "domainObjectType": "bash-option",
+      "id": -6,
+      "longName": "float",
+      "shortName": "f",
+      "type": "number",
+      "defaultValue": "",
+      "helpText": "This is a signed floating point",
+      "validations": [
+        {
+          "domainObjectType": "bash-validation",
+          "id": 3,
+          "name": "Signed real",
           "args": []
         }
       ],
