@@ -33,6 +33,7 @@ public class UserScript extends ApplicationFile {
         String scriptName = bashScriptConfiguration.getScriptName();
         String extension = bashScriptConfiguration.getShellType().getExtension();
         snippetContext.addValue("scriptFile", scriptName + extension);
+        snippetContext.addValue("scriptName", scriptName);
 
         List<String> optionsAndType = createOptionsAndType(bashScriptConfiguration);
 
