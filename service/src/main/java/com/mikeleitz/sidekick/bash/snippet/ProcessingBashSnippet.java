@@ -15,10 +15,9 @@
  */
 package com.mikeleitz.sidekick.bash.snippet;
 
+import java.io.IOException;
 import com.mikeleitz.sidekick.base.Snippet;
 import com.mikeleitz.sidekick.base.SnippetContext;
-
-import java.io.IOException;
 
 /**
  * @author leitz@mikeleitz.com
@@ -29,6 +28,7 @@ public class ProcessingBashSnippet extends Snippet {
     public ProcessingBashSnippet(SnippetContext context) throws IOException {
         super(context);
         setSnippetTemplate(TEMPLATE_LOCATION);
+
 
     }
 }

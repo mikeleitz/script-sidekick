@@ -12,3 +12,7 @@ function .logAllVariables() {
 ##################################################################################################
 
 .logAllVariables
+
+<bashOptionsWithValidations:{ option |
+.<option.longNameBashFriendly>Validate $<option.longNameBashFriendly>_ARG
+}>
