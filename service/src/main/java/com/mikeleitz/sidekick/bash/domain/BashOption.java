@@ -49,6 +49,7 @@ public class BashOption implements ApplicationInput {
     @Builder.Default @NonNull private String helpText = "";
     @Singular private List<BashValidation> bashValidations;
     private String longNameBashFriendly;
+    private Boolean inputRequired;      //true if the user must give some input for this option. false otherwise.
 
     @Override
     public String getVariableName() {

@@ -16,6 +16,10 @@
 
 package com.mikeleitz.sidekick.bash.domain;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -26,11 +30,6 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.IntNode;
 import io.micrometer.core.instrument.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * Deserializes BashOptions.
@@ -71,9 +70,20 @@ public class BashOptionDeserializer extends StdDeserializer<BashOption> {
 
         ObjectMapper mapper = new ObjectMapper();
         ArrayNode validations = (ArrayNode) node.get("validations");
+
+        Boolean isOptionValueRequired = false;
+
         if (validations != null && !validations.isNull()) {
             for (JsonNode validation : validations) {
                 BashValidation val = mapper.readValue(validation.toString(), BashValidation.class);
+
+                // If the option doesn't have the value required, mark the object
+                // as input not required. This helps with rendering the script
+                // templates. There isn't an option to figure this out
+                // dynamically.
+                if (val.getValidationEnum() == ValidationEnum.VALUE_REQUIRED) {
+                    isOptionValueRequired = true;
+                }
                 // TODO modify when we support more validations.
                 allValidations.add(val);
             }
@@ -90,6 +100,7 @@ public class BashOptionDeserializer extends StdDeserializer<BashOption> {
                 .helpText(helpText)
                 .optionHasValue(optionHasValue)
                 .bashValidations(allValidations)
+                .inputRequired(isOptionValueRequired)
                 .build();
 
         return returnValue;
