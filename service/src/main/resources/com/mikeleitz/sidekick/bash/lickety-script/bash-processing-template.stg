@@ -3,7 +3,7 @@
 ##################################################################################################
 
 function .logAllVariables() {
-  <allVariables:{ variable |.log 2 '<variable>: ' $<variable>
+  <allVariables:{ variable |.log 7 '<variable>: ' $<variable>
   }>
 }
 
