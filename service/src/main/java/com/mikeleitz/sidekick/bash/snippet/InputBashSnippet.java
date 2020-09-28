@@ -22,10 +22,10 @@ import java.util.Set;
 import com.mikeleitz.sidekick.base.Snippet;
 import com.mikeleitz.sidekick.base.SnippetContext;
 import com.mikeleitz.sidekick.bash.domain.BashOption;
-import io.micrometer.core.instrument.util.StringUtils;
 import lombok.NonNull;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author leitz@mikeleitz.com
@@ -81,7 +81,7 @@ public class InputBashSnippet extends Snippet {
 
                 if (bashOption.equals(BashOption.HELP)) {
                     switchStatement = HELP_SWITCH_STATEMENT;
-                } else if (bashOption.equals(BashOption.VERBOSE)) {
+                } else if (StringUtils.equalsIgnoreCase(bashOption.getLongNameBashFriendly(), BashOption.VERBOSE.getLongNameBashFriendly())) {
                     switchStatement = VERBOSE_SWITCH_STATEMENT;
                 } else {
                     switchStatement = createSwitchStatement(bashOption);

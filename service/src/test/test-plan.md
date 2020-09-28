@@ -16,7 +16,29 @@
 | switch       | s          | number  | switch                         | This is a boolean true or false                  |
 | capital      | c          | other   | regex [A-Z].*                  | Must start with a capital letter                 |
 
+#### verbose
 
+```
+# Shows all variables printed
+test-script.sh -v
+```
+
+
+#### quiet
+
+#### alphanumeric
+
+#### email
+
+#### url
+
+#### int
+
+#### between
+
+#### switch
+
+#### capital
 
 ## Phase 2
 
