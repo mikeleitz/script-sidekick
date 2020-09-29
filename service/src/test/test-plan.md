@@ -14,7 +14,6 @@
 | int          | i          | number  | is number, is integer          | This is a unsigned integer                       |
 | between      | b          | number  | is number, is int , < 10, >-10 | Integer int number between -10 and 10            |
 | switch       | s          | number  | switch                         | This is a boolean true or false                  |
-| capital      | c          | other   | regex [A-Z].*                  | Must start with a capital letter                 |
 
 #### verbose
 
