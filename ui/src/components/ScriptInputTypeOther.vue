@@ -31,7 +31,7 @@
         <b-form-checkbox name="check-button" v-model="isValueRequired" @change="changeIsValueRequired($event)" :disabled="thisScriptInput.type !== 'other'" switch>
           {{ isValueRequired ? 'is required' : 'is not required' }}
         </b-form-checkbox>
-        <b-form-group>
+        <!--<b-form-group>
           <b-row align-v="center">
             <b-col cols="4">
               <b-form-checkbox name="check-button" v-model="isRegexValueSelected" :disabled="thisScriptInput.type !== 'other'" switch>
@@ -42,7 +42,7 @@
               <b-form-input placeholder="Regex value" v-model="regexValue" :disabled="thisScriptInput.type !== 'other' || !isRegexValueSelected"/>
             </b-col>
           </b-row>
-        </b-form-group>
+        </b-form-group>-->
       </div>
     </b-form-group>
   </b-form-group>
