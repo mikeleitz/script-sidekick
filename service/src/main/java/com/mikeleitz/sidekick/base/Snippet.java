@@ -15,15 +15,14 @@
  */
 package com.mikeleitz.sidekick.base;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.stringtemplate.v4.ST;
-
-import java.io.IOException;
-import java.nio.charset.Charset;
 
 /**
  * @author leitz@mikeleitz.com
@@ -41,7 +40,7 @@ public abstract class Snippet {
 
     public void setSnippetTemplate(String templateLocation) throws IOException {
         templateResource = new ClassPathResource(templateLocation);
-        template = FileUtils.readFileToString(templateResource.getFile(), Charset.defaultCharset());
+        template = IOUtils.toString(templateResource.getInputStream(), StandardCharsets.UTF_8.name());
     }
 
     public String getName() {

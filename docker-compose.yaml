@@ -1,0 +1,29 @@
+version: '3.6'
+services:
+  service:
+    build:
+      context: ./service
+#      target: service-0.0.1-SNAPSHOT.jar
+    image: mikeleitz/lickety-script-service
+    container_name: lickety-script-service
+    #environment:
+    #  WAIT_HOSTS: postgres:5433
+    ports:
+      - 8080:8080
+    networks:
+      - frontback
+
+  front:
+    build: ./ui
+    image: mikeleitz/lickety-script-ui
+    container_name: lickety-script-ui
+    ports:
+      - 80:80
+    depends_on:
+      - service
+    networks:
+      - frontback
+
+networks:
+  frontback:
+    driver: bridge
