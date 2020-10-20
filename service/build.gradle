@@ -65,7 +65,7 @@ ext {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-hateoas'
-    implementation 'org.springframework.boot:spring-boot-devtools'
+
     implementation 'org.antlr:ST4:4.3.1'
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.11.2'
     implementation 'org.json:json:20200518'

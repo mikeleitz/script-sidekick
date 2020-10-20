@@ -37,9 +37,10 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
@@ -57,9 +58,9 @@ public class CreateScriptUiController {
         this.bashService = bashService;
     }
 
-    @GetMapping(path = "status")
-    public @ResponseBody
-    String getGeneratorStatus() {
+    @RequestMapping(path = "status", method = RequestMethod.GET)
+    @CrossOrigin(origins = "https://ui.licketyscript.app")
+    public @ResponseBody String getGeneratorStatus() {
         JSONObject jo = new JSONObject();
         jo.put("status", "Ready");
 
@@ -72,10 +73,9 @@ public class CreateScriptUiController {
      * @param configuration
      * @return
      */
-    @PostMapping(
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = "application/zip")
-    public ResponseEntity<StreamingResponseBody> createScript(@RequestBody BashScriptConfiguration configuration)
+    @RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = "application/zip", method = RequestMethod.POST)
+    @CrossOrigin(origins = "https://ui.licketyscript.app")
+    public @ResponseBody ResponseEntity<StreamingResponseBody> createScript(@RequestBody BashScriptConfiguration configuration)
             throws IOException {
         log.info("Received create script request for data [{}].", configuration);
 

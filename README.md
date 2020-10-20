@@ -75,6 +75,14 @@ docker push gcr.io/side-script-dev/lickety-script-ui:current
 docker push gcr.io/side-script-dev/lickety-script-service:current
 ```
 
+## Deploy to Google Cloud Run
+
+```bash
+gcloud builds submit --tag gcr.io/lickety-script/lickety-script-service
+
+gcloud builds submit --tag gcr.io/lickety-script/lickety-script-ui
+```
+
 # Next features
 
  1. Bundle as .zip file.

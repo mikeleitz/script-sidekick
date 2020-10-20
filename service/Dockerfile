@@ -19,6 +19,6 @@ WORKDIR app
 
 COPY --from=builder /home/gradle/src/build/libs/src-0.0.1-SNAPSHOT.jar /app/service-0.0.1-SNAPSHOT.jar
 
-EXPOSE 8080
+EXPOSE 80
 
 ENTRYPOINT ["java", "-jar", "/app/service-0.0.1-SNAPSHOT.jar"]

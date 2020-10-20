@@ -155,7 +155,7 @@ export default {
     getStatus: function () {
       this.loading = true
       axios({
-        url: 'http://localhost:8080/status',
+        url: 'https://api.licketyscript.app/status',
         method: 'GET'
       }).then(result => {
         this.generatorStatus = result.data.status
@@ -167,7 +167,7 @@ export default {
     },
     onSubmit: function () {
       axios({
-        url: 'http://localhost:8080/',
+        url: 'https://api.licketyscript.app/',
         method: 'POST',
         data: this.scriptInProgress,
         responseType: 'blob'
