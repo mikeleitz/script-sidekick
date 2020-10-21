@@ -58,6 +58,15 @@ public class CreateScriptUiController {
         this.bashService = bashService;
     }
 
+    @RequestMapping(path = "/", method = RequestMethod.GET)
+    @CrossOrigin(origins = "https://ui.licketyscript.app")
+    public @ResponseBody String base() {
+        JSONObject jo = new JSONObject();
+        jo.put("status", "Ready");
+
+        return jo.toString();
+    }
+
     @RequestMapping(path = "status", method = RequestMethod.GET)
     @CrossOrigin(origins = "https://ui.licketyscript.app")
     public @ResponseBody String getGeneratorStatus() {
