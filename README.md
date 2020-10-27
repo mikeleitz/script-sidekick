@@ -68,11 +68,11 @@ Currently the build uses two separate mechanisms to create the deliverable (Dock
 You must tag before pushing.
 
 ```bash
-docker tag mikeleitz/lickety-script-ui gcr.io/side-script-dev/lickety-script-ui:current
-docker tag mikeleitz/lickety-script-service gcr.io/side-script-dev/lickety-script-service:current
+docker tag mikeleitz/lickety-script-ui gcr.io/lickety-script/lickety-script-ui:current
+docker tag mikeleitz/lickety-script-service gcr.io/lickety-script/lickety-script-service:current
 
-docker push gcr.io/side-script-dev/lickety-script-ui:current
-docker push gcr.io/side-script-dev/lickety-script-service:current
+docker push gcr.io/lickety-script/lickety-script-ui:current
+docker push gcr.io/lickety-script/lickety-script-service:current
 ```
 
 ## Deploy to Google Cloud Run

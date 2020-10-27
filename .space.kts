@@ -1,15 +1,12 @@
-//job("Build") {
-//    gradlew("openjdk:11", "clean", "build")
-//}
-//
-//job("create Docker container") {
-//    docker {
-//        build {
-//            file = "ui/Dockerfile"
-//        }
-//
-//        push("leadtechnologist.registry.jetbrains.space/mydocker/lickety-script-ui") {
-//            tag = "0.0.1-SNAPSHOT"
-//        }
-//    }
-//}
+job("build and publish") {
+    container("gradle:6.1.1-jre11") {
+        kotlinScript { api ->
+            api.gradle("build")
+            try {
+                api.gradle("publish")
+            } catch (ex: Exception) {
+                println("Publishing failed")
+            }
+        }
+    }
+}
