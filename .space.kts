@@ -1,5 +1,5 @@
 job("build and publish") {
-    container("gradle:6.1.1-jre11") {
+    container("gradle:6.7.0-jdk11") {
         kotlinScript { api ->
             api.gradle("build")
             try {
