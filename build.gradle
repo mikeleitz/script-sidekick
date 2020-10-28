@@ -21,8 +21,8 @@ project(':service') {
 		mavenCentral()
 	}
 }
-
-project(':ui') {
-}
+//
+//project(':ui') {
+//}
 
 
