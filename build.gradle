@@ -16,36 +16,9 @@
 
 project(':service') {
 	apply plugin: 'java'
-	apply plugin: 'maven-publish'
 
 	repositories {
 		mavenCentral()
-	}
-
-	publishing {
-		publications {
-			maven(MavenPublication) {
-				groupId = 'com.leadtechnologist'
-				artifactId = 'licketyscript-service'
-				version = "0.0.1-SNAPSHOT"
-				from components.java
-
-				pom {
-					name = 'licketyscript-service'
-					description = 'The Java service for lickety script application.'
-				}
-			}
-		}
-
-		repositories {
-			maven {
-				url "https://maven.pkg.jetbrains.space/leadtechnologist/p/lsc/leadtechnologist"
-				credentials {
-					username = "$System.env.JB_SPACE_CLIENT_ID"
-					password = "$System.env.JB_SPACE_CLIENT_SECRET"
-				}
-			}
-		}
 	}
 }
 

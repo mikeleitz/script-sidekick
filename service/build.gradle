@@ -22,6 +22,7 @@ plugins {
     id 'java'
     id 'idea'
     id 'jacoco'
+    id 'maven-publish'
     id 'io.freefair.lombok' version '5.1.1'
     id 'org.asciidoctor.jvm.convert' version '3.2.0'
     id 'com.google.cloud.tools.jib' version '2.5.1'
@@ -29,7 +30,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.10.RELEASE'
 }
 
-group = 'com.mikeleitz'
+group = 'com.leadtechnologist'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
@@ -40,6 +41,32 @@ configurations {
     }
     compileOnly {
         extendsFrom annotationProcessor
+    }
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.leadtechnologist'
+            artifactId = 'licketyscript-service'
+            version = "0.0.1-SNAPSHOT"
+            from components.java
+
+            pom {
+                name = 'licketyscript-service'
+                description = 'The Java service for lickety script application.'
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            url "https://maven.pkg.jetbrains.space/leadtechnologist/p/lsc/leadtechnologist"
+            credentials {
+                username = "$System.env.JB_SPACE_CLIENT_ID"
+                password = "$System.env.JB_SPACE_CLIENT_SECRET"
+            }
+        }
     }
 }
 
