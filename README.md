@@ -1,3 +1,5 @@
+# THIS PROJECT HAS BEEN DEPRECATED AND REPLACED BY 2 LICKETY-SCRIPT REPOS: A SERVICE PROJECT AND A UI PROJECT.
+
 # script-sidekick
 
 Project to help create bash scripts.  Generates the relevant boilerplate and helps you keep your scripts sane.
